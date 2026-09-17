@@ -32,3 +32,9 @@ export async function entryExists({
       entry.kind === "prototype" && entry.owner === owner && entry.slug === slug
   )
 }
+
+export async function addEntry(entry: MetadataEntry) {
+  const entries = await getAllEntries()
+  entries.push(entry)
+  await writeMetadataFile(entries)
+}
