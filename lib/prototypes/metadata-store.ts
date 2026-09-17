@@ -38,3 +38,24 @@ export async function addEntry(entry: MetadataEntry) {
   entries.push(entry)
   await saveMetadataDocument(entries)
 }
+
+export async function removeEntry({
+  owner,
+  slug,
+}: PrototypeKey): Promise<boolean> {
+  const entries = await getAllEntries()
+  const next = entries.filter(
+    (entry) =>
+      !(
+        entry.kind === "prototype" &&
+        entry.owner === owner &&
+        entry.slug === slug
+      )
+  )
+
+  if (entries.length === next.length) false
+
+  await saveMetadataDocument(next)
+
+  return true
+}
