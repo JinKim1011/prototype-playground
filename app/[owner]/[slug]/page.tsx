@@ -8,8 +8,20 @@ type PrototypePageProps = {
   params: Promise<PrototypeKey>
 }
 
+const SEGMENT = /^[a-zA-Z0-9][a-zA-Z0-9._-]{0,127}$/
+
+function isValidSegment(value: string): boolean {
+  return SEGMENT.test(value) && !value.includes("..")
+}
+
 export default async function PrototypePage({ params }: PrototypePageProps) {
   const { owner, slug } = await params
+
+  if (!isValidSegment(owner) || !isValidSegment(slug)) {
+    return (
+      <PrototypeNotFound owner={owner} slug={slug} reason="missing-entry" />
+    )
+  }
 
   const hasEntry = await entryExists({ owner, slug })
   if (!hasEntry) {
