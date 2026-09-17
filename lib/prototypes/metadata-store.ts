@@ -1,4 +1,5 @@
 import { MetadataEntry, MetadataFile } from "@/types/meatadata"
+import { PrototypeKey } from "@/types/prototypes"
 import { readFile, writeFile } from "node:fs/promises"
 import path from "node:path"
 
@@ -19,4 +20,15 @@ export async function getAllEntries(): Promise<MetadataEntry[]> {
   const data = await readMetadataFile()
 
   return data.entries
+}
+
+export async function entryExists({
+  owner,
+  slug,
+}: PrototypeKey): Promise<boolean> {
+  const entries = await getAllEntries()
+  return entries.some(
+    (entry) =>
+      entry.kind === "prototype" && entry.owner === owner && entry.slug === slug
+  )
 }
