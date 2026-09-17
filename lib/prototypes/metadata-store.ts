@@ -14,3 +14,9 @@ async function readMetadataFile(): Promise<MetadataFile> {
 async function writeMetadataFile(entries: MetadataEntry[]) {
   await writeFile(metadataPath, JSON.stringify({ entries }, null, 2), "utf-8")
 }
+
+export async function getAllEntries(): Promise<MetadataEntry[]> {
+  const data = await readMetadataFile()
+
+  return data.entries
+}
