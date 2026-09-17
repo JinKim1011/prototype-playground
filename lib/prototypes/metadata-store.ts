@@ -53,7 +53,7 @@ export async function removeEntry({
       )
   )
 
-  if (entries.length === next.length) false
+  if (entries.length === next.length) return false
 
   await saveMetadataDocument(next)
 
