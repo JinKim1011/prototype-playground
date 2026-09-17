@@ -1,4 +1,4 @@
-import { PrototypeKey } from "@/types/prototypes"
+import type { PrototypeKey } from "@/types/prototypes"
 import { readFile } from "node:fs/promises"
 import path from "node:path"
 
