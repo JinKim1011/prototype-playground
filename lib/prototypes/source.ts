@@ -9,7 +9,6 @@ export async function readPrototypeSource({
 }: PrototypeKey): Promise<string> {
   const filePath = path.join(
     process.cwd(),
-    "src",
     "prototypes",
     owner,
     slug,
