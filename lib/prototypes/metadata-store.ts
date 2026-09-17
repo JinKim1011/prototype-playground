@@ -12,7 +12,7 @@ async function readMetadataFile(): Promise<MetadataFile> {
   return data
 }
 
-async function writeMetadataFile(entries: MetadataEntry[]) {
+async function saveMetadataDocument(entries: MetadataEntry[]) {
   await writeFile(metadataPath, JSON.stringify({ entries }, null, 2), "utf-8")
 }
 
@@ -36,5 +36,5 @@ export async function entryExists({
 export async function addEntry(entry: MetadataEntry) {
   const entries = await getAllEntries()
   entries.push(entry)
-  await writeMetadataFile(entries)
+  await saveMetadataDocument(entries)
 }
