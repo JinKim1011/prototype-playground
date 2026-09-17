@@ -64,17 +64,86 @@ The generated registry is never edited manually.
 
 ## Customizing the Design System
 
-The playground uses standard shadcn components installed into the repository. To adapt it to your team:
+The repository has two component layers:
 
-1. Replace or extend components under `src/components/ui/`.
+- `components/platform/` contains the components used to build the playground application.
+- `components/prototypes/` contains the components available to prototype authors and consumers.
 
-2. Update semantic CSS variables in `src/app/globals.css`.
+The default shadcn destination is `components/platform/ui`, configured by the
+`ui` alias in `components.json`:
 
-3. Update the agent rules so agents know which components and tokens to use.
+```json
+"ui": "@/components/platform/ui"
+```
 
-4. Keep prototype pages independent from product-specific shared state.
+To add a standard shadcn component for the playground, run:
 
-No private registry, access token, or internal design-system package is required.
+```bash
+pnpm dlx shadcn@latest add button
+```
+
+Prototype UI components use a separate destination. Add them explicitly with
+the CLI `--path` option:
+
+```bash
+pnpm dlx shadcn@latest add button \
+	--path components/prototypes
+```
+
+Consumers can customize or remove files in `components/prototypes` without
+changing the playground shell or its platform components. Prototype code should
+import from this layer, while the playground itself should import from
+`components/platform/ui`.
+
+### Installing a Namespaced Registry
+
+To use your team's customized shadcn components for prototypes:
+
+1. Configure the team's registry if it is not already available through the shadcn registry index:
+
+```bash
+pnpm dlx shadcn@latest registry add \
+	@team=https://registry.example.com/r/{name}.json
+```
+
+2. Inspect the registry item before installing it:
+
+```bash
+pnpm dlx shadcn@latest view @team/design-system
+```
+
+3. Install it into the prototype component directory:
+
+```bash
+pnpm dlx shadcn@latest add @team/design-system \
+	--path components/prototypes
+```
+
+The registry item is copied into the repository as local source code. Consumers
+can now customize or remove the installed files in `components/prototypes`.
+Prototype code should import from that directory, while playground code should
+continue using `components/platform/ui`.
+
+If the team registry requires project configuration instead of the `registry
+add` command, add its URL template under `registries` in `components.json`:
+
+```json
+"registries": {
+	"@team": "https://registry.example.com/r/{name}.json"
+}
+```
+
+Replace the example URL with the team's actual registry URL. Review the output
+of `view` before installation because a registry item can include dependencies,
+CSS variables, and files beyond the component itself.
+
+See the official shadcn documentation for [namespaced registries](https://ui.shadcn.com/docs/registry/namespace),
+[registry setup](https://ui.shadcn.com/docs/registry/getting-started), and the
+[CLI](https://ui.shadcn.com/docs/cli).
+
+Update semantic CSS variables in `app/globals.css` when changing the shared
+visual language. Keep prototype pages independent from product-specific shared
+state.
 
 ## Background
 
