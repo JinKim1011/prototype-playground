@@ -2,6 +2,7 @@ import type { PrototypeKey } from "@/types/prototypes"
 import { loadPrototypeModuleWithRetry } from "@/lib/prototypes/loader"
 import { PrototypeNotFound } from "@/components/platform/shell/prototype-not-found"
 import { entryExists } from "@/lib/prototypes/metadata-store"
+import { prototypeSourceExists } from "@/lib/prototypes/source"
 
 type PrototypePageProps = {
   params: Promise<PrototypeKey>
@@ -14,6 +15,12 @@ export default async function PrototypePage({ params }: PrototypePageProps) {
   if (!hasEntry) {
     return (
       <PrototypeNotFound owner={owner} slug={slug} reason="missing-entry" />
+    )
+  }
+
+  if (!(await prototypeSourceExists({ owner, slug }))) {
+    return (
+      <PrototypeNotFound owner={owner} slug={slug} reason="missing-files" />
     )
   }
 
