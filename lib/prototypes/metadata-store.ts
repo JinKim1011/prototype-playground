@@ -1,5 +1,5 @@
-import { MetadataEntry, MetadataFile } from "@/types/meatadata"
-import { PrototypeKey } from "@/types/prototypes"
+import type { MetadataEntry, MetadataFile } from "@/types/meatadata"
+import type { PrototypeKey } from "@/types/prototypes"
 import { readFile, writeFile } from "node:fs/promises"
 import path from "node:path"
 
