@@ -2,7 +2,7 @@
 
 A shared Next.js playground for creating, browsing, previewing, and sharing UI prototypes.
 
-Each prototype is stored as source code under `src/prototypes/` and receives a permanent URL at `/{owner}/{slug}`. Templates can be previewed before being copied into a new prototype. This is a clean reubild based on the default shadcn/ui component model. The repository is designed so teams can replace the generated components and semantic tokens with their own design system.
+Each prototype is stored as source code under `prototypes/` and receives a permanent URL at `/{owner}/{slug}`. Templates can be previewed before being copied into a new prototype. This is a clean rebuild based on the default shadcn/ui component model. The repository is designed so teams can replace the generated components and semantic tokens with their own design system.
 
 - Next.js
 - TypeScript
@@ -43,24 +43,27 @@ Set your display name, owner slug, and prototype directory in the copied file. T
 
 A prototype consists of:
 
-- A metadata entry in `src/data/metadata.json`.
-- A page at `src/prototypes/{owner}/{slug}/page.tsx`.
-- A generated entry in `src/prototypes/registry.ts`.
+- A metadata entry in `data/metadata.json`.
+- A page at `prototypes/{owner}/{slug}/page.tsx`.
+- A generated entry in `prototypes/registry.ts`.
 
 The composite `{owner}:{slug}` identifier connects the metadata entry, URL, and directory on disk.
 
-Templates live under `src/app/templates/{slug}/page.tsx`. The same source is used for template previews and copied into new prototypes.
+Templates live under `app/templates/{slug}/page.tsx`. The same source is used for template previews and copied into new prototypes.
 
 The generated registry is never edited manually.
 
 ## Project Structure
 
-- `src/app/` — routes, layouts, and API handlers.
-- `src/components/ui/` — default shadcn components.
-- `src/data/` — metadata and public configuration.
-- `src/lib/playground/` — metadata, templates, and file operations.
-- `src/prototypes/` — standalone prototype source files.
-- `.cursor/rules/` — shared agent instructions.
+- `app/` — routes and layouts.
+- `components/platform/` — components used to build the playground itself.
+- `components/platform/shell/` — playground shell and platform-level layout components.
+- `components/platform/ui/` — shadcn components used by the playground.
+- `components/prototypes/` — shadcn components supplied to prototype authors and consumers.
+- `data/` — metadata and public configuration.
+- `lib/` — shared utilities and playground logic.
+- `prototypes/` — standalone prototype source files and the generated registry.
+- `.cursor/rules/` = shared agent instructions.
 
 ## Customizing the Design System
 
