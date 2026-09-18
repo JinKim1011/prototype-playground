@@ -1,5 +1,5 @@
 import type { PrototypeKey } from "@/types/prototypes"
-import { Button } from "@/components/platform/ui/button"
+import { Button, buttonVariants } from "@/components/platform/ui/button"
 import { Typography } from "@/components/platform/ui/typography"
 import Link from "next/link"
 
@@ -30,9 +30,10 @@ export function PrototypeNotFound({
       <Typography as="h2" variant="body" className="max-w-md">
         {message} {owner}/{slug}
       </Typography>
-      <Button>
-        <Link href="/prototypes">Back to prototypes</Link>
-      </Button>
+
+      <Link href="/prototypes" className={buttonVariants()}>
+        Back to prototypes
+      </Link>
     </div>
   )
 }
