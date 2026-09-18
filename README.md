@@ -2,7 +2,7 @@
 
 A shared Next.js playground for creating, browsing, previewing, and sharing UI prototypes.
 
-Each prototype is stored as source code under `src/prototypes/` and receives a permanent URL at `/{owner}/{slug}`. Templates can be previewed before being copied into a new prototype. This is a clean reubild based on the default shadcn/ui component model. The repository is designed so teams can replace the generated components and semantic tokens with their own design system.
+Each prototype is stored as source code under `prototypes/` and receives a permanent URL at `/{owner}/{slug}`. Templates can be previewed before being copied into a new prototype. This is a clean rebuild based on the default shadcn/ui component model. The repository is designed so teams can replace the generated components and semantic tokens with their own design system.
 
 - Next.js
 - TypeScript
@@ -43,38 +43,71 @@ Set your display name, owner slug, and prototype directory in the copied file. T
 
 A prototype consists of:
 
-- A metadata entry in `src/data/metadata.json`.
-- A page at `src/prototypes/{owner}/{slug}/page.tsx`.
-- A generated entry in `src/prototypes/registry.ts`.
+- A metadata entry in `data/metadata.json`.
+- A page at `prototypes/{owner}/{slug}/page.tsx`.
+- A generated entry in `prototypes/registry.ts`.
 
 The composite `{owner}:{slug}` identifier connects the metadata entry, URL, and directory on disk.
 
-Templates live under `src/app/templates/{slug}/page.tsx`. The same source is used for template previews and copied into new prototypes.
+Templates live under `app/templates/{slug}/page.tsx`. The same source is used for template previews and copied into new prototypes.
 
 The generated registry is never edited manually.
 
 ## Project Structure
 
-- `src/app/` — routes, layouts, and API handlers.
-- `src/components/ui/` — default shadcn components.
-- `src/data/` — metadata and public configuration.
-- `src/lib/playground/` — metadata, templates, and file operations.
-- `src/prototypes/` — standalone prototype source files.
-- `.cursor/rules/` — shared agent instructions.
+- `app/` — routes and layouts.
+- `components/platform/` — components used to build the playground itself.
+- `components/platform/shell/` — playground shell and platform-level layout components.
+- `components/platform/ui/` — shadcn components used by the playground.
+- `components/prototypes/` — shadcn components supplied to prototype authors and consumers.
+- `data/` — metadata and public configuration.
+- `lib/` — shared utilities and playground logic.
+- `prototypes/` — standalone prototype source files and the generated registry.
+- `.cursor/rules/` - shared agent instructions.
 
 ## Customizing the Design System
 
-The playground uses standard shadcn components installed into the repository. To adapt it to your team:
+The repository has two component layers:
 
-1. Replace or extend components under `src/components/ui/`.
+- `components/platform/` contains the components used to build the playground application.
+- `components/prototypes/` contains the components available to prototype authors and consumers.
 
-2. Update semantic CSS variables in `src/app/globals.css`.
+Playground components use the default `components/platform/ui` destination:
 
-3. Update the agent rules so agents know which components and tokens to use.
+```bash
+pnpm dlx shadcn@latest add button
+```
 
-4. Keep prototype pages independent from product-specific shared state.
+Add prototype components explicitly to `components/prototypes`:
 
-No private registry, access token, or internal design-system package is required.
+```bash
+pnpm dlx shadcn@latest add button \
+  --path components/prototypes
+```
+
+Prototype code should import from `components/prototypes`. Playground code
+should import from `components/platform/ui`.
+
+### Installing a Namespaced Registry
+
+Install your team's registry components into components/prototypes:
+
+```bash
+pnpm dlx shadcn@latest registry add \
+  @team=https://registry.example.com/r/{name}.json
+
+pnpm dlx shadcn@latest add @team/design-system \
+  --path components/prototypes
+```
+
+Inspect registry items with:
+
+```bash
+pnpm dlx shadcn@latest view @team/design-system
+```
+
+If required, configure the registry in `components.json` under `registries`.
+Keep shared design tokens in `app/globals.css`.
 
 ## Background
 
