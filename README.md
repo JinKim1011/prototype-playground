@@ -63,7 +63,7 @@ The generated registry is never edited manually.
 - `data/` — metadata and public configuration.
 - `lib/` — shared utilities and playground logic.
 - `prototypes/` — standalone prototype source files and the generated registry.
-- `.cursor/rules/` = shared agent instructions.
+- `.cursor/rules/` - shared agent instructions.
 
 ## Customizing the Design System
 
