@@ -5,9 +5,14 @@ import type {
   TemplatesFile,
 } from "@/types/templates"
 
-const catalog = templatesFile as TemplatesFile
+export const DEFAULT_TEMPLATE_KEY = "blank"
 
-export const DEFAULT_TEMPLATE_KEY: TemplateKey = "blank"
+const templatePath = path.join(process.cwd(), "data", "templates.json")
+
+export async function readTemplateCatalog(): Promise<TemplatesFile> {
+  const json = await readFile(templatePath, "utf-8")
+  return JSON.parse(json) as TemplatesFile
+}
 
 export function getTemplates(): TemplateEntry[] {
   return catalog.templates
