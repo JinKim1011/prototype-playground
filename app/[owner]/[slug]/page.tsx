@@ -37,11 +37,6 @@ export default async function PrototypePage({ params }: PrototypePageProps) {
   }
 
   const Component = await loadPrototypeModuleWithRetry({ owner, slug })
-  if (!Component) {
-    return (
-      <PrototypeNotFound owner={owner} slug={slug} reason="missing-files" />
-    )
-  }
 
   return <Component />
 }
