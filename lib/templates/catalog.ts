@@ -19,7 +19,9 @@ export async function getTemplates(): Promise<TemplateEntry[]> {
   return catalog.templates
 }
 
-export function getTemplate(key: TemplateKey): TemplateEntry {
+export async function getTemplate(key: string): Promise<TemplateEntry> {
+  const catalog = await readTemplateCatalog()
+
   const template = catalog.templates.find((template) => template.key === key)
 
   if (!template) {
