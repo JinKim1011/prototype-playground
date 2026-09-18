@@ -14,7 +14,8 @@ export async function readTemplateCatalog(): Promise<TemplatesFile> {
   return JSON.parse(json) as TemplatesFile
 }
 
-export function getTemplates(): TemplateEntry[] {
+export async function getTemplates(): Promise<TemplateEntry[]> {
+  const catalog = await readTemplateCatalog()
   return catalog.templates
 }
 
