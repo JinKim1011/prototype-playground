@@ -1,6 +1,6 @@
 import { writeFile } from "node:fs/promises"
 import path from "node:path"
-import { getAllEntries } from "@/lib/prototypes/metadata-store"
+import { getAllEntries } from "@/lib/metadata/store"
 
 const registryPath = path.join(process.cwd(), "prototypes", "registry.ts")
 
