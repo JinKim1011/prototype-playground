@@ -2,9 +2,9 @@ import path from "node:path"
 import { readFile } from "node:fs/promises"
 import type { TemplateEntry, TemplatesFile } from "@/types/templates"
 
-export const DEFAULT_TEMPLATE_KEY = "blank"
+export const DEFAULT_TEMPLATE_KEY = "blank" // application policy not a type definition
 
-const templatePath = path.join(process.cwd(), "data", "templates.json")
+const templatePath = path.join(process.cwd(), "data", "templates.json") // keep the JSON catalog as the single source
 
 export async function readTemplateCatalog(): Promise<TemplatesFile> {
   const json = await readFile(templatePath, "utf-8")
