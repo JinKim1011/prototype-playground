@@ -1,6 +1,5 @@
 import type { PrototypeKey } from "@/types/prototypes"
-import { access } from "node:fs/promises"
-import { readFile } from "node:fs/promises"
+import { access, readFile } from "node:fs/promises"
 import path from "node:path"
 
 export async function readPrototypeSource({
