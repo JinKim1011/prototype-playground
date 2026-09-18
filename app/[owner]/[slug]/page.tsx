@@ -3,6 +3,7 @@ import { loadPrototypeModuleWithRetry } from "@/lib/prototypes/loader"
 import { PrototypeNotFound } from "@/components/platform/shell/prototype-not-found"
 import { entryExists } from "@/lib/metadata/store"
 import { prototypeSourceExists } from "@/lib/prototypes/source"
+import { isValidPrototypeKey } from "@/lib/prototypes/validate"
 
 type PrototypePageProps = {
   params: Promise<PrototypeKey>
@@ -17,7 +18,7 @@ function isValidSegment(value: string): boolean {
 export default async function PrototypePage({ params }: PrototypePageProps) {
   const { owner, slug } = await params
 
-  if (!isValidSegment(owner) || !isValidSegment(slug)) {
+  if (!isValidPrototypeKey({ owner, slug })) {
     return (
       <PrototypeNotFound owner={owner} slug={slug} reason="missing-entry" />
     )
