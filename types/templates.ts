@@ -9,3 +9,7 @@ export type TemplateEntry = {
   createdAt: string
   updatedAt: string
 }
+
+export type TemplatesFile = {
+  templates: TemplateEntry[]
+}
