@@ -2,7 +2,7 @@ import { writeFile } from "node:fs/promises"
 import path from "node:path"
 import { getAllEntries } from "./metadata-store"
 
-const registryPath = path.join(process.cwd(), "prototypes/registry.ts")
+const registryPath = path.join(process.cwd(), "prototypes", "registry.ts")
 
 export async function generatePrototypeRegistry(): Promise<void> {
   const entries = await getAllEntries()
