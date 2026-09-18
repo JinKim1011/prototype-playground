@@ -9,8 +9,7 @@ import { cp } from "node:fs/promises"
 import { generatePrototypeRegistry } from "@/lib/prototypes/registry"
 
 export class CreatePrototypeError extends Error {
-  readonly code:
-    "DUPLICATE_SLUG" | "INVALID_SEGMENT" | "INVALID_INPUT" | "UNKNOWN_ERROR"
+  readonly code: "DUPLICATE_SLUG" | "INVALID_SEGMENT" | "INVALID_INPUT"
 
   constructor(code: CreatePrototypeError["code"], message?: string) {
     super(message ?? code)
