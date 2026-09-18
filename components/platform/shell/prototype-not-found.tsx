@@ -10,7 +10,7 @@ type PrototypeNotFoundProps = PrototypeKey & {
 }
 
 const messages: Record<PrototypeNotFoundReason, string> = {
-  "missing-entry": "No prototype exists at this:",
+  "missing-entry": "No prototype exists at:",
   "missing-files":
     "This prototype is listed in metadata, but its page file is missing. Remove the metadata entry or recreate the prototype.",
 }
