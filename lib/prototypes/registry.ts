@@ -16,7 +16,7 @@ export async function generatePrototypeRegistry(): Promise<void> {
     .join("\n")
 
   const mapLines = prototypes
-    .map((entry, index) => `"${entry.owner}:${entry.slug}": P${index}`)
+    .map((entry, index) => `"${entry.owner}:${entry.slug}": P${index},`)
     .join("\n")
 
   const content =
