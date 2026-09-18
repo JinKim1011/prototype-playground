@@ -1,9 +1,6 @@
-import templatesFile from "@/data/templates.json"
-import type {
-  TemplateKey,
-  TemplateEntry,
-  TemplatesFile,
-} from "@/types/templates"
+import path from "node:path"
+import { readFile } from "node:fs/promises"
+import type { TemplateEntry, TemplatesFile } from "@/types/templates"
 
 export const DEFAULT_TEMPLATE_KEY = "blank"
 
