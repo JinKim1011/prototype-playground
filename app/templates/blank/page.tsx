@@ -1,7 +1,7 @@
 "use client"
 
 import { usePathname } from "next/navigation"
-import { toast } from "sonner"
+import { toast } from "@/components/prototypes/sonner"
 import { Button } from "@/components/prototypes/button"
 import { Typography } from "@/components/prototypes/typography"
 import { openInEditor } from "./lib/openInEditor"
