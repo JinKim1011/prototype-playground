@@ -5,7 +5,7 @@ import { getTemplateDirectory } from "./path"
 import { cp } from "node:fs/promises"
 
 export class CreateTemplateError extends Error {
-  readonly code: "INVALID_INPUT" | "DUPLICATE_SLUG"
+  readonly code: "INVALID_INPUT" | "DUPLICATE_SLUG" | "SOURCE_NOT_FOUND"
 
   constructor(code: CreateTemplateError["code"], message?: string) {
     super(message ?? code)
@@ -46,11 +46,18 @@ export async function createTemplate(
   const sourceDirectory = getTemplateDirectory("blank")
   const destinationDirectory = getTemplateDirectory(slug)
 
-  await cp(sourceDirectory, destinationDirectory, {
-    recursive: true,
-    force: false,
-    errorOnExist: true,
-  })
+  try {
+    await cp(sourceDirectory, destinationDirectory, {
+      recursive: true,
+      force: false,
+      errorOnExist: true,
+    })
+  } catch {
+    throw new CreateTemplateError(
+      "SOURCE_NOT_FOUND",
+      "The Blank template could not be copied"
+    )
+  }
 
   const now = new Date().toISOString()
 
