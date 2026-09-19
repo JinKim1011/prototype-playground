@@ -1,10 +1,9 @@
-import { NextResponse } from "next/server"
+import { createTemplate, CreateTemplateError } from "@/lib/templates/create"
 import { revalidatePath } from "next/cache"
-import { createPrototype, CreatePrototypeError } from "@/lib/prototypes/create"
+import { NextResponse } from "next/server"
 
-const createPrototypeStatus: Record<CreatePrototypeError["code"], number> = {
+const createTemplateStatus: Record<CreateTemplateError["code"], number> = {
   DUPLICATE_SLUG: 409,
-  INVALID_SEGMENT: 400,
   INVALID_INPUT: 400,
 }
 
@@ -18,17 +17,17 @@ export async function POST(request: Request) {
 
   try {
     const input = await request.json()
-    const entry = await createPrototype(input)
+    const entry = await createTemplate(input)
 
-    revalidatePath(`/${entry.owner}/${entry.slug}`)
-    revalidatePath("/prototypes")
+    revalidatePath("/templates")
+    revalidatePath(`/templates/${entry.slug}`)
 
     return NextResponse.json(entry, { status: 201 })
   } catch (error) {
-    if (error instanceof CreatePrototypeError) {
+    if (error instanceof CreateTemplateError) {
       return NextResponse.json(
         { error: error.message },
-        { status: createPrototypeStatus[error.code] }
+        { status: createTemplateStatus[error.code] }
       )
     }
 

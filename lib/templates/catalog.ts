@@ -1,5 +1,5 @@
 import path from "node:path"
-import { readFile } from "node:fs/promises"
+import { readFile, writeFile } from "node:fs/promises"
 import type { TemplateEntry, TemplatesFile } from "@/types/templates"
 
 export const DEFAULT_TEMPLATE_KEY = "blank" // application policy not a type definition
@@ -9,6 +9,12 @@ const templatePath = path.join(process.cwd(), "data", "templates.json") // keep 
 export async function readTemplateCatalog(): Promise<TemplatesFile> {
   const json = await readFile(templatePath, "utf-8")
   return JSON.parse(json) as TemplatesFile
+}
+
+export async function writeTemplateCatalog(
+  catalog: TemplatesFile
+): Promise<void> {
+  await writeFile(templatePath, JSON.stringify(catalog, null, 2), "utf-8")
 }
 
 export async function getTemplates(): Promise<TemplateEntry[]> {

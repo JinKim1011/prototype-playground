@@ -2,7 +2,7 @@
   "templates": [
     {
       "key": "blank",
-      "label": "Blank",
+      "title": "Blank",
       "slug": "blank",
       "owner": "system",
       "description": "A blank starting point for a new prototype.",
