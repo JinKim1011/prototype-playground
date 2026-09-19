@@ -7,6 +7,7 @@ import { DEFAULT_TEMPLATE_KEY, getTemplate } from "@/lib/templates/catalog"
 import { prototypeDirectory } from "@/lib/prototypes/path"
 import { cp, rm } from "node:fs/promises"
 import { generatePrototypeRegistry } from "@/lib/prototypes/registry"
+import { slugify } from "@/lib/utils"
 
 export class CreatePrototypeError extends Error {
   readonly code: "DUPLICATE_SLUG" | "INVALID_SEGMENT" | "INVALID_INPUT"
@@ -21,12 +22,25 @@ export class CreatePrototypeError extends Error {
 export async function createPrototype(
   input: CreatePrototypeInput
 ): Promise<MetadataEntry> {
-  const owner = assertSegment(input.owner, "owner")
-  const slug = assertSegment(input.slug, "slug")
   const title = input.title.trim()
-
   if (!title) {
     throw new CreatePrototypeError("INVALID_INPUT", "Title is required")
+  }
+
+  const owner = slugify(input.owner)
+  if (!owner) {
+    throw new CreatePrototypeError(
+      "INVALID_INPUT",
+      "Owner must contain at least one letter or number"
+    )
+  }
+
+  const slug = slugify(title)
+  if (!slug) {
+    throw new CreatePrototypeError(
+      "INVALID_INPUT",
+      "Title must contain at least one letter or number"
+    )
   }
 
   if (await entryExists({ owner, slug })) {
