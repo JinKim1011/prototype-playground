@@ -8,6 +8,10 @@ export async function createTemplate(
   input: CreateTemplateInput
 ): Promise<TemplateEntry> {
   const title = input.title.trim()
+  if (!title) {
+    throw new CreateTemplateError("INVALID_INPUT", "Title is required")
+  }
+
   const slug = slugify(title)
   const key = slug
   const catalog = await readTemplateCatalog()
