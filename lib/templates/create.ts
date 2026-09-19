@@ -3,6 +3,7 @@ import { slugify } from "../utils"
 import { readTemplateCatalog, writeTemplateCatalog } from "./catalog"
 import { getTemplateDirectory } from "./path"
 import { cp, rm } from "node:fs/promises"
+import { copyDirectoryAtomically } from "@/lib/fs/atomic-copy-directory"
 
 export class CreateTemplateError extends Error {
   readonly code: "INVALID_INPUT" | "DUPLICATE_SLUG"
@@ -58,20 +59,21 @@ export async function createTemplate(
     description: input.description?.trim() ?? "",
   }
 
+  let destinationOwned = false
+
   try {
-    await cp(sourceDirectory, destinationDirectory, {
-      recursive: true,
-      force: false,
-      errorOnExist: true,
-    })
+    await copyDirectoryAtomically(sourceDirectory, destinationDirectory)
+    destinationOwned = true
 
     catalog.templates.push(entry)
     await writeTemplateCatalog(catalog)
   } catch (error) {
-    await rm(destinationDirectory, {
-      recursive: true,
-      force: true,
-    })
+    if (destinationOwned) {
+      await rm(destinationDirectory, {
+        recursive: true,
+        force: true,
+      })
+    }
 
     throw error
   }
