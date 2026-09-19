@@ -1,11 +1,11 @@
 import { MetadataEntry } from "@/types/metadata"
 import { CreatePrototypeInput } from "@/types/prototypes"
 import { assertSegment } from "@/lib/prototypes/validate"
-import { addEntry, entryExists } from "@/lib/metadata/store"
+import { addEntry, entryExists, removeEntry } from "@/lib/metadata/store"
 import { getTemplateDirectory } from "@/lib/templates/files"
 import { DEFAULT_TEMPLATE_KEY, getTemplate } from "@/lib/templates/catalog"
 import { prototypeDirectory } from "@/lib/prototypes/path"
-import { cp } from "node:fs/promises"
+import { cp, rm } from "node:fs/promises"
 import { generatePrototypeRegistry } from "@/lib/prototypes/registry"
 
 export class CreatePrototypeError extends Error {
@@ -42,12 +42,6 @@ export async function createPrototype(
   const templateDirectory = getTemplateDirectory(template.slug)
   const destinationDirectory = prototypeDirectory({ owner, slug })
 
-  await cp(templateDirectory, destinationDirectory, {
-    recursive: true,
-    force: false,
-    errorOnExist: true,
-  })
-
   const now = new Date().toISOString()
 
   const entry: MetadataEntry = {
@@ -62,8 +56,27 @@ export async function createPrototype(
     templateKey,
   }
 
-  await addEntry(entry)
-  await generatePrototypeRegistry()
+  try {
+    await cp(templateDirectory, destinationDirectory, {
+      recursive: true,
+      force: false,
+      errorOnExist: true,
+    })
+
+    await addEntry(entry)
+
+    await generatePrototypeRegistry()
+  } catch (error) {
+    await removeEntry({ owner, slug }).catch(() => {})
+
+    await generatePrototypeRegistry().catch(() => {})
+
+    await rm(destinationDirectory, { recursive: true, force: true }).catch(
+      () => {}
+    )
+
+    throw error
+  }
 
   return entry
 }
