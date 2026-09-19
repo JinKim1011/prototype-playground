@@ -9,13 +9,3 @@ export function isValidateSegment(value: string): boolean {
 export function isValidPrototypeKey({ owner, slug }: PrototypeKey): boolean {
   return isValidateSegment(owner) && isValidateSegment(slug)
 }
-
-export function assertSegment(value: string, label: "owner" | "slug"): string {
-  const normalizedValue = value.trim()
-
-  if (!isValidateSegment(normalizedValue)) {
-    throw new Error(`${label} is invalid`)
-  }
-
-  return normalizedValue
-}
