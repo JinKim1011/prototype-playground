@@ -1,3 +1,5 @@
+export type DEFAULT_TEMPLATE_KEY = "blank"
+
 export type TemplateEntry = {
   key: string
   label: string
@@ -6,4 +8,8 @@ export type TemplateEntry = {
   description: string
   createdAt: string
   updatedAt: string
+}
+
+export type TemplatesFile = {
+  templates: TemplateEntry[]
 }

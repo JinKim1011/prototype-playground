@@ -1,21 +1,12 @@
 import type { PrototypeKey } from "@/types/prototypes"
-import { access } from "node:fs/promises"
-import { readFile } from "node:fs/promises"
-import path from "node:path"
+import { access, readFile } from "node:fs/promises"
+import { prototypePage } from "@/lib/prototypes/path"
 
 export async function readPrototypeSource({
   owner,
   slug,
 }: PrototypeKey): Promise<string> {
-  const filePath = path.join(
-    process.cwd(),
-    "prototypes",
-    owner,
-    slug,
-    "page.tsx"
-  )
-
-  return readFile(filePath, "utf-8")
+  return readFile(prototypePage({ owner, slug }), "utf-8")
 }
 
 export async function prototypeSourceExists({
@@ -23,9 +14,7 @@ export async function prototypeSourceExists({
   slug,
 }: PrototypeKey): Promise<boolean> {
   try {
-    await access(
-      path.join(process.cwd(), "prototypes", owner, slug, "page.tsx")
-    )
+    await access(prototypePage({ owner, slug }))
     return true
   } catch {
     return false
