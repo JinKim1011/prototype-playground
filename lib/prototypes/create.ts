@@ -32,7 +32,7 @@ export async function createPrototype(
   if (await entryExists({ owner, slug })) {
     throw new CreatePrototypeError(
       "DUPLICATE_SLUG",
-      "Prototype with this owner and title already exists"
+      "Prototype with this owner and title already exist"
     )
   }
 
