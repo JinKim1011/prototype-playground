@@ -1,6 +1,8 @@
 export type DEFAULT_TEMPLATE_KEY = "blank"
 
-export type TemplateEntry = CreateTemplateInput & {
+export type TemplateEntry = {
+  title: string
+  description: string
   key: string
   slug: string
   owner: string
@@ -14,5 +16,5 @@ export type TemplatesFile = {
 
 export type CreateTemplateInput = {
   title: string
-  description: string
+  description?: string
 }
