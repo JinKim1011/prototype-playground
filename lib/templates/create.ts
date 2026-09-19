@@ -71,8 +71,23 @@ export async function createTemplate(
     description: input.description?.trim() ?? "",
   }
 
-  catalog.templates.push(entry)
-  await writeTemplateCatalog(catalog)
+  try {
+    await cp(sourceDirectory, destinationDirectory, {
+      recursive: true,
+      force: false,
+      errorOnExist: true,
+    })
+
+    catalog.templates.push(entry)
+    await writeTemplateCatalog(catalog)
+  } catch (error) {
+    await rm(destinationDirectory, {
+      recursive: true,
+      force: true,
+    })
+
+    throw error
+  }
 
   return entry
 }
