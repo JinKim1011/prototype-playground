@@ -4,6 +4,16 @@ import { readTemplateCatalog, writeTemplateCatalog } from "./catalog"
 import { getTemplateDirectory } from "./path"
 import { cp } from "node:fs/promises"
 
+export class CreateTemplateError extends Error {
+  readonly code: "INVALID_INPUT"
+
+  constructor(code: CreateTemplateError["code"], message?: string) {
+    super(message ?? code)
+    this.name = "CreateTemplateError"
+    this.code = code
+  }
+}
+
 export async function createTemplate(
   input: CreateTemplateInput
 ): Promise<TemplateEntry> {
