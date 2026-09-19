@@ -7,6 +7,13 @@ import { promisify } from "node:util"
 const execFileAsync = promisify(execFile)
 
 export async function POST(request: Request) {
+  if (process.env.NODE_ENV !== "development") {
+    return NextResponse.json(
+      { error: "Not available in production" },
+      { status: 403 }
+    )
+  }
+
   try {
     const input = (await request.json()) as { pathname: string }
 
