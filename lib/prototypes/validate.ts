@@ -11,11 +11,11 @@ export function isValidPrototypeKey({ owner, slug }: PrototypeKey): boolean {
 }
 
 export function assertSegment(value: string, label: "owner" | "slug"): string {
-  const normalizedVlaue = value.trim()
+  const normalizedValue = value.trim()
 
-  if (!isValidateSegment(normalizedVlaue)) {
+  if (!isValidateSegment(normalizedValue)) {
     throw new Error(`${label} is invalid`)
   }
 
-  return normalizedVlaue
+  return normalizedValue
 }
