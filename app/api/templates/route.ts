@@ -1,4 +1,5 @@
 import { createTemplate, CreateTemplateError } from "@/lib/templates/create"
+import { revalidatePath } from "next/cache"
 import { NextResponse } from "next/server"
 
 const createTemplateStatus: Record<CreateTemplateError["code"], number> = {
@@ -10,6 +11,9 @@ export async function POST(request: Request) {
   try {
     const input = await request.json()
     const entry = await createTemplate(input)
+
+    revalidatePath("/templates")
+    revalidatePath(`/templates/${entry.slug}`)
 
     return NextResponse.json(entry, { status: 201 })
   } catch (error) {
