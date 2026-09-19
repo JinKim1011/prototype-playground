@@ -13,6 +13,13 @@ export async function createTemplate(
   }
 
   const slug = slugify(title)
+  if (!slug) {
+    throw new CreateTemplateError(
+      "INVALID_INPUT",
+      "Title must contain at least one letter or number"
+    )
+  }
+
   const key = slug
   const catalog = await readTemplateCatalog()
 
