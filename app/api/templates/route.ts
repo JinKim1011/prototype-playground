@@ -8,6 +8,13 @@ const createTemplateStatus: Record<CreateTemplateError["code"], number> = {
 }
 
 export async function POST(request: Request) {
+  if (process.env.NODE_ENV !== "development") {
+    return NextResponse.json(
+      { error: "Not available in production" },
+      { status: 403 }
+    )
+  }
+
   try {
     const input = await request.json()
     const entry = await createTemplate(input)
