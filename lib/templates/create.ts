@@ -32,17 +32,6 @@ export async function createTemplate(
   }
 
   const key = slug
-  const catalog = await readTemplateCatalog()
-
-  const alreadyExist = catalog.templates.some(
-    (template) => template.slug === slug
-  )
-  if (alreadyExist) {
-    throw new CreateTemplateError(
-      "DUPLICATE_SLUG",
-      "A template with this title already exists"
-    )
-  }
 
   const sourceDirectory = getTemplateDirectory("blank")
   const destinationDirectory = getTemplateDirectory(slug)
@@ -65,8 +54,23 @@ export async function createTemplate(
     await copyDirectoryAtomically(sourceDirectory, destinationDirectory)
     destinationOwned = true
 
-    catalog.templates.push(entry)
-    await writeTemplateCatalog(catalog)
+    await updateTemplateCatalog((catalog) => {
+      const alreadyExists = catalog.templates.some(
+        (template) => template.slug === slug
+      )
+
+      if (alreadyExists) {
+        throw new CreateTemplateError(
+          "DUPLICATE_SLUG",
+          "A template with this title already exists"
+        )
+      }
+
+      return {
+        ...catalog,
+        templates: [...catalog.templates, entry],
+      }
+    })
   } catch (error) {
     if (destinationOwned) {
       await rm(destinationDirectory, {
