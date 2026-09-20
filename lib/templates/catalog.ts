@@ -34,3 +34,27 @@ export async function getTemplate(key: string): Promise<TemplateEntry> {
 
   return template
 }
+
+let catalogUpdateQueue = Promise.resolve()
+
+export async function updateTemplateCatalog(
+  update: (create: TemplatesFile) => TemplatesFile
+): Promise<void> {
+  const previousUpdate = catalogUpdateQueue
+  let release!: () => void
+
+  catalogUpdateQueue = new Promise<void>((resolve) => {
+    release = resolve
+  })
+
+  await previousUpdate
+
+  try {
+    const catalog = await readTemplateCatalog()
+    const updatedCatalog = update(catalog)
+
+    await writeTemplateCatalog(updatedCatalog)
+  } finally {
+    release()
+  }
+}
