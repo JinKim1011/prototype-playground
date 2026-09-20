@@ -1,8 +1,8 @@
 import { CreateTemplateInput, TemplateEntry } from "@/types/templates"
 import { slugify } from "../utils"
-import { readTemplateCatalog, writeTemplateCatalog } from "./catalog"
+import { updateTemplateCatalog } from "@/lib/templates/catalog"
 import { getTemplateDirectory } from "./path"
-import { cp, rm } from "node:fs/promises"
+import { rm } from "node:fs/promises"
 import { copyDirectoryAtomically } from "@/lib/fs/atomic-copy-directory"
 
 export class CreateTemplateError extends Error {
