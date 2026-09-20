@@ -64,15 +64,15 @@ export async function createPrototype(
   }
 
   let destinationOwned = false
-  let metatdataOwnded = false
+  let metadataOwned = false
 
   try {
     await copyDirectoryAtomically(templateDirectory, destinationDirectory)
     destinationOwned = true
 
-    metatdataOwnded = await addEntryIfAvailable(entry)
+    metadataOwned = await addEntryIfAvailable(entry)
 
-    if (!metatdataOwnded) {
+    if (!metadataOwned) {
       throw new CreatePrototypeError(
         "DUPLICATE_SLUG",
         "Prototype with this owner and title already exists"
@@ -81,7 +81,7 @@ export async function createPrototype(
 
     await generatePrototypeRegistry()
   } catch (error) {
-    if (metatdataOwnded) {
+    if (metadataOwned) {
       await removeEntry({ owner, slug }).catch(() => {})
       await generatePrototypeRegistry().catch(() => {})
     }
