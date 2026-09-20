@@ -18,7 +18,8 @@ export class CreateTemplateError extends Error {
 export async function createTemplate(
   input: CreateTemplateInput
 ): Promise<TemplateEntry> {
-  const title = input.title.trim()
+  const title = typeof input?.title === "string" ? input.title.trim() : ""
+
   if (!title) {
     throw new CreateTemplateError("INVALID_INPUT", "Title is required")
   }
