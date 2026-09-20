@@ -1,4 +1,3 @@
-import { writeFile } from "node:fs/promises"
 import path from "node:path"
 import { getAllEntries } from "@/lib/metadata/store"
 import { writeFileAtomically } from "@/lib/fs/atomic-write"
