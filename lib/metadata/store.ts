@@ -60,3 +60,27 @@ export async function removeEntry({
 
   return true
 }
+
+let metadataUpdateQueue = Promise.resolve()
+
+export async function updateMetadata(
+  update: (create: MetadataFile) => MetadataFile
+): Promise<void> {
+  const previousUpdate = metadataUpdateQueue
+  let release!: () => void
+
+  metadataUpdateQueue = new Promise<void>((resolve) => {
+    release = resolve
+  })
+
+  await previousUpdate
+
+  try {
+    const metadata = await readMetadataFile()
+    const updatedMetadata = update(metadata)
+
+    await saveMetadataDocument(updatedMetadata.entries)
+  } finally {
+    release()
+  }
+}
