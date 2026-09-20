@@ -1,6 +1,6 @@
 import { MetadataEntry } from "@/types/metadata"
 import { CreatePrototypeInput } from "@/types/prototypes"
-import { addEntry, entryExists, removeEntry } from "@/lib/metadata/store"
+import { addEntryIfAvailable, removeEntry } from "@/lib/metadata/store"
 import { getTemplateDirectory } from "@/lib/templates/path"
 import { DEFAULT_TEMPLATE_KEY, getTemplate } from "@/lib/templates/catalog"
 import { prototypeDirectory } from "@/lib/prototypes/path"
@@ -64,16 +64,27 @@ export async function createPrototype(
   }
 
   let destinationOwned = false
+  let metatdataOwnded = false
 
   try {
     await copyDirectoryAtomically(templateDirectory, destinationDirectory)
     destinationOwned = true
 
+    metatdataOwnded = await addEntryIfAvailable(entry)
+
+    if (!metatdataOwnded) {
+      throw new CreatePrototypeError(
+        "DUPLICATE_SLUG",
+        "Prototype with this owner and title already exists"
+      )
+    }
+
     await generatePrototypeRegistry()
   } catch (error) {
-    await removeEntry({ owner, slug }).catch(() => {})
-
-    await generatePrototypeRegistry().catch(() => {})
+    if (metatdataOwnded) {
+      await removeEntry({ owner, slug }).catch(() => {})
+      await generatePrototypeRegistry().catch(() => {})
+    }
 
     if (destinationOwned) {
       await rm(destinationDirectory, { recursive: true, force: true }).catch(
