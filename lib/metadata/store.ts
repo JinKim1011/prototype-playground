@@ -91,3 +91,30 @@ export async function updateMetadata(
     release()
   }
 }
+
+export async function addEntryIfAvailable(
+  entry: MetadataEntry
+): Promise<boolean> {
+  let added = false
+
+  await updateMetadata((metadata) => {
+    const exists = metadata.entries.some(
+      (currentEntry) =>
+        currentEntry.kind === "prototype" &&
+        currentEntry.owner === entry.owner &&
+        currentEntry.slug === entry.slug
+    )
+
+    if (exists) {
+      return metadata
+    }
+
+    added = true
+
+    return {
+      ...metadata,
+      entries: [...metadata.entries, entry],
+    }
+  })
+  return added
+}
