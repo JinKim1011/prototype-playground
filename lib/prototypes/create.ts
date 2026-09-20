@@ -4,7 +4,7 @@ import { addEntry, entryExists, removeEntry } from "@/lib/metadata/store"
 import { getTemplateDirectory } from "@/lib/templates/path"
 import { DEFAULT_TEMPLATE_KEY, getTemplate } from "@/lib/templates/catalog"
 import { prototypeDirectory } from "@/lib/prototypes/path"
-import { cp, rm } from "node:fs/promises"
+import { rm } from "node:fs/promises"
 import { generatePrototypeRegistry } from "@/lib/prototypes/registry"
 import { slugify } from "@/lib/utils"
 import { copyDirectoryAtomically } from "@/lib/fs/atomic-copy-directory"
@@ -43,13 +43,6 @@ export async function createPrototype(
     )
   }
 
-  if (await entryExists({ owner, slug })) {
-    throw new CreatePrototypeError(
-      "DUPLICATE_SLUG",
-      "Prototype with this owner and title already exist"
-    )
-  }
-
   const templateKey = input.fromTemplateKey ?? DEFAULT_TEMPLATE_KEY
 
   const template = await getTemplate(templateKey)
@@ -75,8 +68,6 @@ export async function createPrototype(
   try {
     await copyDirectoryAtomically(templateDirectory, destinationDirectory)
     destinationOwned = true
-
-    await addEntry(entry)
 
     await generatePrototypeRegistry()
   } catch (error) {
