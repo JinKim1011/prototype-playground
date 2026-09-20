@@ -45,21 +45,27 @@ export async function removeEntry({
   owner,
   slug,
 }: PrototypeKey): Promise<boolean> {
-  const entries = await getAllEntries()
-  const next = entries.filter(
-    (entry) =>
-      !(
-        entry.kind === "prototype" &&
-        entry.owner === owner &&
-        entry.slug === slug
-      )
-  )
+  let removed = false
 
-  if (entries.length === next.length) return false
+  await updateMetadata((metadata) => {
+    const entries = metadata.entries.filter(
+      (entry) =>
+        !(
+          entry.kind === "prototype" &&
+          entry.owner === owner &&
+          entry.slug === slug
+        )
+    )
 
-  await saveMetadataDocument(next)
+    removed = entries.length !== metadata.entries.length
 
-  return true
+    return {
+      ...metadata,
+      entries,
+    }
+  })
+
+  return removed
 }
 
 let metadataUpdateQueue = Promise.resolve()
