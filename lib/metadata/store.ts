@@ -34,10 +34,11 @@ export async function entryExists({
   )
 }
 
-export async function addEntry(entry: MetadataEntry) {
-  const entries = await getAllEntries()
-  entries.push(entry)
-  await saveMetadataDocument(entries)
+export async function addEntry(entry: MetadataEntry): Promise<void> {
+  await updateMetadata((metadata) => ({
+    ...metadata,
+    entries: [...metadata.entries, entry],
+  }))
 }
 
 export async function removeEntry({
