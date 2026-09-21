@@ -10,6 +10,7 @@ import {
   prepareDirectoryCopy,
   DirectoryTransaction,
 } from "@/lib/fs/atomic-copy-directory"
+import { withKeyedLock } from "@/lib/fs/keyed-lock"
 
 export class CreatePrototypeError extends Error {
   readonly code: "DUPLICATE_SLUG" | "INVALID_SEGMENT" | "INVALID_INPUT"
@@ -65,37 +66,39 @@ export async function createPrototype(
     templateKey,
   }
 
-  let transaction: DirectoryTransaction | undefined
-  let metadataOwned = false
+  return withKeyedLock("prototype-publication", async () => {
+    let transaction: DirectoryTransaction | undefined
+    let metadataOwned = false
 
-  try {
-    metadataOwned = await addEntryIfAvailable(entry)
+    try {
+      metadataOwned = await addEntryIfAvailable(entry)
 
-    if (!metadataOwned) {
-      throw new CreatePrototypeError(
-        "DUPLICATE_SLUG",
-        "Prototype with this owner and title already exists"
+      if (!metadataOwned) {
+        throw new CreatePrototypeError(
+          "DUPLICATE_SLUG",
+          "Prototype with this owner and title already exists"
+        )
+      }
+
+      transaction = await prepareDirectoryCopy(
+        templateDirectory,
+        destinationDirectory
       )
+
+      await generatePrototypeRegistry()
+
+      await transaction.commit()
+    } catch (error) {
+      await transaction?.rollback().catch(() => {})
+
+      if (metadataOwned) {
+        await removeEntry({ owner, slug }).catch(() => {})
+        await generatePrototypeRegistry().catch(() => {})
+      }
+
+      throw error
     }
 
-    transaction = await prepareDirectoryCopy(
-      templateDirectory,
-      destinationDirectory
-    )
-
-    await generatePrototypeRegistry()
-
-    await transaction.commit()
-  } catch (error) {
-    await transaction?.rollback().catch(() => {})
-
-    if (metadataOwned) {
-      await removeEntry({ owner, slug }).catch(() => {})
-      await generatePrototypeRegistry().catch(() => {})
-    }
-
-    throw error
-  }
-
-  return entry
+    return entry
+  })
 }
