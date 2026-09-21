@@ -69,11 +69,6 @@ export async function createPrototype(
   let metadataOwned = false
 
   try {
-    transaction = await prepareDirectoryCopy(
-      templateDirectory,
-      destinationDirectory
-    )
-
     metadataOwned = await addEntryIfAvailable(entry)
 
     if (!metadataOwned) {
@@ -82,6 +77,11 @@ export async function createPrototype(
         "Prototype with this owner and title already exists"
       )
     }
+
+    transaction = await prepareDirectoryCopy(
+      templateDirectory,
+      destinationDirectory
+    )
 
     await generatePrototypeRegistry()
 
