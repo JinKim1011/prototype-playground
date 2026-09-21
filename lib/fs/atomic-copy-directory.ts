@@ -12,6 +12,12 @@ export async function copyDirectoryAtomically(
     parentDirectory,
     `.${name}.${randomUUID()}.tmp`
   )
+  const backupDirectory = path.join(
+    parentDirectory,
+    `.${name}.${randomUUID}.backup`
+  )
+
+  let destinationBackedUp = false
 
   try {
     await cp(sourceDirectory, stagingDirectory, {
@@ -20,12 +26,25 @@ export async function copyDirectoryAtomically(
       errorOnExist: true,
     })
 
+    try {
+      await rename(destinationDirectory, backupDirectory)
+      destinationBackedUp = true
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
+        throw error
+      }
+    }
+
     await rename(stagingDirectory, destinationDirectory)
   } catch (error) {
     await rm(stagingDirectory, {
       recursive: true,
       force: true,
     }).catch(() => {})
+
+    if (destinationBackedUp) {
+      await rename(backupDirectory, destinationDirectory).catch(() => {})
+    }
 
     throw error
   }
