@@ -2,10 +2,14 @@ import { randomUUID } from "node:crypto"
 import { cp, rename, rm } from "node:fs/promises"
 import path from "node:path"
 
+type DirectoryTransaction = {
+  commit(): Promise<void>
+}
+
 export async function copyDirectoryAtomically(
   sourceDirectory: string,
   destinationDirectory: string
-): Promise<void> {
+): Promise<DirectoryTransaction> {
   const parentDirectory = path.dirname(destinationDirectory)
   const name = path.basename(destinationDirectory)
   const stagingDirectory = path.join(
@@ -36,6 +40,14 @@ export async function copyDirectoryAtomically(
     }
 
     await rename(stagingDirectory, destinationDirectory)
+
+    return {
+      async commit() {
+        if (destinationBackedUp) {
+          await rm(backupDirectory, { recursive: true, force: true })
+        }
+      },
+    }
   } catch (error) {
     await rm(stagingDirectory, {
       recursive: true,
