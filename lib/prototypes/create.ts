@@ -1,12 +1,16 @@
 import { MetadataEntry } from "@/types/metadata"
 import { CreatePrototypeInput } from "@/types/prototypes"
-import { assertSegment } from "@/lib/prototypes/validate"
-import { addEntry, entryExists, removeEntry } from "@/lib/metadata/store"
-import { getTemplateDirectory } from "@/lib/templates/files"
+import { addEntryIfAvailable, removeEntry } from "@/lib/metadata/store"
+import { getTemplateDirectory } from "@/lib/templates/path"
 import { DEFAULT_TEMPLATE_KEY, getTemplate } from "@/lib/templates/catalog"
 import { prototypeDirectory } from "@/lib/prototypes/path"
-import { cp, rm } from "node:fs/promises"
 import { generatePrototypeRegistry } from "@/lib/prototypes/registry"
+import { slugify } from "@/lib/utils"
+import {
+  prepareDirectoryCopy,
+  DirectoryTransaction,
+} from "@/lib/fs/atomic-copy-directory"
+import { withKeyedLock } from "@/lib/fs/keyed-lock"
 
 export class CreatePrototypeError extends Error {
   readonly code: "DUPLICATE_SLUG" | "INVALID_SEGMENT" | "INVALID_INPUT"
@@ -21,18 +25,24 @@ export class CreatePrototypeError extends Error {
 export async function createPrototype(
   input: CreatePrototypeInput
 ): Promise<MetadataEntry> {
-  const owner = assertSegment(input.owner, "owner")
-  const slug = assertSegment(input.slug, "slug")
   const title = input.title.trim()
-
   if (!title) {
     throw new CreatePrototypeError("INVALID_INPUT", "Title is required")
   }
 
-  if (await entryExists({ owner, slug })) {
+  const owner = slugify(input.owner)
+  if (!owner) {
     throw new CreatePrototypeError(
-      "DUPLICATE_SLUG",
-      "Prototype with this owner and title already exist"
+      "INVALID_INPUT",
+      "Owner must contain at least one letter or number"
+    )
+  }
+
+  const slug = slugify(title)
+  if (!slug) {
+    throw new CreatePrototypeError(
+      "INVALID_INPUT",
+      "Title must contain at least one letter or number"
     )
   }
 
@@ -56,27 +66,39 @@ export async function createPrototype(
     templateKey,
   }
 
-  try {
-    await cp(templateDirectory, destinationDirectory, {
-      recursive: true,
-      force: false,
-      errorOnExist: true,
-    })
+  return withKeyedLock("prototype-publication", async () => {
+    let transaction: DirectoryTransaction | undefined
+    let metadataOwned = false
 
-    await addEntry(entry)
+    try {
+      metadataOwned = await addEntryIfAvailable(entry)
 
-    await generatePrototypeRegistry()
-  } catch (error) {
-    await removeEntry({ owner, slug }).catch(() => {})
+      if (!metadataOwned) {
+        throw new CreatePrototypeError(
+          "DUPLICATE_SLUG",
+          "Prototype with this owner and title already exists"
+        )
+      }
 
-    await generatePrototypeRegistry().catch(() => {})
+      transaction = await prepareDirectoryCopy(
+        templateDirectory,
+        destinationDirectory
+      )
 
-    await rm(destinationDirectory, { recursive: true, force: true }).catch(
-      () => {}
-    )
+      await generatePrototypeRegistry()
 
-    throw error
-  }
+      await transaction.commit()
+    } catch (error) {
+      await transaction?.rollback().catch(() => {})
 
-  return entry
+      if (metadataOwned) {
+        await removeEntry({ owner, slug }).catch(() => {})
+        await generatePrototypeRegistry().catch(() => {})
+      }
+
+      throw error
+    }
+
+    return entry
+  })
 }

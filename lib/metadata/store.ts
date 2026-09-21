@@ -1,6 +1,7 @@
 import type { MetadataEntry, MetadataFile } from "@/types/metadata"
 import type { PrototypeKey } from "@/types/prototypes"
-import { readFile, writeFile } from "node:fs/promises"
+import { readFile } from "node:fs/promises"
+import { writeFileAtomically } from "@/lib/fs/atomic-write"
 import path from "node:path"
 
 const metadataPath = path.join(process.cwd(), "data/metadata.json")
@@ -13,7 +14,7 @@ async function readMetadataFile(): Promise<MetadataFile> {
 }
 
 async function saveMetadataDocument(entries: MetadataEntry[]) {
-  await writeFile(metadataPath, JSON.stringify({ entries }, null, 2), "utf-8")
+  await writeFileAtomically(metadataPath, JSON.stringify({ entries }, null, 2))
 }
 
 export async function getAllEntries(): Promise<MetadataEntry[]> {
@@ -33,29 +34,87 @@ export async function entryExists({
   )
 }
 
-export async function addEntry(entry: MetadataEntry) {
-  const entries = await getAllEntries()
-  entries.push(entry)
-  await saveMetadataDocument(entries)
+export async function addEntry(entry: MetadataEntry): Promise<void> {
+  await updateMetadata((metadata) => ({
+    ...metadata,
+    entries: [...metadata.entries, entry],
+  }))
 }
 
 export async function removeEntry({
   owner,
   slug,
 }: PrototypeKey): Promise<boolean> {
-  const entries = await getAllEntries()
-  const next = entries.filter(
-    (entry) =>
-      !(
-        entry.kind === "prototype" &&
-        entry.owner === owner &&
-        entry.slug === slug
-      )
-  )
+  let removed = false
 
-  if (entries.length === next.length) return false
+  await updateMetadata((metadata) => {
+    const entries = metadata.entries.filter(
+      (entry) =>
+        !(
+          entry.kind === "prototype" &&
+          entry.owner === owner &&
+          entry.slug === slug
+        )
+    )
 
-  await saveMetadataDocument(next)
+    removed = entries.length !== metadata.entries.length
 
-  return true
+    return {
+      ...metadata,
+      entries,
+    }
+  })
+
+  return removed
+}
+
+let metadataUpdateQueue = Promise.resolve()
+
+export async function updateMetadata(
+  update: (create: MetadataFile) => MetadataFile
+): Promise<void> {
+  const previousUpdate = metadataUpdateQueue
+  let release!: () => void
+
+  metadataUpdateQueue = new Promise<void>((resolve) => {
+    release = resolve
+  })
+
+  await previousUpdate
+
+  try {
+    const metadata = await readMetadataFile()
+    const updatedMetadata = update(metadata)
+
+    await saveMetadataDocument(updatedMetadata.entries)
+  } finally {
+    release()
+  }
+}
+
+export async function addEntryIfAvailable(
+  entry: MetadataEntry
+): Promise<boolean> {
+  let added = false
+
+  await updateMetadata((metadata) => {
+    const exists = metadata.entries.some(
+      (currentEntry) =>
+        currentEntry.kind === "prototype" &&
+        currentEntry.owner === entry.owner &&
+        currentEntry.slug === entry.slug
+    )
+
+    if (exists) {
+      return metadata
+    }
+
+    added = true
+
+    return {
+      ...metadata,
+      entries: [...metadata.entries, entry],
+    }
+  })
+  return added
 }

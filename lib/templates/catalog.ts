@@ -1,6 +1,7 @@
 import path from "node:path"
 import { readFile } from "node:fs/promises"
 import type { TemplateEntry, TemplatesFile } from "@/types/templates"
+import { writeFileAtomically } from "@/lib/fs/atomic-write"
 
 export const DEFAULT_TEMPLATE_KEY = "blank" // application policy not a type definition
 
@@ -9,6 +10,12 @@ const templatePath = path.join(process.cwd(), "data", "templates.json") // keep 
 export async function readTemplateCatalog(): Promise<TemplatesFile> {
   const json = await readFile(templatePath, "utf-8")
   return JSON.parse(json) as TemplatesFile
+}
+
+export async function writeTemplateCatalog(
+  catalog: TemplatesFile
+): Promise<void> {
+  await writeFileAtomically(templatePath, JSON.stringify(catalog, null, 2))
 }
 
 export async function getTemplates(): Promise<TemplateEntry[]> {
@@ -26,4 +33,28 @@ export async function getTemplate(key: string): Promise<TemplateEntry> {
   }
 
   return template
+}
+
+let catalogUpdateQueue = Promise.resolve()
+
+export async function updateTemplateCatalog(
+  update: (create: TemplatesFile) => TemplatesFile
+): Promise<void> {
+  const previousUpdate = catalogUpdateQueue
+  let release!: () => void
+
+  catalogUpdateQueue = new Promise<void>((resolve) => {
+    release = resolve
+  })
+
+  await previousUpdate
+
+  try {
+    const catalog = await readTemplateCatalog()
+    const updatedCatalog = update(catalog)
+
+    await writeTemplateCatalog(updatedCatalog)
+  } finally {
+    release()
+  }
 }
