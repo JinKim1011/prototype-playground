@@ -19,7 +19,7 @@ export async function copyDirectoryAtomically(
   )
   const backupDirectory = path.join(
     parentDirectory,
-    `.${name}.${randomUUID}.backup`
+    `.${name}.${randomUUID()}.backup`
   )
 
   let destinationBackedUp = false
@@ -42,6 +42,7 @@ export async function copyDirectoryAtomically(
     }
 
     await rename(stagingDirectory, destinationDirectory)
+    destinationInstalled = true
 
     return {
       async commit() {
