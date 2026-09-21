@@ -1,13 +1,11 @@
 import path from "node:path"
 import { getAllEntries } from "@/lib/metadata/store"
 import { writeFileAtomically } from "@/lib/fs/atomic-write"
+import type { MetadataEntry } from "@/types/metadata"
 
 const registryPath = path.join(process.cwd(), "prototypes", "registry.ts")
 
-export async function generatePrototypeRegistry(): Promise<void> {
-  const entries = await getAllEntries()
-  const prototypes = entries.filter((entry) => entry.kind === "prototype")
-
+function buildContent(prototypes: MetadataEntry[]) {
   const importLines = prototypes
     .map(
       (entry, index) =>
@@ -37,6 +35,15 @@ export async function generatePrototypeRegistry(): Promise<void> {
           mapLines,
           "};",
         ].join("\n")
+
+  return content
+}
+
+export async function generatePrototypeRegistry(): Promise<void> {
+  const entries = await getAllEntries()
+  const prototypes = entries.filter((entry) => entry.kind === "prototype")
+
+  const content = buildContent(prototypes)
 
   return writeFileAtomically(registryPath, content)
 }
