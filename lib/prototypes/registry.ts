@@ -5,6 +5,8 @@ import type { MetadataEntry } from "@/types/metadata"
 
 const registryPath = path.join(process.cwd(), "prototypes", "registry.ts")
 
+let registryGenerationQueue = Promise.resolve()
+
 function buildContent(prototypes: MetadataEntry[]) {
   const importLines = prototypes
     .map(
@@ -40,10 +42,17 @@ function buildContent(prototypes: MetadataEntry[]) {
 }
 
 export async function generatePrototypeRegistry(): Promise<void> {
-  const entries = await getAllEntries()
-  const prototypes = entries.filter((entry) => entry.kind === "prototype")
+  const generation = registryGenerationQueue.then(async () => {
+    const entries = await getAllEntries()
 
-  const content = buildContent(prototypes)
+    const prototypes = entries.filter((entry) => entry.kind === "prototype")
 
-  return writeFileAtomically(registryPath, content)
+    const content = buildContent(prototypes)
+
+    return writeFileAtomically(registryPath, content)
+  })
+
+  registryGenerationQueue = generation.catch(() => {})
+
+  return generation
 }
