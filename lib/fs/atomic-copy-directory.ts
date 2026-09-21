@@ -6,9 +6,11 @@ export async function copyDirectoryAtomically(
   sourceDirectory: string,
   destinationDirectory: string
 ): Promise<void> {
+  const parentDirectory = path.dirname(destinationDirectory)
+  const name = path.basename(destinationDirectory)
   const stagingDirectory = path.join(
-    path.dirname(destinationDirectory),
-    `.${path.basename(destinationDirectory)}.${randomUUID()}.tmp`
+    parentDirectory,
+    `.${name}.${randomUUID()}.tmp`
   )
 
   try {
