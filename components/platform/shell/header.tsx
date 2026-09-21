@@ -1,5 +1,6 @@
 import { Typography } from "@/components/platform/ui/typography"
 import { Button } from "@/components/platform/ui/button"
+import { CaretDownIcon } from "@phosphor-icons/react/dist/ssr"
 
 export function Header() {
   return (
@@ -7,7 +8,10 @@ export function Header() {
       <Typography as="h1" variant="heading-strong">
         Prototype Playground
       </Typography>
-      <Button>CREATE</Button>
+      <Button>
+        CREATE
+        <CaretDownIcon data-icon="inline-end" className="size-3" />
+      </Button>
     </header>
   )
 }
