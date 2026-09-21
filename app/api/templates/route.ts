@@ -16,7 +16,14 @@ export async function POST(request: Request) {
   }
 
   try {
-    const input = await request.json()
+    let input
+
+    try {
+      input = await request.json()
+    } catch {
+      return NextResponse.json({ error: "Invalid JSON" }, { status: 400 })
+    }
+
     const entry = await createTemplate(input)
 
     revalidatePath("/templates")
