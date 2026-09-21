@@ -4,6 +4,7 @@ import path from "node:path"
 
 type DirectoryTransaction = {
   commit(): Promise<void>
+  rollback(): Promise<void>
 }
 
 export async function copyDirectoryAtomically(
@@ -22,6 +23,7 @@ export async function copyDirectoryAtomically(
   )
 
   let destinationBackedUp = false
+  let destinationInstalled = false
 
   try {
     await cp(sourceDirectory, stagingDirectory, {
@@ -45,6 +47,18 @@ export async function copyDirectoryAtomically(
       async commit() {
         if (destinationBackedUp) {
           await rm(backupDirectory, { recursive: true, force: true })
+        }
+      },
+      async rollback() {
+        if (destinationInstalled) {
+          await rm(destinationDirectory, {
+            recursive: true,
+            force: true,
+          }).catch(() => {})
+        }
+
+        if (destinationBackedUp) {
+          await rename(backupDirectory, destinationDirectory)
         }
       },
     }
