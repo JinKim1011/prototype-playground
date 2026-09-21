@@ -4,7 +4,6 @@ import { addEntryIfAvailable, removeEntry } from "@/lib/metadata/store"
 import { getTemplateDirectory } from "@/lib/templates/path"
 import { DEFAULT_TEMPLATE_KEY, getTemplate } from "@/lib/templates/catalog"
 import { prototypeDirectory } from "@/lib/prototypes/path"
-import { rm } from "node:fs/promises"
 import { generatePrototypeRegistry } from "@/lib/prototypes/registry"
 import { slugify } from "@/lib/utils"
 import {
