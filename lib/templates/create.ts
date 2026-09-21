@@ -3,7 +3,10 @@ import { slugify } from "../utils"
 import { updateTemplateCatalog } from "@/lib/templates/catalog"
 import { getTemplateDirectory } from "./path"
 import { rm } from "node:fs/promises"
-import { copyDirectoryAtomically } from "@/lib/fs/atomic-copy-directory"
+import {
+  prepareDirectoryCopy,
+  DirectoryTransaction,
+} from "@/lib/fs/atomic-copy-directory"
 
 export class CreateTemplateError extends Error {
   readonly code: "INVALID_INPUT" | "DUPLICATE_SLUG"
@@ -51,9 +54,13 @@ export async function createTemplate(
 
   let destinationOwned = false
 
+  let transaction: DirectoryTransaction | undefined
+
   try {
-    await copyDirectoryAtomically(sourceDirectory, destinationDirectory)
-    destinationOwned = true
+    transaction = await prepareDirectoryCopy(
+      sourceDirectory,
+      destinationDirectory
+    )
 
     await updateTemplateCatalog((catalog) => {
       const alreadyExists = catalog.templates.some(
@@ -72,13 +79,10 @@ export async function createTemplate(
         templates: [...catalog.templates, entry],
       }
     })
+
+    await transaction.commit()
   } catch (error) {
-    if (destinationOwned) {
-      await rm(destinationDirectory, {
-        recursive: true,
-        force: true,
-      })
-    }
+    await transaction?.rollback().catch(() => {})
 
     throw error
   }
