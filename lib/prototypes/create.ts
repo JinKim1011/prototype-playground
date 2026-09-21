@@ -7,7 +7,10 @@ import { prototypeDirectory } from "@/lib/prototypes/path"
 import { rm } from "node:fs/promises"
 import { generatePrototypeRegistry } from "@/lib/prototypes/registry"
 import { slugify } from "@/lib/utils"
-import { copyDirectoryAtomically } from "@/lib/fs/atomic-copy-directory"
+import {
+  prepareDirectoryCopy,
+  DirectoryTransaction,
+} from "@/lib/fs/atomic-copy-directory"
 
 export class CreatePrototypeError extends Error {
   readonly code: "DUPLICATE_SLUG" | "INVALID_SEGMENT" | "INVALID_INPUT"
@@ -63,12 +66,14 @@ export async function createPrototype(
     templateKey,
   }
 
-  let destinationOwned = false
+  let transaction: DirectoryTransaction | undefined
   let metadataOwned = false
 
   try {
-    await copyDirectoryAtomically(templateDirectory, destinationDirectory)
-    destinationOwned = true
+    transaction = await prepareDirectoryCopy(
+      templateDirectory,
+      destinationDirectory
+    )
 
     metadataOwned = await addEntryIfAvailable(entry)
 
@@ -80,16 +85,14 @@ export async function createPrototype(
     }
 
     await generatePrototypeRegistry()
+
+    await transaction.commit()
   } catch (error) {
+    await transaction?.rollback().catch(() => {})
+
     if (metadataOwned) {
       await removeEntry({ owner, slug }).catch(() => {})
       await generatePrototypeRegistry().catch(() => {})
-    }
-
-    if (destinationOwned) {
-      await rm(destinationDirectory, { recursive: true, force: true }).catch(
-        () => {}
-      )
     }
 
     throw error
