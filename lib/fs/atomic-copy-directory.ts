@@ -2,12 +2,12 @@ import { randomUUID } from "node:crypto"
 import { cp, rename, rm } from "node:fs/promises"
 import path from "node:path"
 
-type DirectoryTransaction = {
+export type DirectoryTransaction = {
   commit(): Promise<void>
   rollback(): Promise<void>
 }
 
-export async function copyDirectoryAtomically(
+export async function prepareDirectoryCopy(
   sourceDirectory: string,
   destinationDirectory: string
 ): Promise<DirectoryTransaction> {
