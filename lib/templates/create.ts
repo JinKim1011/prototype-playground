@@ -51,8 +51,6 @@ export async function createTemplate(
     description: input.description?.trim() ?? "",
   }
 
-  let destinationOwned = false
-
   let transaction: DirectoryTransaction | undefined
 
   try {
