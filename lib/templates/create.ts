@@ -6,6 +6,7 @@ import {
   prepareDirectoryCopy,
   DirectoryTransaction,
 } from "@/lib/fs/atomic-copy-directory"
+import { withKeyedLock } from "@/lib/fs/keyed-lock"
 
 export class CreateTemplateError extends Error {
   readonly code: "INVALID_INPUT" | "DUPLICATE_SLUG"
@@ -51,38 +52,39 @@ export async function createTemplate(
     description: input.description?.trim() ?? "",
   }
 
-  let transaction: DirectoryTransaction | undefined
+  return withKeyedLock(destinationDirectory, async () => {
+    let transaction: DirectoryTransaction | undefined
 
-  try {
-    transaction = await prepareDirectoryCopy(
-      sourceDirectory,
-      destinationDirectory
-    )
-
-    await updateTemplateCatalog((catalog) => {
-      const alreadyExists = catalog.templates.some(
-        (template) => template.slug === slug
+    try {
+      transaction = await prepareDirectoryCopy(
+        sourceDirectory,
+        destinationDirectory
       )
 
-      if (alreadyExists) {
-        throw new CreateTemplateError(
-          "DUPLICATE_SLUG",
-          "A template with this title already exists"
+      await updateTemplateCatalog((catalog) => {
+        const alreadyExists = catalog.templates.some(
+          (template) => template.slug === slug
         )
-      }
 
-      return {
-        ...catalog,
-        templates: [...catalog.templates, entry],
-      }
-    })
+        if (alreadyExists) {
+          throw new CreateTemplateError(
+            "DUPLICATE_SLUG",
+            "A template with this title already exists"
+          )
+        }
 
-    await transaction.commit()
-  } catch (error) {
-    await transaction?.rollback().catch(() => {})
+        return {
+          ...catalog,
+          templates: [...catalog.templates, entry],
+        }
+      })
 
-    throw error
-  }
+      await transaction.commit()
+      return entry
+    } catch (error) {
+      await transaction?.rollback().catch(() => {})
 
-  return entry
+      throw error
+    }
+  })
 }
