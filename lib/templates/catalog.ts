@@ -23,13 +23,13 @@ export async function getTemplates(): Promise<TemplateEntry[]> {
   return catalog.templates
 }
 
-export async function getTemplate(key: string): Promise<TemplateEntry> {
+export async function getTemplate(id: string): Promise<TemplateEntry> {
   const catalog = await readTemplateCatalog()
 
-  const template = catalog.templates.find((template) => template.key === key)
+  const template = catalog.templates.find((template) => template.id === id)
 
   if (!template) {
-    throw new Error(`Template not found: ${key}`)
+    throw new Error(`Template not found: ${id}`)
   }
 
   return template
