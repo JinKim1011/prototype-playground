@@ -1,5 +1,5 @@
 import type { PrototypeKey } from "@/types/prototypes"
-import { Button, buttonVariants } from "@/components/platform/ui/button"
+import { buttonVariants } from "@/components/platform/ui/button"
 import { Typography } from "@/components/platform/ui/typography"
 import Link from "next/link"
 
