@@ -1,4 +1,4 @@
-import { MetadataEntry } from "@/types/metadata"
+import { PrototypeEntry } from "@/types/prototypes"
 import { CreatePrototypeInput } from "@/types/prototypes"
 import { addEntryIfAvailable, removeEntry } from "@/lib/prototypes/catalog"
 import { getTemplateDirectory } from "@/lib/templates/path"
@@ -24,7 +24,7 @@ export class CreatePrototypeError extends Error {
 
 export async function createPrototype(
   input: CreatePrototypeInput
-): Promise<MetadataEntry> {
+): Promise<PrototypeEntry> {
   const title = input.title.trim()
   if (!title) {
     throw new CreatePrototypeError("INVALID_INPUT", "Title is required")
@@ -54,7 +54,7 @@ export async function createPrototype(
 
   const now = new Date().toISOString()
 
-  const entry: MetadataEntry = {
+  const entry: PrototypeEntry = {
     id: `${owner}:${slug}`,
     owner,
     slug,
