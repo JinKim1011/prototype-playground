@@ -1,5 +1,3 @@
-export type DEFAULT_TEMPLATE_KEY = "blank"
-
 export type TemplateEntry = {
   id: string
   title: string
