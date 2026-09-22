@@ -1,5 +1,5 @@
 import path from "node:path"
-import { getAllEntries } from "@/lib/prototypes/catalog"
+import { getAllPrototypes } from "@/lib/prototypes/catalog"
 import { writeFileAtomically } from "@/lib/fs/atomic-write"
 import type { PrototypeEntry } from "@/types/prototypes"
 
@@ -43,7 +43,7 @@ function buildContent(prototypes: PrototypeEntry[]) {
 
 export async function generatePrototypeRegistry(): Promise<void> {
   const generation = registryGenerationQueue.then(async () => {
-    const entries = await getAllEntries()
+    const entries = await getAllPrototypes()
 
     const content = buildContent(entries)
 
