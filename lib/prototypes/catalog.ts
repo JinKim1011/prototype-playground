@@ -13,7 +13,7 @@ async function readPrototypesFile(): Promise<PrototypesFile> {
   return data
 }
 
-async function saveMetadataDocument(entries: PrototypeEntry[]) {
+async function savePrototypesDocument(entries: PrototypeEntry[]) {
   await writeFileAtomically(
     prototypesPath,
     JSON.stringify({ entries }, null, 2)
@@ -81,7 +81,7 @@ export async function updateMetadata(
     const metadata = await readPrototypesFile()
     const updatedMetadata = update(metadata)
 
-    await saveMetadataDocument(updatedMetadata.entries)
+    await savePrototypesDocument(updatedMetadata.entries)
   } finally {
     release()
   }
