@@ -35,7 +35,7 @@ export async function entryExists({
 }
 
 export async function addEntry(entry: PrototypeEntry): Promise<void> {
-  await updateMetadata((metadata) => ({
+  await updatePrototypes((metadata) => ({
     ...metadata,
     entries: [...metadata.entries, entry],
   }))
@@ -47,7 +47,7 @@ export async function removeEntry({
 }: PrototypeKey): Promise<boolean> {
   let removed = false
 
-  await updateMetadata((metadata) => {
+  await updatePrototypes((metadata) => {
     const entries = metadata.entries.filter(
       (entry) => !(entry.owner === owner && entry.slug === slug)
     )
@@ -65,7 +65,7 @@ export async function removeEntry({
 
 let metadataUpdateQueue = Promise.resolve()
 
-export async function updateMetadata(
+export async function updatePrototypes(
   update: (create: PrototypesFile) => PrototypesFile
 ): Promise<void> {
   const previousUpdate = metadataUpdateQueue
@@ -92,7 +92,7 @@ export async function addEntryIfAvailable(
 ): Promise<boolean> {
   let added = false
 
-  await updateMetadata((metadata) => {
+  await updatePrototypes((metadata) => {
     const exists = metadata.entries.some(
       (currentEntry) =>
         currentEntry.owner === entry.owner && currentEntry.slug === entry.slug
