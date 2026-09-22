@@ -58,7 +58,7 @@ export async function createPrototype(
   const now = new Date().toISOString()
 
   const entry: PrototypeEntry = {
-    id: `${owner}:${slug}`,
+    id: `prototype:${owner}:${slug}`,
     owner,
     slug,
     title,
