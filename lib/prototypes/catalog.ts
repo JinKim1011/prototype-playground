@@ -26,7 +26,7 @@ export async function getAllPrototypes(): Promise<PrototypeEntry[]> {
   return data.entries
 }
 
-export async function entryExists({
+export async function prototypeExists({
   owner,
   slug,
 }: PrototypeKey): Promise<boolean> {
