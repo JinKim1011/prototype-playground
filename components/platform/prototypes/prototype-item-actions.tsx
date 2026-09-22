@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/platform/ui/button"
 import { PencilSimpleLineIcon, TrashSimpleIcon } from "@phosphor-icons/react"
+import { toast } from "@/components/platform/ui/toaster"
 
 type Props = {
   owner: string
@@ -14,14 +15,24 @@ export function PrototypeItemActions({ owner, slug, title }: Props) {
   const router = useRouter()
 
   async function handleDelete() {
-    const response = await fetch("/api/prototypes", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ owner, slug }),
-    })
+    try {
+      const response = await fetch("/api/prototypes", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ owner, slug }),
+      })
 
-    if (response.ok) {
+      if (!response.ok) {
+        const result = await response.json().catch(() => null)
+
+        toast.error(result?.error ?? "Failed to delete prototype")
+        return
+      }
+
+      toast.success(`Deleted "${title}"`)
       router.refresh()
+    } catch {
+      toast.error("Unable to connect to the server")
     }
   }
 
