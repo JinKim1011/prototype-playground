@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises"
 import { writeFileAtomically } from "@/lib/fs/atomic-write"
 import path from "node:path"
 
-const prototypesPath = path.join(process.cwd(), "data/prototypes.json")
+const prototypesPath = path.join(process.cwd(), "data", "prototypes.json")
 
 async function readPrototypesFile(): Promise<PrototypesFile> {
   const json = await readFile(prototypesPath, "utf-8")
