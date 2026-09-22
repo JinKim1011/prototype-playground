@@ -1,6 +1,6 @@
 import { PrototypeEntry } from "@/types/prototypes"
 import { CreatePrototypeInput } from "@/types/prototypes"
-import { addEntryIfAvailable, removeEntry } from "@/lib/prototypes/catalog"
+import { addEntryIfAvailable, removePrototype } from "@/lib/prototypes/catalog"
 import { getTemplateDirectory } from "@/lib/templates/path"
 import { DEFAULT_TEMPLATE_ID, getTemplate } from "@/lib/templates/catalog"
 import { prototypeDirectory } from "@/lib/prototypes/path"
@@ -91,7 +91,7 @@ export async function createPrototype(
       await transaction?.rollback().catch(() => {})
 
       if (metadataOwned) {
-        await removeEntry({ owner, slug }).catch(() => {})
+        await removePrototype({ owner, slug }).catch(() => {})
         await generatePrototypeRegistry().catch(() => {})
       }
 
