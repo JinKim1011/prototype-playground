@@ -34,7 +34,7 @@ export async function prototypeExists({
   return entries.some((entry) => entry.owner === owner && entry.slug === slug)
 }
 
-export async function addEntry(entry: PrototypeEntry): Promise<void> {
+export async function addPrototype(entry: PrototypeEntry): Promise<void> {
   await updatePrototypes((metadata) => ({
     ...metadata,
     entries: [...metadata.entries, entry],
