@@ -4,15 +4,7 @@ import { ItemGroup } from "@/components/platform/ui/item"
 import { PrototypeItem } from "@/components/platform/prototypes/prototype-item"
 import { PrototypeToggleGroup } from "./prototype-toggle-group"
 import { useState } from "react"
-
-export type PrototypeListItem = {
-  id: string
-  owner: string
-  slug: string
-  title: string
-  updatedAt: string
-  previewPath?: string
-}
+import type { PrototypeListItem } from "@/types/prototypes"
 
 type Props = {
   prototypes: PrototypeListItem[]
