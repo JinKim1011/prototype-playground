@@ -5,7 +5,6 @@ export type TemplateEntry = {
   title: string
   description: string
   slug: string
-  owner: string
   createdAt: string
   updatedAt: string
 }
