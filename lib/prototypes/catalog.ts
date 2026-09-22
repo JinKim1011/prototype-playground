@@ -49,7 +49,7 @@ export async function removePrototype({
 
   await updatePrototypes((metadata) => {
     removedPrototype = metadata.entries.find(
-      (entry) => !(entry.owner === owner && entry.slug === slug)
+      (entry) => entry.owner === owner && entry.slug === slug
     )
 
     if (!removePrototype) {
