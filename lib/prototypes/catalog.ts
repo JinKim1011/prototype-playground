@@ -1,4 +1,4 @@
-import type { MetadataEntry, MetadataFile } from "@/types/metadata"
+import type { PrototypeEntry, PrototypesFile } from "@/types/prototypes"
 import type { PrototypeKey } from "@/types/prototypes"
 import { readFile } from "node:fs/promises"
 import { writeFileAtomically } from "@/lib/fs/atomic-write"
@@ -6,19 +6,19 @@ import path from "node:path"
 
 const metadataPath = path.join(process.cwd(), "data/metadata.json")
 
-async function readMetadataFile(): Promise<MetadataFile> {
+async function readPrototypesFile(): Promise<PrototypesFile> {
   const json = await readFile(metadataPath, "utf-8")
-  const data = JSON.parse(json) as MetadataFile
+  const data = JSON.parse(json) as PrototypesFile
 
   return data
 }
 
-async function saveMetadataDocument(entries: MetadataEntry[]) {
+async function saveMetadataDocument(entries: PrototypeEntry[]) {
   await writeFileAtomically(metadataPath, JSON.stringify({ entries }, null, 2))
 }
 
-export async function getAllEntries(): Promise<MetadataEntry[]> {
-  const data = await readMetadataFile()
+export async function getAllEntries(): Promise<PrototypeEntry[]> {
+  const data = await readPrototypesFile()
 
   return data.entries
 }
@@ -31,7 +31,7 @@ export async function entryExists({
   return entries.some((entry) => entry.owner === owner && entry.slug === slug)
 }
 
-export async function addEntry(entry: MetadataEntry): Promise<void> {
+export async function addEntry(entry: PrototypeEntry): Promise<void> {
   await updateMetadata((metadata) => ({
     ...metadata,
     entries: [...metadata.entries, entry],
@@ -63,7 +63,7 @@ export async function removeEntry({
 let metadataUpdateQueue = Promise.resolve()
 
 export async function updateMetadata(
-  update: (create: MetadataFile) => MetadataFile
+  update: (create: PrototypesFile) => PrototypesFile
 ): Promise<void> {
   const previousUpdate = metadataUpdateQueue
   let release!: () => void
@@ -75,7 +75,7 @@ export async function updateMetadata(
   await previousUpdate
 
   try {
-    const metadata = await readMetadataFile()
+    const metadata = await readPrototypesFile()
     const updatedMetadata = update(metadata)
 
     await saveMetadataDocument(updatedMetadata.entries)
@@ -85,7 +85,7 @@ export async function updateMetadata(
 }
 
 export async function addEntryIfAvailable(
-  entry: MetadataEntry
+  entry: PrototypeEntry
 ): Promise<boolean> {
   let added = false
 
