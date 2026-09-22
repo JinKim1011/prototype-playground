@@ -6,5 +6,5 @@ export type PrototypeKey = {
 export type CreatePrototypeInput = Pick<PrototypeKey, "owner"> & {
   title: string
   description?: string
-  fromTemplateKey?: string
+  fromTemplateId?: string
 }
