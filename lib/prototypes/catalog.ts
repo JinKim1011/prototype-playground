@@ -20,7 +20,7 @@ async function savePrototypesDocument(entries: PrototypeEntry[]) {
   )
 }
 
-export async function getAllEntries(): Promise<PrototypeEntry[]> {
+export async function getAllPrototypes(): Promise<PrototypeEntry[]> {
   const data = await readPrototypesFile()
 
   return data.entries
@@ -30,7 +30,7 @@ export async function entryExists({
   owner,
   slug,
 }: PrototypeKey): Promise<boolean> {
-  const entries = await getAllEntries()
+  const entries = await getAllPrototypes()
   return entries.some((entry) => entry.owner === owner && entry.slug === slug)
 }
 
