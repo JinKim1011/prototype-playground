@@ -43,7 +43,7 @@ Set your display name, owner slug, and prototype directory in the copied file. T
 
 A prototype consists of:
 
-- A metadata entry in `data/metadata.json`.
+- A prototype entry in `data/prototypes.json`.
 - A page at `prototypes/{owner}/{slug}/page.tsx`.
 - A generated entry in `prototypes/registry.ts`.
 
@@ -60,7 +60,7 @@ The generated registry is never edited manually.
 - `components/platform/shell/` — playground shell and platform-level layout components.
 - `components/platform/ui/` — shadcn components used by the playground.
 - `components/prototypes/` — shadcn components supplied to prototype authors and consumers.
-- `data/` — metadata and public configuration.
+- `data/` — prototype and template catalogs.
 - `lib/` — shared utilities and playground logic.
 - `prototypes/` — standalone prototype source files and the generated registry.
 - `.cursor/rules/` - shared agent instructions.
