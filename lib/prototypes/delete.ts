@@ -17,7 +17,7 @@ export class DeletePrototypeError extends Error {
   readonly code: "INVALID_KEY" | "NOT_FOUND"
 
   constructor(code: DeletePrototypeError["code"], message: string) {
-    super(message)
+    super(message ?? code)
     this.name = "DeletePrototypeError"
     this.code = code
   }
