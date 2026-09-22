@@ -4,17 +4,20 @@ import { readFile } from "node:fs/promises"
 import { writeFileAtomically } from "@/lib/fs/atomic-write"
 import path from "node:path"
 
-const metadataPath = path.join(process.cwd(), "data/metadata.json")
+const prototypesPath = path.join(process.cwd(), "data/prototypes.json")
 
 async function readPrototypesFile(): Promise<PrototypesFile> {
-  const json = await readFile(metadataPath, "utf-8")
+  const json = await readFile(prototypesPath, "utf-8")
   const data = JSON.parse(json) as PrototypesFile
 
   return data
 }
 
 async function saveMetadataDocument(entries: PrototypeEntry[]) {
-  await writeFileAtomically(metadataPath, JSON.stringify({ entries }, null, 2))
+  await writeFileAtomically(
+    prototypesPath,
+    JSON.stringify({ entries }, null, 2)
+  )
 }
 
 export async function getAllEntries(): Promise<PrototypeEntry[]> {
