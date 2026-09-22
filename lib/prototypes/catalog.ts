@@ -63,15 +63,15 @@ export async function removeEntry({
   return removed
 }
 
-let metadataUpdateQueue = Promise.resolve()
+let prototypesUpdateQueue = Promise.resolve()
 
 export async function updatePrototypes(
   update: (create: PrototypesFile) => PrototypesFile
 ): Promise<void> {
-  const previousUpdate = metadataUpdateQueue
+  const previousUpdate = prototypesUpdateQueue
   let release!: () => void
 
-  metadataUpdateQueue = new Promise<void>((resolve) => {
+  prototypesUpdateQueue = new Promise<void>((resolve) => {
     release = resolve
   })
 
