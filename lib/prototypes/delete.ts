@@ -28,9 +28,13 @@ export async function deletePrototype({
   slug,
 }: PrototypeKey): Promise<void> {
   await withKeyedLock("prototype-publication", async () => {
-    const exists = await prototypeExists({ owner, slug })
+    const entries = await getAllPrototypes()
+    const entry = entries.find(
+      (currentPrototype) =>
+        currentPrototype.owner === owner && currentPrototype.slug === slug
+    )
 
-    if (!exists) {
+    if (!entry) {
       throw new DeletePrototypeError("NOT_FOUND", "Prototype not found")
     }
 
