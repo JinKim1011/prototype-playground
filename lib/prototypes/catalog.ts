@@ -59,7 +59,7 @@ export async function removePrototype({
     return {
       ...metadata,
       entries: metadata.entries.filter(
-        (prototype) => !(prototype.owner === owner && prototype.slug === slug)
+        (entry) => !(entry.owner === owner && entry.slug === slug)
       ),
     }
   })
