@@ -1,7 +1,4 @@
-export type RegistryKind = "prototype" | "template"
-
 export type MetadataEntry = {
-  kind: RegistryKind
   id: string
   owner: string
   slug: string
