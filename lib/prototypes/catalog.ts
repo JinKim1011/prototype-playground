@@ -41,7 +41,7 @@ export async function addPrototype(entry: PrototypeEntry): Promise<void> {
   }))
 }
 
-export async function removeEntry({
+export async function removePrototype({
   owner,
   slug,
 }: PrototypeKey): Promise<boolean> {
