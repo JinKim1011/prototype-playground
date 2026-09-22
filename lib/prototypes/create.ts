@@ -2,7 +2,7 @@ import { MetadataEntry } from "@/types/metadata"
 import { CreatePrototypeInput } from "@/types/prototypes"
 import { addEntryIfAvailable, removeEntry } from "@/lib/metadata/store"
 import { getTemplateDirectory } from "@/lib/templates/path"
-import { DEFAULT_TEMPLATE_KEY, getTemplate } from "@/lib/templates/catalog"
+import { DEFAULT_TEMPLATE_ID, getTemplate } from "@/lib/templates/catalog"
 import { prototypeDirectory } from "@/lib/prototypes/path"
 import { generatePrototypeRegistry } from "@/lib/prototypes/registry"
 import { slugify } from "@/lib/utils"
@@ -46,9 +46,9 @@ export async function createPrototype(
     )
   }
 
-  const templateKey = input.fromTemplateKey ?? DEFAULT_TEMPLATE_KEY
+  const templateId = input.fromTemplateId ?? DEFAULT_TEMPLATE_ID
 
-  const template = await getTemplate(templateKey)
+  const template = await getTemplate(templateId)
   const templateDirectory = getTemplateDirectory(template.slug)
   const destinationDirectory = prototypeDirectory({ owner, slug })
 
