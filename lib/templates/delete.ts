@@ -1,4 +1,3 @@
-import { TemplateEntry } from "@/types/templates"
 import { withKeyedLock } from "../fs/keyed-lock"
 import { getTemplateDirectory } from "./path"
 import {
@@ -6,6 +5,7 @@ import {
   prepareDirectoryRemoval,
 } from "../fs/atomic-remove-directory"
 import { getTemplates, removeTemplate, updateTemplateCatalog } from "./catalog"
+import { slugify } from "../utils"
 
 export class DeleteTemplateError extends Error {
   readonly code: "NOT_FOUND" | "INVALID_SLUG"
@@ -18,6 +18,17 @@ export class DeleteTemplateError extends Error {
 }
 
 export async function deleteTemplate(slug: string): Promise<void> {
+  const normalizedSlug = typeof slug === "string" ? slugify(slug) : ""
+
+  if (!normalizedSlug || normalizedSlug !== slug || slug === "blank") {
+    throw new DeleteTemplateError(
+      "INVALID_SLUG",
+      slug === "blank"
+        ? "Blank tempalte cannot be deleted"
+        : "Invalid template slug"
+    )
+  }
+
   await withKeyedLock(getTemplateDirectory(slug), async () => {
     const catalog = await getTemplates()
     const template = catalog.find(
