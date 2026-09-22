@@ -9,7 +9,7 @@ export type MetadataEntry = {
   description: string
   createdAt: string
   updatedAt: string
-  templateKey?: string | null
+  templateId?: string | null
 }
 
 export type MetadataFile = {
