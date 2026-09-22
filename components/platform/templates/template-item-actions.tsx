@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/platform/ui/button"
 import { PencilSimpleLineIcon, TrashSimpleIcon } from "@phosphor-icons/react"
+import { toast } from "@/components/platform/ui/toaster"
 
 type TemplateItemActionsProps = {
   slug: string
@@ -13,14 +14,24 @@ export function TemplateItemActions({ slug, title }: TemplateItemActionsProps) {
   const router = useRouter()
 
   async function handleDelete() {
-    const response = await fetch("/api/templates", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ slug }),
-    })
+    try {
+      const response = await fetch("/api/templates", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slug }),
+      })
 
-    if (response.ok) {
+      if (!response.ok) {
+        const result = await response.json().catch(() => null)
+
+        toast.error(result?.error ?? "Failed to delete template")
+        return
+      }
+
+      toast.success(`Deleted "${title}"`)
       router.refresh()
+    } catch {
+      toast.error("Unable to connect to the server")
     }
   }
 
