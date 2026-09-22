@@ -7,7 +7,7 @@ import {
   ItemTitle,
 } from "@/components/platform/ui/item"
 import { PrototypeItemActions } from "@/components/platform/prototypes/prototype-item-actions"
-import type { PrototypeListItem } from "@/components/platform/prototypes/prototype-item-group"
+import type { PrototypeListItem } from "@/types/prototypes"
 
 type Props = {
   prototype: PrototypeListItem
