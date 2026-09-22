@@ -1,7 +1,7 @@
 import type { PrototypeKey } from "@/types/prototypes"
 import { loadPrototypeModuleWithRetry } from "@/lib/prototypes/loader"
 import { PrototypeNotFound } from "@/components/platform/shell/prototype-not-found"
-import { entryExists } from "@/lib/metadata/store"
+import { entryExists } from "@/lib/prototypes/catalog"
 import { prototypeSourceExists } from "@/lib/prototypes/source"
 import { isValidPrototypeKey } from "@/lib/prototypes/validate"
 

@@ -1,6 +1,6 @@
 import { MetadataEntry } from "@/types/metadata"
 import { CreatePrototypeInput } from "@/types/prototypes"
-import { addEntryIfAvailable, removeEntry } from "@/lib/metadata/store"
+import { addEntryIfAvailable, removeEntry } from "@/lib/prototypes/catalog"
 import { getTemplateDirectory } from "@/lib/templates/path"
 import { DEFAULT_TEMPLATE_ID, getTemplate } from "@/lib/templates/catalog"
 import { prototypeDirectory } from "@/lib/prototypes/path"

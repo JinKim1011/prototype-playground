@@ -1,5 +1,5 @@
 import path from "node:path"
-import { getAllEntries } from "@/lib/metadata/store"
+import { getAllEntries } from "@/lib/prototypes/catalog"
 import { writeFileAtomically } from "@/lib/fs/atomic-write"
 import type { MetadataEntry } from "@/types/metadata"
 
