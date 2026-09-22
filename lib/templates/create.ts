@@ -35,18 +35,15 @@ export async function createTemplate(
     )
   }
 
-  const key = slug
-
   const sourceDirectory = getTemplateDirectory("blank")
   const destinationDirectory = getTemplateDirectory(slug)
 
   const now = new Date().toISOString()
 
   const entry: TemplateEntry = {
+    id: `template:${slug}`,
     title,
     slug,
-    key,
-    owner: "system",
     createdAt: now,
     updatedAt: now,
     description: input.description?.trim() ?? "",

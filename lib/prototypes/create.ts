@@ -1,8 +1,11 @@
-import { MetadataEntry } from "@/types/metadata"
+import { PrototypeEntry } from "@/types/prototypes"
 import { CreatePrototypeInput } from "@/types/prototypes"
-import { addEntryIfAvailable, removeEntry } from "@/lib/metadata/store"
+import {
+  addPrototypeIfAvailable,
+  removePrototype,
+} from "@/lib/prototypes/catalog"
 import { getTemplateDirectory } from "@/lib/templates/path"
-import { DEFAULT_TEMPLATE_KEY, getTemplate } from "@/lib/templates/catalog"
+import { DEFAULT_TEMPLATE_ID, getTemplate } from "@/lib/templates/catalog"
 import { prototypeDirectory } from "@/lib/prototypes/path"
 import { generatePrototypeRegistry } from "@/lib/prototypes/registry"
 import { slugify } from "@/lib/utils"
@@ -24,7 +27,7 @@ export class CreatePrototypeError extends Error {
 
 export async function createPrototype(
   input: CreatePrototypeInput
-): Promise<MetadataEntry> {
+): Promise<PrototypeEntry> {
   const title = input.title.trim()
   if (!title) {
     throw new CreatePrototypeError("INVALID_INPUT", "Title is required")
@@ -46,24 +49,23 @@ export async function createPrototype(
     )
   }
 
-  const templateKey = input.fromTemplateKey ?? DEFAULT_TEMPLATE_KEY
+  const templateId = input.fromTemplateId ?? DEFAULT_TEMPLATE_ID
 
-  const template = await getTemplate(templateKey)
+  const template = await getTemplate(templateId)
   const templateDirectory = getTemplateDirectory(template.slug)
   const destinationDirectory = prototypeDirectory({ owner, slug })
 
   const now = new Date().toISOString()
 
-  const entry: MetadataEntry = {
-    kind: "prototype",
-    id: `${owner}:${slug}`,
+  const entry: PrototypeEntry = {
+    id: `prototype:${owner}:${slug}`,
     owner,
     slug,
     title,
     description: input.description?.trim() ?? "",
     createdAt: now,
     updatedAt: now,
-    templateKey,
+    templateId,
   }
 
   return withKeyedLock("prototype-publication", async () => {
@@ -71,7 +73,7 @@ export async function createPrototype(
     let metadataOwned = false
 
     try {
-      metadataOwned = await addEntryIfAvailable(entry)
+      metadataOwned = await addPrototypeIfAvailable(entry)
 
       if (!metadataOwned) {
         throw new CreatePrototypeError(
@@ -92,7 +94,7 @@ export async function createPrototype(
       await transaction?.rollback().catch(() => {})
 
       if (metadataOwned) {
-        await removeEntry({ owner, slug }).catch(() => {})
+        await removePrototype({ owner, slug }).catch(() => {})
         await generatePrototypeRegistry().catch(() => {})
       }
 
