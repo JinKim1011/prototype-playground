@@ -3,7 +3,6 @@ import { withKeyedLock } from "@/lib/fs/keyed-lock"
 import {
   addPrototype,
   getAllPrototypes,
-  prototypeExists,
   removePrototype,
 } from "@/lib/prototypes/catalog"
 import { generatePrototypeRegistry } from "./registry"
@@ -46,7 +45,8 @@ export async function deletePrototype({
         prototypeDirectory({ owner, slug })
       )
 
-      metadataRemoved = await removePrototype({ owner, slug })
+      await removePrototype({ owner, slug })
+      metadataRemoved = true
 
       if (!metadataRemoved) {
         throw new Error("Prototype data could not be removed")
