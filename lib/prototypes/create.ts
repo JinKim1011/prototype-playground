@@ -55,7 +55,6 @@ export async function createPrototype(
   const now = new Date().toISOString()
 
   const entry: MetadataEntry = {
-    kind: "prototype",
     id: `${owner}:${slug}`,
     owner,
     slug,
