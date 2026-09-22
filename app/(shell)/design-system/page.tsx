@@ -1,3 +1,3 @@
 export default function DesignSystemPage() {
-  return <div>prototypes</div>
+  return <div>design system</div>
 }
