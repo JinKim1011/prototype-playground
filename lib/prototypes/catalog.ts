@@ -52,7 +52,7 @@ export async function removePrototype({
       (entry) => entry.owner === owner && entry.slug === slug
     )
 
-    if (!removePrototype) {
+    if (!removedPrototype) {
       return metadata
     }
 
