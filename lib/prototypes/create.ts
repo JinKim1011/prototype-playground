@@ -63,7 +63,7 @@ export async function createPrototype(
     description: input.description?.trim() ?? "",
     createdAt: now,
     updatedAt: now,
-    templateKey,
+    templateId,
   }
 
   return withKeyedLock("prototype-publication", async () => {
