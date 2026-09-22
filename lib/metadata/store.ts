@@ -28,10 +28,7 @@ export async function entryExists({
   slug,
 }: PrototypeKey): Promise<boolean> {
   const entries = await getAllEntries()
-  return entries.some(
-    (entry) =>
-      entry.kind === "prototype" && entry.owner === owner && entry.slug === slug
-  )
+  return entries.some((entry) => entry.owner === owner && entry.slug === slug)
 }
 
 export async function addEntry(entry: MetadataEntry): Promise<void> {
@@ -49,12 +46,7 @@ export async function removeEntry({
 
   await updateMetadata((metadata) => {
     const entries = metadata.entries.filter(
-      (entry) =>
-        !(
-          entry.kind === "prototype" &&
-          entry.owner === owner &&
-          entry.slug === slug
-        )
+      (entry) => !(entry.owner === owner && entry.slug === slug)
     )
 
     removed = entries.length !== metadata.entries.length
@@ -100,9 +92,7 @@ export async function addEntryIfAvailable(
   await updateMetadata((metadata) => {
     const exists = metadata.entries.some(
       (currentEntry) =>
-        currentEntry.kind === "prototype" &&
-        currentEntry.owner === entry.owner &&
-        currentEntry.slug === entry.slug
+        currentEntry.owner === entry.owner && currentEntry.slug === entry.slug
     )
 
     if (exists) {
