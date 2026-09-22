@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/platform/ui/button"
 import { PencilSimpleLineIcon, TrashSimpleIcon } from "@phosphor-icons/react"
 import { toast } from "@/components/platform/ui/toaster"
+import { openInEditor } from "@/lib/dev/open-in-editor"
 
 type TemplateItemActionsProps = {
   slug: string
@@ -12,6 +13,12 @@ type TemplateItemActionsProps = {
 
 export function TemplateItemActions({ slug, title }: TemplateItemActionsProps) {
   const router = useRouter()
+
+  async function handleOpenInEditor(event: React.MouseEvent) {
+    event.preventDefault()
+    event.stopPropagation()
+    await openInEditor(`/templates/${slug}`)
+  }
 
   async function handleDelete() {
     try {
@@ -43,9 +50,7 @@ export function TemplateItemActions({ slug, title }: TemplateItemActionsProps) {
         variant="outline"
         aria-label={`Edit ${title}`}
         className="hover:bg-foreground/10"
-        onClick={() => {
-          // Open editor flow
-        }}
+        onClick={handleOpenInEditor}
       >
         <PencilSimpleLineIcon />
       </Button>
