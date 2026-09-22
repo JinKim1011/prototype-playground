@@ -1,10 +1,6 @@
-export type TemplateEntry = {
-  id: string
-  title: string
-  description: string
-  slug: string
-  createdAt: string
+export type TemplateEntry = TemplateListItem & {
   updatedAt: string
+  description: string
 }
 
 export type TemplatesFile = {
@@ -14,4 +10,11 @@ export type TemplatesFile = {
 export type CreateTemplateInput = {
   title: string
   description?: string
+}
+
+export type TemplateListItem = {
+  id: string
+  title: string
+  slug: string
+  createdAt: string
 }
