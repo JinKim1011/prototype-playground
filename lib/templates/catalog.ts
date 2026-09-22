@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises"
 import type { TemplateEntry, TemplatesFile } from "@/types/templates"
 import { writeFileAtomically } from "@/lib/fs/atomic-write"
 
-export const DEFAULT_TEMPLATE_KEY = "blank" // application policy not a type definition
+export const DEFAULT_TEMPLATE_ID = "template:blank" // application policy not a type definition
 
 const templatePath = path.join(process.cwd(), "data", "templates.json") // keep the JSON catalog as the single source
 
