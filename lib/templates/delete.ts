@@ -24,7 +24,7 @@ export async function deleteTemplate(slug: string): Promise<void> {
     throw new DeleteTemplateError(
       "INVALID_SLUG",
       slug === "blank"
-        ? "Blank tempalte cannot be deleted"
+        ? "The default template cannot be deleted"
         : "Invalid template slug"
     )
   }
