@@ -2,7 +2,7 @@
 
 import { ItemGroup } from "@/components/platform/ui/item"
 import { PrototypeItem } from "@/components/platform/prototypes/prototype-item"
-import { PrototypeToggleGroup } from "./prototype-toggle-group"
+import { PrototypeToggleGroup } from "@/components/platform/prototypes/prototype-toggle-group"
 import { useState } from "react"
 import type { PrototypeListItem } from "@/types/prototypes"
 
