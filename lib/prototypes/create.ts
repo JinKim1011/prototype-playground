@@ -1,6 +1,9 @@
 import { PrototypeEntry } from "@/types/prototypes"
 import { CreatePrototypeInput } from "@/types/prototypes"
-import { addEntryIfAvailable, removePrototype } from "@/lib/prototypes/catalog"
+import {
+  addPrototypeIfAvailable,
+  removePrototype,
+} from "@/lib/prototypes/catalog"
 import { getTemplateDirectory } from "@/lib/templates/path"
 import { DEFAULT_TEMPLATE_ID, getTemplate } from "@/lib/templates/catalog"
 import { prototypeDirectory } from "@/lib/prototypes/path"
@@ -70,7 +73,7 @@ export async function createPrototype(
     let metadataOwned = false
 
     try {
-      metadataOwned = await addEntryIfAvailable(entry)
+      metadataOwned = await addPrototypeIfAvailable(entry)
 
       if (!metadataOwned) {
         throw new CreatePrototypeError(
