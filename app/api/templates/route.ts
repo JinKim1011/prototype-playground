@@ -52,6 +52,13 @@ export async function POST(request: Request) {
 }
 
 export async function DELETE(request: Request) {
+  if (process.env.NODE_ENV !== "development") {
+    return NextResponse.json(
+      { error: "Not available in production" },
+      { status: 403 }
+    )
+  }
+
   try {
     const input = await request.json()
 
