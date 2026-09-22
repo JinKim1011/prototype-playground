@@ -45,9 +45,7 @@ export async function generatePrototypeRegistry(): Promise<void> {
   const generation = registryGenerationQueue.then(async () => {
     const entries = await getAllEntries()
 
-    const prototypes = entries.filter((entry) => entry.kind === "prototype")
-
-    const content = buildContent(prototypes)
+    const content = buildContent(entries)
 
     return writeFileAtomically(registryPath, content)
   })
