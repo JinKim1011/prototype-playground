@@ -87,7 +87,7 @@ export async function updatePrototypes(
   }
 }
 
-export async function addEntryIfAvailable(
+export async function addPrototypeIfAvailable(
   entry: PrototypeEntry
 ): Promise<boolean> {
   let added = false
