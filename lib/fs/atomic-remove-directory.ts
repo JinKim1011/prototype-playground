@@ -12,7 +12,7 @@ export async function prepareDirectoryRemoval(
 ): Promise<DirectoryRemovalTransaction> {
   const backupDirectory = path.join(
     path.dirname(directory),
-    `.${path.basename(directory)}.${randomUUID}.backup`
+    `.${path.basename(directory)}.${randomUUID()}.backup`
   )
 
   let directoryBackedUp = false
