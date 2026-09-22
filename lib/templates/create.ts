@@ -44,8 +44,6 @@ export async function createTemplate(
     id: `template:${slug}`,
     title,
     slug,
-    key,
-    owner: "system",
     createdAt: now,
     updatedAt: now,
     description: input.description?.trim() ?? "",
