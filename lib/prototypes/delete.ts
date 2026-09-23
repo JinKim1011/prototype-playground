@@ -56,11 +56,32 @@ export async function deletePrototype({
 
       await transaction.commit()
     } catch (error) {
-      await transaction?.rollback().catch(() => {})
+      const rollbackErrors: unknown[] = []
+
+      try {
+        await transaction?.rollback()
+      } catch (rollbackError) {
+        rollbackErrors.push(rollbackError)
+      }
 
       if (metadataRemoved) {
-        await addPrototype(entry).catch(() => {})
-        await generatePrototypeRegistry().catch(() => {})
+        try {
+          await addPrototype(entry)
+        } catch (metadataError) {
+          rollbackErrors.push(metadataError)
+        }
+        try {
+          await generatePrototypeRegistry()
+        } catch (registryError) {
+          rollbackErrors.push(registryError)
+        }
+      }
+
+      if (rollbackErrors.length > 0) {
+        throw new AggregateError(
+          [error, ...rollbackErrors],
+          "Prototype deletion failed and rollback was incomplete"
+        )
       }
 
       throw error
