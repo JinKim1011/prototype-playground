@@ -10,7 +10,7 @@ import { ArrowClockwiseIcon } from "@phosphor-icons/react/dist/ssr"
 export function WisdomIdiom() {
   const [wisdom, setWisdom] = useState<Wisdom>(wisdoms[0])
 
-  function revealFortune() {
+  function revealWisdom() {
     const index = Math.floor(Math.random() * wisdoms.length)
     setWisdom(wisdoms[index])
   }
@@ -28,7 +28,7 @@ export function WisdomIdiom() {
       <Button
         type="button"
         variant="outline"
-        onClick={revealFortune}
+        onClick={revealWisdom}
         className="w-fit"
       >
         <ArrowClockwiseIcon />
