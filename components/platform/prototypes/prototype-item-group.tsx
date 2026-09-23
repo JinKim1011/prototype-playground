@@ -30,7 +30,7 @@ export function PrototypeItemGroup({ prototypes }: Props) {
         onValueChange={setSelectedOwner}
         className="mt-4"
       />
-      <ItemGroup className="-mx-2 w-[calc(100%+1rem)] py-4">
+      <ItemGroup className="-mx-2 w-[calc(100%+1rem)] py-2">
         {visiblePrototypes.map((prototype) => (
           <PrototypeItem key={prototype.id} prototype={prototype} />
         ))}
