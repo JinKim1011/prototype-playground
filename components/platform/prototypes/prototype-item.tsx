@@ -14,7 +14,7 @@ type Props = {
 }
 
 export function PrototypeItem({ prototype }: Props) {
-  const prototypePath = `/${prototype.owner}/${prototype.slug}`
+  const prototypePath = `/${prototype.owner.toLowerCase()}/${prototype.slug}`
 
   return (
     <Item size="xs">
