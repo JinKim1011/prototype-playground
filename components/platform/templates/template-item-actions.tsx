@@ -17,7 +17,14 @@ export function TemplateItemActions({ slug, title }: TemplateItemActionsProps) {
   async function handleOpenInEditor(event: React.MouseEvent) {
     event.preventDefault()
     event.stopPropagation()
-    await openInEditor(`/templates/${slug}`)
+
+    try {
+      await openInEditor(`/templates/${slug}`)
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Failed to open editor"
+      )
+    }
   }
 
   async function handleDelete(event: React.MouseEvent) {
