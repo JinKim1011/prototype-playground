@@ -4,6 +4,8 @@ import { useRender } from "@base-ui/react/use-render"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 
+import { typographyStyles } from "@/components/platform/ui/typography"
+
 function ItemGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -19,7 +21,10 @@ function ItemGroup({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 const itemVariants = cva(
-  "group/item flex w-full flex-wrap items-center rounded-none border text-xs transition-colors duration-100 outline-none hover:bg-muted hover:text-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 [a]:transition-colors [a]:hover:bg-muted",
+  cn(
+    "group/item flex w-full flex-wrap items-center rounded-none border transition-colors duration-100 outline-none hover:bg-muted hover:text-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 [a]:transition-colors [a]:hover:bg-muted",
+    typographyStyles({ variant: "label-small" })
+  ),
   {
     variants: {
       variant: {
@@ -114,7 +119,8 @@ function ItemTitle({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="item-title"
       className={cn(
-        "line-clamp-1 flex w-fit items-center gap-2 text-xs underline-offset-4",
+        "line-clamp-1 flex w-fit items-center gap-2 underline-offset-4",
+        typographyStyles({ variant: "label-small" }),
         className
       )}
       {...props}
@@ -127,7 +133,8 @@ function ItemDescription({ className, ...props }: React.ComponentProps<"p">) {
     <p
       data-slot="item-description"
       className={cn(
-        "line-clamp-2 text-left text-xs/relaxed font-normal text-muted-foreground group-data-[size=xs]/item:text-xs/relaxed [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary",
+        "line-clamp-2 text-left text-muted-foreground [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary",
+        typographyStyles({ variant: "label-small" }),
         className
       )}
       {...props}
