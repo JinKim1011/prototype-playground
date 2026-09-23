@@ -31,14 +31,16 @@ export default function BlankTemplatePage() {
   }
 
   return (
-    <main className="mx-auto flex w-full max-w-3xl flex-col gap-12 px-3">
-      <section className="flex flex-col gap-4 pt-20">
-        <div className="flex flex-col gap-1">
-          <Typography variant="body-strong">New prototype</Typography>
-          <Typography variant="body">This is a blank template.</Typography>
+    <main className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-3">
+      <section className="flex items-center pt-20">
+        <div className="flex flex-1 flex-col gap-1">
+          <Typography variant="heading-small">New prototype</Typography>
+          <Typography variant="body" className="text-muted-foreground">
+            This is a blank template.
+          </Typography>
         </div>
 
-        <Button size="sm" onClick={handleOpenInEditor} className="w-fit">
+        <Button onClick={handleOpenInEditor} className="w-fit">
           Open in editor
         </Button>
       </section>
