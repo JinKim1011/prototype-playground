@@ -77,7 +77,7 @@ function TabsContent({ className, ...props }: TabsPrimitive.Panel.Props) {
       data-slot="tabs-content"
       className={cn(
         "flex-1 outline-none",
-        typographyStyles({ variant: "body" }),
+        typographyStyles({ variant: "label" }),
         className
       )}
       {...props}
