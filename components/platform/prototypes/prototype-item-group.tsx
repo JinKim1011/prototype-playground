@@ -18,16 +18,23 @@ export function PrototypeItemGroup({ prototypes }: Props) {
     new Set(prototypes.map((prototype) => prototype.owner))
   ).sort()
 
+  const effectiveSelectedOwner =
+    selectedOwner === "all" || owners.includes(selectedOwner)
+      ? selectedOwner
+      : "all"
+
   const visiblePrototypes =
-    selectedOwner === "all"
+    effectiveSelectedOwner === "all"
       ? prototypes
-      : prototypes.filter((prototype) => prototype.owner === selectedOwner)
+      : prototypes.filter(
+          (prototype) => prototype.owner === effectiveSelectedOwner
+        )
 
   return (
     <>
       <PrototypeToggleGroup
         owners={owners}
-        value={selectedOwner}
+        value={effectiveSelectedOwner}
         onValueChange={setSelectedOwner}
         className="mt-4"
       />
