@@ -11,7 +11,7 @@ export default function BlankTemplatePage() {
   const pathname = usePathname()
   const isPreview = pathname.startsWith("/templates/")
 
-  function handleOpenInEditor(event: React.MouseEvent) {
+  async function handleOpenInEditor(event: React.MouseEvent) {
     event.preventDefault()
     event.stopPropagation()
 
@@ -21,7 +21,7 @@ export default function BlankTemplatePage() {
         return
       }
 
-      void openInEditor(window.location.pathname)
+      await openInEditor(window.location.pathname)
       toast.success(`Opened Blank in editor`)
     } catch (error) {
       toast.error(
