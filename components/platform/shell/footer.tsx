@@ -1,7 +1,6 @@
 import { buttonVariants } from "@/components/platform/ui/button"
 import { ModeToggle } from "@/components/platform/ui/mode-toggle"
 import Link from "next/link"
-import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/ssr"
 
 export function Footer() {
   return (
