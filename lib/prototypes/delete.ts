@@ -11,6 +11,7 @@ import {
   DirectoryRemovalTransaction,
   prepareDirectoryRemoval,
 } from "../fs/atomic-remove-directory"
+import { isValidPrototypeKey } from "./validate"
 
 export class DeletePrototypeError extends Error {
   readonly code: "INVALID_KEY" | "NOT_FOUND"
@@ -26,6 +27,14 @@ export async function deletePrototype({
   owner,
   slug,
 }: PrototypeKey): Promise<void> {
+  if (
+    typeof owner !== "string" ||
+    typeof slug !== "string" ||
+    !isValidPrototypeKey({ owner, slug })
+  ) {
+    throw new DeletePrototypeError("INVALID_KEY", "Invalid prototype key")
+  }
+
   await withKeyedLock("prototype-publication", async () => {
     const entries = await getAllPrototypes()
     const entry = entries.find(
