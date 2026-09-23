@@ -5,7 +5,7 @@ import { toast } from "@/components/prototypes/sonner"
 import { Button } from "@/components/prototypes/button"
 import { Typography } from "@/components/prototypes/typography"
 import { openInEditor } from "./lib/openInEditor"
-import { WisdomIdiom } from "./components/widtom-idiom"
+import { WisdomIdiom } from "./components/wisdom-idiom"
 
 export default function BlankTemplatePage() {
   const pathname = usePathname()
