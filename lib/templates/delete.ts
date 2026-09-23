@@ -50,14 +50,32 @@ export async function deleteTemplate(slug: string): Promise<void> {
 
       await transaction.commit()
     } catch (error) {
-      await transaction?.rollback().catch(() => {})
+      const rollbackErrors: unknown[] = []
+
+      try {
+        await transaction?.rollback()
+      } catch (rollbackError) {
+        rollbackErrors.push(rollbackError)
+      }
 
       if (metadataRemoved) {
-        await updateTemplateCatalog((currentCatalog) => ({
-          ...currentCatalog,
-          templates: [...currentCatalog.templates, template],
-        }))
+        try {
+          await updateTemplateCatalog((currentCatalog) => ({
+            ...currentCatalog,
+            templates: [...currentCatalog.templates, template],
+          }))
+        } catch (metadataError) {
+          rollbackErrors.push(metadataError)
+        }
       }
+
+      if (rollbackErrors.length > 0) {
+        throw new AggregateError(
+          [error, ...rollbackErrors],
+          "Template deletion failed and rollback was incomplete"
+        )
+      }
+
       throw error
     }
   })
