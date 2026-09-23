@@ -1,7 +1,7 @@
 "use client"
 
 import { useTheme } from "next-themes"
-import { Toaster as Sonner, type ToasterProps } from "sonner"
+import { Toaster as Sonner, type ToasterProps, toast } from "sonner"
 import {
   CheckCircleIcon,
   InfoIcon,
@@ -9,6 +9,8 @@ import {
   XCircleIcon,
   SpinnerIcon,
 } from "@phosphor-icons/react"
+
+import { typographyStyles } from "@/components/platform/ui/typography"
 
 const Toaster = ({ ...props }: ToasterProps) => {
   const { theme = "system" } = useTheme()
@@ -34,7 +36,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
       }
       toastOptions={{
         classNames: {
-          toast: "cn-toast",
+          toast: `cn-toast ${typographyStyles({ variant: "body" })}`,
         },
       }}
       {...props}
@@ -42,4 +44,4 @@ const Toaster = ({ ...props }: ToasterProps) => {
   )
 }
 
-export { Toaster }
+export { Toaster, toast }

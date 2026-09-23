@@ -58,3 +58,28 @@ export async function updateTemplateCatalog(
     release()
   }
 }
+
+export async function removeTemplate(slug: string): Promise<TemplateEntry> {
+  let removedTemplate: TemplateEntry | undefined
+
+  await updateTemplateCatalog((catalog) => {
+    removedTemplate = catalog.templates.find(
+      (template) => template.slug === slug
+    )
+
+    if (!removedTemplate) {
+      return catalog
+    }
+
+    return {
+      ...catalog,
+      templates: catalog.templates.filter((template) => template.slug !== slug),
+    }
+  })
+
+  if (!removedTemplate) {
+    throw new Error("Template not found")
+  }
+
+  return removedTemplate
+}

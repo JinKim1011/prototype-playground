@@ -44,23 +44,31 @@ export async function addPrototype(entry: PrototypeEntry): Promise<void> {
 export async function removePrototype({
   owner,
   slug,
-}: PrototypeKey): Promise<boolean> {
-  let removed = false
+}: PrototypeKey): Promise<PrototypeEntry> {
+  let removedPrototype: PrototypeEntry | undefined
 
   await updatePrototypes((metadata) => {
-    const entries = metadata.entries.filter(
-      (entry) => !(entry.owner === owner && entry.slug === slug)
+    removedPrototype = metadata.entries.find(
+      (entry) => entry.owner === owner && entry.slug === slug
     )
 
-    removed = entries.length !== metadata.entries.length
+    if (!removedPrototype) {
+      return metadata
+    }
 
     return {
       ...metadata,
-      entries,
+      entries: metadata.entries.filter(
+        (entry) => !(entry.owner === owner && entry.slug === slug)
+      ),
     }
   })
 
-  return removed
+  if (!removedPrototype) {
+    throw new Error("Prototype not found")
+  }
+
+  return removedPrototype
 }
 
 let prototypesUpdateQueue = Promise.resolve()
