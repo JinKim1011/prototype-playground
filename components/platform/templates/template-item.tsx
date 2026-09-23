@@ -26,7 +26,7 @@ export function TemplateItem({ template }: TemplateItemProps) {
       />
       <div className="pointer-events-none flex min-w-0 flex-1 items-center gap-3">
         <ItemMedia variant="image" className="h-9 w-16 shrink-0">
-          <div className="h-9 w-16 overflow-hidden border-[0.5px] bg-muted">
+          <div className="h-9 w-16 overflow-hidden border-[0.5px] border-muted bg-muted">
             <iframe
               src={templatePath}
               title={`${template.title} preview`}
