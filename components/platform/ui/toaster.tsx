@@ -10,6 +10,8 @@ import {
   SpinnerIcon,
 } from "@phosphor-icons/react"
 
+import { typographyStyles } from "@/components/platform/ui/typography"
+
 const Toaster = ({ ...props }: ToasterProps) => {
   const { theme = "system" } = useTheme()
 
@@ -34,7 +36,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
       }
       toastOptions={{
         classNames: {
-          toast: "cn-toast",
+          toast: `cn-toast ${typographyStyles({ variant: "body" })}`,
         },
       }}
       {...props}
