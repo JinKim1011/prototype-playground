@@ -18,10 +18,14 @@ export function PrototypeItemActions({ owner, slug, title }: Props) {
   async function handleOpenInEditor(event: React.MouseEvent) {
     event.preventDefault()
     event.stopPropagation()
+
     await openInEditor(`/${owner}/${slug}`)
   }
 
-  async function handleDelete() {
+  async function handleDelete(event: React.MouseEvent) {
+    event.preventDefault()
+    event.stopPropagation()
+
     try {
       const response = await fetch("/api/prototypes", {
         method: "DELETE",

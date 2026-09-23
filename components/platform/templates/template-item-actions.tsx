@@ -20,7 +20,10 @@ export function TemplateItemActions({ slug, title }: TemplateItemActionsProps) {
     await openInEditor(`/templates/${slug}`)
   }
 
-  async function handleDelete() {
+  async function handleDelete(event: React.MouseEvent) {
+    event.preventDefault()
+    event.stopPropagation()
+
     try {
       const response = await fetch("/api/templates", {
         method: "DELETE",
