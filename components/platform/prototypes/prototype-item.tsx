@@ -28,7 +28,7 @@ export function PrototypeItem({ prototype }: Props) {
             <iframe
               src={prototypePath}
               title={`${prototype.title} preview`}
-              className="h-180 w-320 origin-top-left scale-[0.05] border-0"
+              className="h-180 w-7xl origin-top-left scale-[0.05] border-0"
               tabIndex={-1}
               aria-hidden="true"
             />
