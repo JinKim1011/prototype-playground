@@ -22,6 +22,7 @@ export function PrototypeItem({ prototype }: Props) {
         href={prototypePath}
         target="_blank"
         className="absolute inset-0 z-0"
+        aria-label={`Open ${prototype.title}`}
       />
       <div className="pointer-events-none flex min-w-0 flex-1 items-center gap-3">
         <ItemMedia variant="image" className="h-9 w-16 shrink-0">
