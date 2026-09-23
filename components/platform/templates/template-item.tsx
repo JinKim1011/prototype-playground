@@ -17,36 +17,39 @@ export function TemplateItem({ template }: TemplateItemProps) {
   const templatePath = `/templates/${template.slug}`
 
   return (
-    <Item size="xs">
+    <Item size="xs" className="relative">
       <Link
         href={templatePath}
         target="_blank"
-        className="contents items-center"
-      >
-        <ItemMedia variant="image" className="h-9 w-16">
+        aria-label={`Open ${template.title}`}
+        className="absolute inset-0 z-0"
+      />
+      <div className="pointer-events-none flex min-w-0 flex-1 items-center gap-3">
+        <ItemMedia variant="image" className="h-9 w-16 shrink-0">
           <div className="h-9 w-16 overflow-hidden border-[0.5px] bg-muted">
             <iframe
               src={templatePath}
               title={`${template.title} preview`}
-              className="h-180 w-7xl origin-top-left scale-[0.05] border-0"
+              className="pointer-events-none h-180 w-7xl origin-top-left scale-[0.05] border-0"
               tabIndex={-1}
               aria-hidden="true"
             />
           </div>
         </ItemMedia>
 
-        <ItemContent>
+        <ItemContent className="min-w-0">
           <ItemTitle>{template.title}</ItemTitle>
-
           <ItemDescription>
-            <span className="hidden group-hover/item:inline">
+            <span className="invisible opacity-0 transition-[opacity,visibility] duration-100 ease-out group-hover/item:visible group-hover/item:opacity-100">
               {templatePath}
             </span>
           </ItemDescription>
         </ItemContent>
-      </Link>
+      </div>
 
-      <TemplateItemActions slug={template.slug} title={template.title} />
+      <div className="relative z-10">
+        <TemplateItemActions slug={template.slug} title={template.title} />
+      </div>
     </Item>
   )
 }
