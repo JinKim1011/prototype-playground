@@ -1,15 +1,16 @@
 import { prototypePage } from "@/lib/prototypes/path"
-import { isValidPrototypeKey } from "@/lib/prototypes/validate"
 import { NextResponse } from "next/server"
 import { execFile } from "node:child_process"
 import { promisify } from "node:util"
+import { isValidateSegment } from "@/lib/prototypes/validate"
+import { getTemplatePage } from "@/lib/templates/path"
 
 const execFileAsync = promisify(execFile)
 
 export async function POST(request: Request) {
   if (process.env.NODE_ENV !== "development") {
     return NextResponse.json(
-      { error: "Not available in production" },
+      { error: "Only available in development environment" },
       { status: 403 }
     )
   }
