@@ -5,9 +5,10 @@ import { wisdoms } from "../data/wisdoms"
 import { Button } from "@/components/prototypes/button"
 import { Typography } from "@/components/prototypes/typography"
 import { Wisdom } from "../types/wisdom"
+import { ArrowClockwiseIcon } from "@phosphor-icons/react/dist/ssr"
 
 export function WisdomIdiom() {
-  const [wisdom, setWisdom] = useState<Wisdom | null>(null)
+  const [wisdom, setWisdom] = useState<Wisdom>(wisdoms[0])
 
   function revealFortune() {
     const index = Math.floor(Math.random() * wisdoms.length)
@@ -15,11 +16,11 @@ export function WisdomIdiom() {
   }
 
   return (
-    <section className="flex flex-col items-center justify-center gap-4 bg-muted pt-8 pb-6">
+    <section className="flex flex-col items-center justify-center gap-5 bg-muted pt-8 pb-6">
       {wisdom && (
-        <div className="flex flex-col items-center gap-2">
-          <Typography variant="label">"{wisdom.message}"</Typography>
-          <Typography variant="label-small" className="text-muted-foreground">
+        <div className="flex flex-col items-center">
+          <Typography variant="body-large">"{wisdom.message}"</Typography>
+          <Typography variant="caption" className="text-muted-foreground">
             {wisdom.author}
           </Typography>
         </div>
@@ -27,11 +28,11 @@ export function WisdomIdiom() {
       <Button
         type="button"
         variant="outline"
-        size="sm"
         onClick={revealFortune}
         className="w-fit"
       >
-        Give me wisdom
+        <ArrowClockwiseIcon />
+        Refresh
       </Button>
     </section>
   )
