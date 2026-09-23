@@ -19,7 +19,7 @@ export function WisdomIdiom() {
     <section className="flex flex-col items-center justify-center gap-5 bg-muted pt-8 pb-6">
       {wisdom && (
         <div className="flex flex-col items-center">
-          <Typography variant="body-large">"{wisdom.message}"</Typography>
+          <Typography variant="body">"{wisdom.message}"</Typography>
           <Typography variant="caption" className="text-muted-foreground">
             {wisdom.author}
           </Typography>
