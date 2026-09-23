@@ -49,7 +49,7 @@ export function TemplateItemActions({ slug, title }: TemplateItemActionsProps) {
     <div className="pointer-events-none flex w-fit gap-0.5 opacity-0 transition-opacity group-focus-within/item:pointer-events-auto group-focus-within/item:opacity-100 group-hover/item:pointer-events-auto group-hover/item:opacity-100">
       <Button
         type="button"
-        size="icon-sm"
+        size="icon-xs"
         variant="outline"
         aria-label={`Edit ${title}`}
         className="hover:bg-foreground/10"
@@ -60,7 +60,7 @@ export function TemplateItemActions({ slug, title }: TemplateItemActionsProps) {
 
       <Button
         type="button"
-        size="icon-sm"
+        size="icon-xs"
         variant="outline"
         className="hover:bg-foreground/10"
         aria-label={`Delete ${title}`}
