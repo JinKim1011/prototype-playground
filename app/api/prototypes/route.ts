@@ -17,7 +17,7 @@ const deletePrototypeStatus: Record<DeletePrototypeError["code"], number> = {
 export async function POST(request: Request) {
   if (process.env.NODE_ENV !== "development") {
     return NextResponse.json(
-      { error: "Not available in production" },
+      { error: "Only available in development environment" },
       { status: 403 }
     )
   }
@@ -48,7 +48,7 @@ export async function POST(request: Request) {
 export async function DELETE(request: Request) {
   if (process.env.NODE_ENV !== "development") {
     return NextResponse.json(
-      { error: "Not available in production" },
+      { error: "Only available in development environment" },
       { status: 403 }
     )
   }
