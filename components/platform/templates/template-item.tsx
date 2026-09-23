@@ -28,7 +28,7 @@ export function TemplateItem({ template }: TemplateItemProps) {
             <iframe
               src={templatePath}
               title={`${template.title} preview`}
-              className="h-90 w-160 origin-top-left scale-[0.1] border-0"
+              className="h-180 w-7xl origin-top-left scale-[0.05] border-0"
               tabIndex={-1}
               aria-hidden="true"
             />
