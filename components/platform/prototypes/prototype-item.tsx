@@ -14,7 +14,7 @@ type Props = {
 }
 
 export function PrototypeItem({ prototype }: Props) {
-  const prototypePath = `/${prototype.owner.toLowerCase()}/${prototype.slug}`
+  const prototypePath = `${prototype.owner.toLowerCase()}/${prototype.slug}`
 
   return (
     <Item size="xs" className="relative">
@@ -39,11 +39,9 @@ export function PrototypeItem({ prototype }: Props) {
         <ItemContent className="flex min-w-0 items-center gap-2">
           <ItemTitle>{prototype.title}</ItemTitle>
           <ItemDescription>
-            <span className="col-start-1 row-start-1 opacity-100 transition-opacity duration-100 ease-out group-hover/item:opacity-0">
-              {prototype.owner}
-            </span>
+            <span className="group-hover/item:hidden">{prototype.owner}</span>
 
-            <span className="col-start-1 row-start-1 opacity-0 transition-opacity duration-100 ease-out group-hover/item:opacity-100">
+            <span className="hidden group-hover/item:inline">
               {prototypePath}
             </span>
           </ItemDescription>
