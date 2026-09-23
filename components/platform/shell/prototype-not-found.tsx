@@ -24,7 +24,7 @@ export function PrototypeNotFound({
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-4 p-8 text-center">
-      <Typography as="h1" variant="heading-strong">
+      <Typography as="h1" variant="heading">
         Prototype not found
       </Typography>
       <Typography as="h2" variant="body" className="max-w-md">
