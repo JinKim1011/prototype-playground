@@ -10,7 +10,7 @@ type TemplateItemGroupProps = {
 
 export function TemplateItemGroup({ templates }: TemplateItemGroupProps) {
   return (
-    <ItemGroup className="-mx-2 w-[calc(100%+1rem)] py-3">
+    <ItemGroup className="-mx-2 w-[calc(100%+1rem)] py-4">
       {templates.map((template) => (
         <TemplateItem key={template.id} template={template} />
       ))}
