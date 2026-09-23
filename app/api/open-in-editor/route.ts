@@ -18,6 +18,13 @@ export async function POST(request: Request) {
   try {
     const input = (await request.json()) as { pathname: string }
 
+    if (typeof input?.pathname !== "string") {
+      return NextResponse.json(
+        { error: "Invalid prototype pathname" },
+        { status: 400 }
+      )
+    }
+
     const segments = input.pathname.split("/").filter(Boolean)
 
     if (segments[0] === "templates") {
