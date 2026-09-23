@@ -25,7 +25,7 @@ export function PrototypeItem({ prototype }: Props) {
       />
       <div className="pointer-events-none flex min-w-0 flex-1 items-center gap-3">
         <ItemMedia variant="image" className="h-9 w-16 shrink-0">
-          <div className="h-9 w-16 overflow-hidden border-[0.5px] border-muted bg-muted">
+          <div className="h-9 w-16 overflow-hidden border-[0.5px] bg-muted">
             <iframe
               src={prototypePath}
               title={`${prototype.title} preview`}
@@ -36,7 +36,7 @@ export function PrototypeItem({ prototype }: Props) {
           </div>
         </ItemMedia>
 
-        <ItemContent className="min-w-0">
+        <ItemContent className="flex min-w-0 items-center gap-2">
           <ItemTitle>{prototype.title}</ItemTitle>
           <ItemDescription>
             <span className="col-start-1 row-start-1 opacity-100 transition-opacity duration-100 ease-out group-hover/item:opacity-0">
