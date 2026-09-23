@@ -10,7 +10,7 @@ function ItemGroup({ className, ...props }: React.ComponentProps<"div">) {
       role="list"
       data-slot="item-group"
       className={cn(
-        "group/item-group flex w-full flex-col gap-2.5 has-data-[size=sm]:gap-2 has-data-[size=xs]:gap-1",
+        "group/item-group flex w-full flex-col gap-2.5 has-data-[size=sm]:gap-2 has-data-[size=xs]:gap-0",
         className
       )}
       {...props}
