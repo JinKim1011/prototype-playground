@@ -19,7 +19,13 @@ export function PrototypeItemActions({ owner, slug, title }: Props) {
     event.preventDefault()
     event.stopPropagation()
 
-    await openInEditor(`/${owner}/${slug}`)
+    try {
+      await openInEditor(`/${owner}/${slug}`)
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Failed to open editor"
+      )
+    }
   }
 
   async function handleDelete(event: React.MouseEvent) {
