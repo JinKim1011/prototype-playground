@@ -5,6 +5,7 @@ import { PrototypeItem } from "@/components/platform/prototypes/prototype-item"
 import { PrototypeToggleGroup } from "@/components/platform/prototypes/prototype-toggle-group"
 import { useState } from "react"
 import type { PrototypeListItem } from "@/types/prototypes"
+import { Typography } from "../ui/typography"
 
 type Props = {
   prototypes: PrototypeListItem[]
@@ -31,9 +32,18 @@ export function PrototypeItemGroup({ prototypes }: Props) {
         className="mt-4"
       />
       <ItemGroup className="-mx-2 w-[calc(100%+1rem)] py-2">
-        {visiblePrototypes.map((prototype) => (
-          <PrototypeItem key={prototype.id} prototype={prototype} />
-        ))}
+        {visiblePrototypes.length === 0 ? (
+          <Typography
+            variant="label-small"
+            className="flex h-13.5 w-full items-center justify-center text-muted-foreground"
+          >
+            Created prototypes will appear here.
+          </Typography>
+        ) : (
+          visiblePrototypes.map((prototype) => (
+            <PrototypeItem key={prototype.id} prototype={prototype} />
+          ))
+        )}
       </ItemGroup>
     </>
   )
