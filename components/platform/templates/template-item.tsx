@@ -23,12 +23,12 @@ export function TemplateItem({ template }: TemplateItemProps) {
         target="_blank"
         className="contents items-center"
       >
-        <ItemMedia variant="image">
-          <div className="size-16 overflow-hidden rounded border bg-muted">
+        <ItemMedia variant="image" className="h-9 w-16">
+          <div className="h-9 w-16 overflow-hidden border-[0.5px] bg-muted">
             <iframe
               src={templatePath}
               title={`${template.title} preview`}
-              className="h-80 w-160 origin-top-left scale-[0.1] border-0"
+              className="h-90 w-160 origin-top-left scale-[0.1] border-0"
               tabIndex={-1}
               aria-hidden="true"
             />
