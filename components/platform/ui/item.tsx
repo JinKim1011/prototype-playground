@@ -72,7 +72,7 @@ const itemMediaVariants = cva(
         default: "bg-transparent",
         icon: "[&_svg:not([class*='size-'])]:size-4",
         image:
-          "aspect-video h-10 w-[71px] shrink-0 overflow-hidden rounded-none bg-muted group-data-[size=sm]/item:h-8 group-data-[size=sm]/item:w-[57px] group-data-[size=xs]/item:h-6 group-data-[size=xs]/item:w-[43px] [&_img]:size-full [&_img]:object-cover",
+          "shrink-0 overflow-hidden rounded-none bg-muted [&_img]:size-full [&_img]:object-cover",
       },
     },
     defaultVariants: {
