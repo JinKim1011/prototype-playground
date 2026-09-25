@@ -6,6 +6,11 @@ import { createPrototype, CreatePrototypeError } from "@/lib/prototypes/create"
 export type CreatePrototypeState = {
   status: "idle" | "error" | "success"
   message?: string
+  errors?: {
+    title?: string
+    owner?: string
+    fromTemplateId?: string
+  }
 }
 
 export async function createPrototypeAction(
