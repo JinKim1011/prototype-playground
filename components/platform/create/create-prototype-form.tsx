@@ -22,6 +22,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectLabel,
 } from "@/components/platform/ui/select"
 import { Button } from "@/components/platform/ui/button"
 import { Textarea } from "@/components/platform/ui/textarea"
@@ -101,6 +102,7 @@ export default function CreatePrototyeForm({
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
+                    <SelectLabel>Select template</SelectLabel>
                     {templateItems.map((item) => (
                       <SelectItem key={item.value} value={item.value}>
                         {item.label}
