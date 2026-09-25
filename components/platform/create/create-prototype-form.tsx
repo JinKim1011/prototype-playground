@@ -61,11 +61,18 @@ export default function CreatePrototyeForm({
         <FieldGroup>
           <FieldSet>
             <FieldLegend>Details</FieldLegend>
-            <Field>
-              <Input id="title" name="title" placeholder="Title" required />
-              <FieldDescription>
-                Only letters and numbers, no special characters
-              </FieldDescription>
+            <Field data-invalid={!!state.errors?.title}>
+              <Input
+                id="title"
+                name="title"
+                placeholder="Title"
+                required
+                aria-invalid={!!state.errors?.title}
+                aria-describedby={
+                  state.errors?.title ? "title-error" : undefined
+                }
+              />
+              <FieldError id="title-error">{state.errors?.title}</FieldError>
             </Field>
 
             <Field>
