@@ -123,8 +123,14 @@ export default function CreatePrototyeForm({
               <FieldError>{state.errors?.fromTemplateId}</FieldError>
             </Field>
           </FieldSet>
+
           <Field orientation="horizontal">
-            <Button type="submit" disabled={pending}>
+            <Button
+              size="lg"
+              type="submit"
+              disabled={pending}
+              className="w-full"
+            >
               Create Prototype
             </Button>
           </Field>
