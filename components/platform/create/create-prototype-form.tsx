@@ -117,9 +117,6 @@ export default function CreatePrototyeForm({
             <Button type="submit" disabled={pending}>
               Create Prototype
             </Button>
-            <FieldError>
-              {state.status === "error" ? state.message : undefined}
-            </FieldError>
           </Field>
         </FieldGroup>
       </form>
