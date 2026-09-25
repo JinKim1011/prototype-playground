@@ -8,7 +8,6 @@ import {
 import { toast } from "@/components/platform/ui/toaster"
 import {
   Field,
-  FieldDescription,
   FieldGroup,
   FieldLegend,
   FieldSet,
@@ -59,7 +58,7 @@ export default function CreatePrototyeForm({
     <div className="w-full p-4">
       <form action={formAction} noValidate>
         <FieldGroup>
-          <FieldSet>
+          <FieldSet className="gap-2">
             <FieldLegend>Details</FieldLegend>
             <Field data-invalid={!!state.errors?.title}>
               <Input
@@ -75,18 +74,7 @@ export default function CreatePrototyeForm({
               <FieldError id="title-error">{state.errors?.title}</FieldError>
             </Field>
 
-            <Field>
-              <Textarea
-                id="description"
-                name="description"
-                placeholder="Description (optional)"
-              />
-            </Field>
-          </FieldSet>
-
-          <FieldSet>
-            <FieldLegend>Owner</FieldLegend>
-            <Field>
+            <Field data-invalid={!!state.errors?.owner}>
               <Input
                 id="owner"
                 name="owner"
@@ -99,6 +87,19 @@ export default function CreatePrototyeForm({
               />
               <FieldError id="owner-error">{state.errors?.owner}</FieldError>
             </Field>
+
+            <Field>
+              <Textarea
+                id="description"
+                name="description"
+                placeholder="Description (optional)"
+              />
+            </Field>
+          </FieldSet>
+
+          <FieldSet className="gap-2">
+            <FieldLegend>Template</FieldLegend>
+
             <Field data-invalid={!!state.errors?.fromTemplateId}>
               <Select
                 items={templateItems}
