@@ -92,7 +92,12 @@ export default function CreatePrototyeForm({
                 name="owner"
                 placeholder="Enter owner"
                 required
+                aria-invalid={!!state.errors?.owner}
+                aria-describedby={
+                  state.errors?.owner ? "owner-error" : undefined
+                }
               />
+              <FieldError id="owner-error">{state.errors?.owner}</FieldError>
             </Field>
           </FieldSet>
 
