@@ -57,7 +57,7 @@ export default function CreatePrototyeForm({
 
   return (
     <div className="w-full p-4">
-      <form action={formAction}>
+      <form action={formAction} noValidate>
         <FieldGroup>
           <FieldSet>
             <FieldLegend>Details</FieldLegend>
