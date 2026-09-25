@@ -29,24 +29,16 @@ export async function createPrototypeAction(
   const description = String(formData.get("description") ?? "")
   const fromTemplateId = String(formData.get("fromTemplateId") ?? "")
 
-  if (!title) {
+  if (!title || !owner || !fromTemplateId) {
     return {
       status: "error",
-      message: "Please enter prototype title",
-    }
-  }
-
-  if (!owner) {
-    return {
-      status: "error",
-      message: "Please select or create owner",
-    }
-  }
-
-  if (!fromTemplateId) {
-    return {
-      status: "error",
-      message: "Please select template",
+      errors: {
+        title: !title ? "Please enter a prototype title" : undefined,
+        owner: !owner ? "Please select or create an owner" : undefined,
+        fromTemplateId: !fromTemplateId
+          ? "Please select a template"
+          : undefined,
+      },
     }
   }
 
