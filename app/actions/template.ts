@@ -40,16 +40,12 @@ export async function createTemplateAction(
       message: `${entry.title} was created successfully`,
     }
   } catch (error) {
-    if (error instanceof CreateTemplateError) {
-      return {
-        status: "error",
-        message:
-          error instanceof CreateTemplateError
-            ? error.message
-            : "Unable to create the template.",
-      }
+    return {
+      status: "error",
+      message:
+        error instanceof CreateTemplateError
+          ? error.message
+          : "Failed to create template",
     }
-
-    return { status: "error", message: "Failed to create template" }
   }
 }
