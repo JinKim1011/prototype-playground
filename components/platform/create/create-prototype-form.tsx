@@ -99,15 +99,12 @@ export default function CreatePrototyeForm({
               />
               <FieldError id="owner-error">{state.errors?.owner}</FieldError>
             </Field>
-          </FieldSet>
-
-          <FieldSet>
-            <FieldLegend>Template</FieldLegend>
-            <Field>
+            <Field data-invalid={!!state.errors?.fromTemplateId}>
               <Select
                 items={templateItems}
                 name="fromTemplateId"
                 defaultValue={templateItems[0]?.value}
+                required
               >
                 <SelectTrigger className="w-full">
                   <SelectValue />
@@ -123,6 +120,7 @@ export default function CreatePrototyeForm({
                   </SelectGroup>
                 </SelectContent>
               </Select>
+              <FieldError>{state.errors?.fromTemplateId}</FieldError>
             </Field>
           </FieldSet>
           <Field orientation="horizontal">
