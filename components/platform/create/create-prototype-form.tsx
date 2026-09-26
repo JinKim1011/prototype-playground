@@ -130,7 +130,7 @@ export default function CreatePrototyeForm({
               size="lg"
               type="submit"
               disabled={pending}
-              className="mt-2 w-full"
+              className="mt-1.5 w-full"
             >
               Create Prototype
             </Button>
