@@ -11,7 +11,7 @@ export const typographyStyles = cva("", {
       "body-large-strong": "text-[1rem] leading-[1.7] font-semibold",
       "body": "text-[0.875rem] leading-[1.7] font-normal",
       "body-strong": "text-[0.875rem] leading-[1.7] font-semibold",
-      "caption": "text-[0.8125rem] leading-[1.7] font-normal",
+      "caption": "text-[0.75rem] leading-[1.7] font-normal",
       "label-large": "text-[0.9375rem] leading-[1.3] font-medium",
       "label": "text-[0.875rem] leading-[1.3] font-medium",
       "label-small": "text-[0.8125rem] leading-[1.3] font-medium",
