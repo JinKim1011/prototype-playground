@@ -3,14 +3,16 @@
 import { revalidatePath } from "next/cache"
 import { createPrototype, CreatePrototypeError } from "@/lib/prototypes/create"
 
+type CreatePrototypeErrors = {
+  title?: string
+  owner?: string
+  fromTemplateId?: string
+}
+
 export type CreatePrototypeState = {
   status: "idle" | "error" | "success"
   message?: string
-  errors?: {
-    title?: string
-    owner?: string
-    fromTemplateId?: string
-  }
+  errors?: CreatePrototypeErrors
 }
 
 export async function createPrototypeAction(
