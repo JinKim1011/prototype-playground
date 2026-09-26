@@ -6,6 +6,9 @@ import { createTemplate, CreateTemplateError } from "@/lib/templates/create"
 export type CreateTemplateState = {
   status: "idle" | "error" | "success"
   message?: string
+  errors?: {
+    title?: string
+  }
 }
 
 export async function createTemplateAction(
@@ -25,7 +28,9 @@ export async function createTemplateAction(
   if (!title) {
     return {
       status: "error",
-      message: "Please enter template title",
+      errors: {
+        title: !title ? "Please enter a prototype title" : undefined,
+      },
     }
   }
 
