@@ -15,11 +15,14 @@ type CreateMenuProps = {
 export default function CreateMenuTabs({ templates }: CreateMenuProps) {
   return (
     <Tabs>
-      <TabsList>
-        <TabsTrigger value="prototype">Prototype</TabsTrigger>
-        <TabsTrigger value="template">Template</TabsTrigger>
-        <TabsTrigger value="owner">Owner</TabsTrigger>
-      </TabsList>
+      <div className="w-full justify-center border-b-[0.5px] border-border pt-1">
+        <TabsList variant="line">
+          <TabsTrigger value="prototype" className="ml-4">
+            Prototype
+          </TabsTrigger>
+          <TabsTrigger value="template">Template</TabsTrigger>
+        </TabsList>
+      </div>
       <TabsContent value="prototype">
         <CreatePrototyeForm templates={templates} />
       </TabsContent>
