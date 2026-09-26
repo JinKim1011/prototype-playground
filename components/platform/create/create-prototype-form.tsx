@@ -125,12 +125,12 @@ export default function CreatePrototyeForm({
             </Field>
           </FieldSet>
 
-          <Field orientation="horizontal">
+          <Field>
             <Button
               size="lg"
               type="submit"
               disabled={pending}
-              className="w-full"
+              className="mt-2 w-full"
             >
               Create Prototype
             </Button>
