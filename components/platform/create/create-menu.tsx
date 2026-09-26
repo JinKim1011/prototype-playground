@@ -6,13 +6,13 @@ import {
 } from "@/components/platform/ui/popover"
 import { Button } from "@/components/platform/ui/button"
 import CreateMenuTabs from "@/components/platform/create/create-menu-tabs"
-import { CaretDownIcon } from "@phosphor-icons/react"
+import { CaretDownIcon } from "@phosphor-icons/react/dist/ssr"
 
 type CreateMenuProps = {
   templates: TemplateEntry[]
 }
 
-export default function CreateMenu({ templates }: CreateMenuProps) {
+export function CreateMenu({ templates }: CreateMenuProps) {
   return (
     <Popover>
       <PopoverTrigger
@@ -23,7 +23,7 @@ export default function CreateMenu({ templates }: CreateMenuProps) {
           </Button>
         }
       />
-      <PopoverContent className="w-90">
+      <PopoverContent className="w-90" align="end">
         <CreateMenuTabs templates={templates} />
       </PopoverContent>
     </Popover>
