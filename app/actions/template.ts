@@ -3,12 +3,14 @@
 import { revalidatePath } from "next/cache"
 import { createTemplate, CreateTemplateError } from "@/lib/templates/create"
 
+type CreateTemplateErrors = {
+  title?: string
+}
+
 export type CreateTemplateState = {
   status: "idle" | "error" | "success"
   message?: string
-  errors?: {
-    title?: string
-  }
+  errors?: CreateTemplateErrors
 }
 
 export async function createTemplateAction(
