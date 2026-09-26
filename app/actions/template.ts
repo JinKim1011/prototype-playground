@@ -24,14 +24,23 @@ export async function createTemplateAction(
     }
   }
 
-  const title = String(formData.get("title") ?? "")
+  const title = String(formData.get("title") ?? "").trim()
   const description = String(formData.get("description") ?? "")
 
   if (!title) {
     return {
       status: "error",
       errors: {
-        title: !title ? "Please enter a prototype title" : undefined,
+        title: "Please enter a template title",
+      },
+    }
+  }
+
+  if (!/^[A-Za-z0-9 ]+$/.test(title)) {
+    return {
+      status: "error",
+      errors: {
+        title: "Please only enter letters and numbers, no special characters",
       },
     }
   }
