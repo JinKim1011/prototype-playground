@@ -51,9 +51,6 @@ export default function CreateTemplateForm() {
                 }
               />
               <FieldError id="title-error">{state.errors?.title}</FieldError>
-              {/* <FieldDescription>
-                Only letters and numbers, no special characters
-              </FieldDescription> */}
             </Field>
 
             <Field>
