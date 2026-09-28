@@ -39,7 +39,12 @@ export default async function PrototypePage({ params }: PrototypePageProps) {
     )
   }
 
-  if (!(await prototypeExists(ownerEntry.id, slug))) {
+  if (
+    !(await prototypeExists({
+      ownerId: ownerEntry.id,
+      slug,
+    }))
+  ) {
     return (
       <PrototypeNotFound
         ownerSlug={owner}
@@ -49,7 +54,12 @@ export default async function PrototypePage({ params }: PrototypePageProps) {
     )
   }
 
-  if (!(await prototypeSourceExists(owner, slug))) {
+  if (
+    !(await prototypeSourceExists({
+      ownerSlug: owner,
+      prototypeSlug: slug,
+    }))
+  ) {
     return (
       <PrototypeNotFound
         ownerSlug={owner}
@@ -59,7 +69,10 @@ export default async function PrototypePage({ params }: PrototypePageProps) {
     )
   }
 
-  const Component = await loadPrototypeModuleWithRetry(owner, slug)
+  const Component = await loadPrototypeModuleWithRetry({
+    ownerSlug: owner,
+    prototypeSlug: slug,
+  })
 
   return <Component />
 }
