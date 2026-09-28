@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import { revalidatePath } from "next/cache"
 import { createPrototype, CreatePrototypeError } from "@/lib/prototypes/create"
 import { deletePrototype, DeletePrototypeError } from "@/lib/prototypes/delete"
+import { getOwnerById } from "@/lib/owners/catalog"
 
 const createPrototypeStatus: Record<CreatePrototypeError["code"], number> = {
   DUPLICATE_SLUG: 409,
