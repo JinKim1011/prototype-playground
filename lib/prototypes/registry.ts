@@ -65,7 +65,7 @@ export async function generatePrototypeRegistry(): Promise<void> {
   const generation = registryGenerationQueue.then(async () => {
     const entries = await getAllPrototypes()
 
-    const content = buildContent(entries)
+    const content = await buildContent(entries)
 
     return writeFileAtomically(registryPath, content)
   })
