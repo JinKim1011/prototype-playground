@@ -84,13 +84,13 @@ export default function CreatePrototypeForm({
               <FieldError id="title-error">{state.errors?.title}</FieldError>
             </Field>
 
-            <Field data-invalid={!!state.errors?.owner}>
+            <Field data-invalid={!!state.errors?.ownerId}>
               <Select
                 items={ownerItems}
                 name="ownerId"
-                aria-invalid={!!state.errors?.owner}
+                aria-invalid={!!state.errors?.ownerId}
                 aria-describedby={
-                  state.errors?.owner ? "owner-error" : undefined
+                  state.errors?.ownerId ? "owner-error" : undefined
                 }
                 required
               >
@@ -108,7 +108,7 @@ export default function CreatePrototypeForm({
                   </SelectGroup>
                 </SelectContent>
               </Select>
-              <FieldError id="owner-error">{state.errors?.owner}</FieldError>
+              <FieldError id="owner-error">{state.errors?.ownerId}</FieldError>
             </Field>
 
             <Field>
