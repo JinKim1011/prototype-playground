@@ -1,4 +1,8 @@
-export type TemplateEntry = TemplateListItem & {
+export type TemplateEntry = {
+  id: string
+  title: string
+  slug: string
+  createdAt: string
   updatedAt: string
   description: string
 }
