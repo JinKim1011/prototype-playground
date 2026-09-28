@@ -2,21 +2,41 @@ import path from "node:path"
 import { getAllPrototypes } from "@/lib/prototypes/catalog"
 import { writeFileAtomically } from "@/lib/fs/atomic-write"
 import type { PrototypeEntry } from "@/types/prototypes"
+import { getOwners } from "@/lib/owners/catalog"
 
 const registryPath = path.join(process.cwd(), "prototypes", "registry.ts")
 
 let registryGenerationQueue = Promise.resolve()
 
-function buildContent(prototypes: PrototypeEntry[]) {
-  const importLines = prototypes
+async function buildContent(prototypes: PrototypeEntry[]) {
+  const owners = await getOwners()
+  const ownerById = new Map(owners.map((owner) => [owner.id, owner]))
+
+  const resolvedPrototypes = prototypes.map((prototype) => {
+    const owner = ownerById.get(prototype.ownerId)
+
+    if (!owner) {
+      throw new Error(`Owner(${prototype.ownerId}) not found.`)
+    }
+
+    return {
+      prototype,
+      owner,
+    }
+  })
+
+  const importLines = resolvedPrototypes
     .map(
-      (entry, index) =>
-        `import P${index} from "./${entry.owner}/${entry.slug}/page";`
+      ({ prototype, owner }, index) =>
+        `import P${index} from "./${owner.slug}/${prototype.slug}/page";`
     )
     .join("\n")
 
-  const mapLines = prototypes
-    .map((entry, index) => `"${entry.owner}:${entry.slug}": P${index},`)
+  const mapLines = resolvedPrototypes
+    .map(
+      ({ prototype, owner }, index) =>
+        `"${owner.slug}:${prototype.slug}": P${index},`
+    )
     .join("\n")
 
   const content =
