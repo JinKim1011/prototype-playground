@@ -23,15 +23,11 @@ export class DeletePrototypeError extends Error {
   }
 }
 
-export async function deletePrototype({
-  ownerId,
-  slug,
-}: PrototypeKey): Promise<void> {
-  if (
-    typeof ownerId !== "string" ||
-    typeof slug !== "string" ||
-    !isValidPrototypeKey({ ownerId, slug })
-  ) {
+export async function deletePrototype(
+  ownerSlug: string,
+  prototypeSlug: string
+): Promise<void> {
+  if (typeof ownerSlug !== "string" || typeof prototypeSlug !== "string") {
     throw new DeletePrototypeError("INVALID_KEY", "Invalid prototype key")
   }
 
