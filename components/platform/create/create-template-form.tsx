@@ -30,6 +30,8 @@ export default function CreateTemplateForm() {
   useEffect(() => {
     if (state.status === "success") {
       toast.success(state.message)
+    } else if (state.status === "error" && state.message) {
+      toast.error(state.message)
     }
   }, [state.status, state.message])
 
