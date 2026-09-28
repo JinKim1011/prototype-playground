@@ -95,7 +95,10 @@ export async function createPrototype(
       await transaction?.rollback().catch(() => {})
 
       if (metadataOwned) {
-        await removePrototype(ownerId, slug).catch(() => {})
+        await removePrototype({
+          ownerId,
+          slug,
+        }).catch(() => {})
         await generatePrototypeRegistry().catch(() => {})
       }
 

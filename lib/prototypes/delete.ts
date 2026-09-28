@@ -57,7 +57,10 @@ export async function deletePrototype({
         prototypeDirectory(ownerSlug, prototypeSlug)
       )
 
-      await removePrototype(ownerSlug, prototypeSlug)
+      await removePrototype({
+        ownerId: owner.id,
+        slug: prototypeSlug,
+      })
       metadataRemoved = true
 
       if (!metadataRemoved) {

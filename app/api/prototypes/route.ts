@@ -67,7 +67,10 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: "Owner not found" }, { status: 404 })
     }
 
-    await deletePrototype(owner.slug, input.slug)
+    await deletePrototype({
+      ownerSlug: owner.slug,
+      prototypeSlug: input.slug,
+    })
 
     revalidatePath(`/${owner.slug}/${input.slug}`)
     revalidatePath("/prototypes")

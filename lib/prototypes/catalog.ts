@@ -1,4 +1,8 @@
-import type { PrototypeEntry, PrototypesFile } from "@/types/prototypes"
+import type {
+  PrototypeEntry,
+  PrototypesFile,
+  PrototypeCatalogKey,
+} from "@/types/prototypes"
 import { readFile } from "node:fs/promises"
 import { writeFileAtomically } from "@/lib/fs/atomic-write"
 import path from "node:path"
@@ -25,13 +29,13 @@ export async function getAllPrototypes(): Promise<PrototypeEntry[]> {
   return data.entries
 }
 
-export async function prototypeExists(
-  ownerId: string,
-  prototypeSlug: string
-): Promise<boolean> {
+export async function prototypeExists({
+  ownerId,
+  slug,
+}: PrototypeCatalogKey): Promise<boolean> {
   const entries = await getAllPrototypes()
   return entries.some(
-    (entry) => entry.ownerId === ownerId && entry.slug === prototypeSlug
+    (entry) => entry.ownerId === ownerId && entry.slug === slug
   )
 }
 
@@ -42,15 +46,15 @@ export async function addPrototype(entry: PrototypeEntry): Promise<void> {
   }))
 }
 
-export async function removePrototype(
-  ownerId: string,
-  prototypeSlug: string
-): Promise<PrototypeEntry> {
+export async function removePrototype({
+  ownerId,
+  slug,
+}: PrototypeCatalogKey): Promise<PrototypeEntry> {
   let removedPrototype: PrototypeEntry | undefined
 
   await updatePrototypes((metadata) => {
     removedPrototype = metadata.entries.find(
-      (entry) => entry.slug === prototypeSlug && entry.ownerId === ownerId
+      (entry) => entry.slug === slug && entry.ownerId === ownerId
     )
 
     if (!removedPrototype) {
@@ -60,7 +64,7 @@ export async function removePrototype(
     return {
       ...metadata,
       entries: metadata.entries.filter(
-        (entry) => !(entry.slug === prototypeSlug && entry.ownerId === ownerId)
+        (entry) => !(entry.slug === slug && entry.ownerId === ownerId)
       ),
     }
   })
