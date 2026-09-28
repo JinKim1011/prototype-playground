@@ -35,6 +35,8 @@ export function PrototypeItemActions({
     event.preventDefault()
     event.stopPropagation()
 
+    const title = prototype.title
+
     try {
       const response = await fetch("/api/prototypes", {
         method: "DELETE",
@@ -62,7 +64,7 @@ export function PrototypeItemActions({
         type="button"
         size="icon-xs"
         variant="outline"
-        aria-label={`Edit ${title}`}
+        aria-label={`Edit ${prototype.title}`}
         className="hover:bg-foreground/10"
         onClick={handleOpenInEditor}
       >
@@ -74,7 +76,7 @@ export function PrototypeItemActions({
         size="icon-xs"
         variant="outline"
         className="hover:bg-foreground/10"
-        aria-label={`Delete ${title}`}
+        aria-label={`Delete ${prototype.title}`}
         onClick={handleDelete}
       >
         <TrashSimpleIcon />
