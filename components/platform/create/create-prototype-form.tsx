@@ -87,7 +87,7 @@ export default function CreatePrototypeForm({
             <Field data-invalid={!!state.errors?.owner}>
               <Select
                 items={ownerItems}
-                name="owner"
+                name="ownerId"
                 aria-invalid={!!state.errors?.owner}
                 aria-describedby={
                   state.errors?.owner ? "owner-error" : undefined
