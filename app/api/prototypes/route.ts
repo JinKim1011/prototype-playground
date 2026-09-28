@@ -61,7 +61,7 @@ export async function DELETE(request: Request) {
   try {
     const input = await request.json()
 
-    await deletePrototype({ owner: input.owner, slug: input.slug })
+    await deletePrototype({ ownerId: input.owner, slug: input.slug })
 
     revalidatePath(`/${input.owner}/${input.slug}`)
     revalidatePath("/prototypes")
