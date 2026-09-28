@@ -85,16 +85,29 @@ export default function CreatePrototypeForm({
             </Field>
 
             <Field data-invalid={!!state.errors?.owner}>
-              <Input
-                id="owner"
+              <Select
+                items={ownerItems}
                 name="owner"
-                placeholder="Enter owner"
-                required
                 aria-invalid={!!state.errors?.owner}
                 aria-describedby={
                   state.errors?.owner ? "owner-error" : undefined
                 }
-              />
+                required
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Owner" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Select an owner or create one</SelectLabel>
+                    {ownerItems.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
               <FieldError id="owner-error">{state.errors?.owner}</FieldError>
             </Field>
 
