@@ -1,12 +1,21 @@
 import { PrototypeKey } from "@/types/prototypes"
 import path from "node:path"
+import { getOwnerById } from "../owners/catalog"
 
 const prototypesRoot = path.join(process.cwd(), "prototypes")
 
-export function prototypeDirectory({ owner, slug }: PrototypeKey) {
-  return path.join(prototypesRoot, owner, slug)
+export async function prototypeDirectory({ ownerId, slug }: PrototypeKey) {
+  const owner = await getOwnerById(ownerId)
+
+  if (!owner) {
+    throw new Error(`Onwer(${ownerId}) not found.`)
+  }
+
+  return path.join(prototypesRoot, owner.slug, slug)
 }
 
-export function prototypePage({ owner, slug }: PrototypeKey) {
-  return path.join(prototypeDirectory({ owner, slug }), "page.tsx")
+export async function prototypePage({ ownerId, slug }: PrototypeKey) {
+  const directory = await prototypeDirectory({ ownerId, slug })
+
+  return path.join(directory, "page.tsx")
 }
