@@ -39,7 +39,8 @@ export async function deletePrototype({
     const entries = await getAllPrototypes()
     const entry = entries.find(
       (currentPrototype) =>
-        currentPrototype.ownerId === ownerId && currentPrototype.slug === slug
+        currentPrototype.ownerId === owner.id &&
+        currentPrototype.slug === prototypeSlug
     )
 
     if (!entry) {
