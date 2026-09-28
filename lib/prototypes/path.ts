@@ -8,8 +8,8 @@ export function prototypeDirectory(ownerSlug: string, prototypeSlug: string) {
   return path.join(prototypesRoot, ownerSlug, prototypeSlug)
 }
 
-export async function prototypePage({ ownerId, slug }: PrototypeKey) {
-  const directory = await prototypeDirectory({ ownerId, slug })
+export function prototypePage(ownerSlug: string, prototypeSlug: string) {
+  const directory = prototypeDirectory(ownerSlug, prototypeSlug)
 
   return path.join(directory, "page.tsx")
 }
