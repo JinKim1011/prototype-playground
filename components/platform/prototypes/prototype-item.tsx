@@ -53,7 +53,8 @@ export function PrototypeItem({ prototype, owner }: PrototypeItemProps) {
 
       <div className="relative z-10">
         <PrototypeItemActions
-          owner={prototype.ownerId}
+          ownerId={owner.id}
+          ownerSlug={owner.slug}
           slug={prototype.slug}
           title={prototype.title}
         />
