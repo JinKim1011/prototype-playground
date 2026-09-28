@@ -15,7 +15,7 @@ type PrototypeItemProps = {
   owner: OwnerEntry
 }
 
-export async function PrototypeItem({ prototype, owner }: PrototypeItemProps) {
+export function PrototypeItem({ prototype, owner }: PrototypeItemProps) {
   const prototypePath = `${owner.slug}/${prototype.slug}`
 
   return (
