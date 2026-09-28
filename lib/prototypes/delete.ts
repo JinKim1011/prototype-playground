@@ -31,6 +31,12 @@ export async function deletePrototype(
     throw new DeletePrototypeError("INVALID_KEY", "Invalid prototype key")
   }
 
+  const owner = await getOwnerBySlug(ownerSlug)
+
+  if (!owner) {
+    throw new DeletePrototypeError("NOT_FOUND", "Owner not found")
+  }
+
   await withKeyedLock("prototype-publication", async () => {
     const entries = await getAllPrototypes()
     const entry = entries.find(
