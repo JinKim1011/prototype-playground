@@ -54,7 +54,7 @@ export async function createPrototype(
 
   const template = await getTemplate(templateId)
   const templateDirectory = getTemplateDirectory(template.slug)
-  const destinationDirectory = prototypeDirectory({ ownerId, slug })
+  const destinationDirectory = prototypeDirectory(ownerEntry.slug, slug)
 
   const now = new Date().toISOString()
 
