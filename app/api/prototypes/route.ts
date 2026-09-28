@@ -61,10 +61,15 @@ export async function DELETE(request: Request) {
 
   try {
     const input = await request.json()
+    const owner = await getOwnerById(input.ownerId)
 
-    await deletePrototype({ ownerId: input.owner, slug: input.slug })
+    if (!owner) {
+      return NextResponse.json({ error: "Owner not found" }, { status: 404 })
+    }
 
-    revalidatePath(`/${input.owner}/${input.slug}`)
+    await deletePrototype(owner.slug, input.slug)
+
+    revalidatePath(`/${owner.slug}/${input.slug}`)
     revalidatePath("/prototypes")
 
     return new NextResponse(null, { status: 204 })
