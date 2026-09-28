@@ -27,11 +27,13 @@ export async function getAllPrototypes(): Promise<PrototypeEntry[]> {
 }
 
 export async function prototypeExists({
-  owner,
+  ownerId,
   slug,
 }: PrototypeKey): Promise<boolean> {
   const entries = await getAllPrototypes()
-  return entries.some((entry) => entry.owner === owner && entry.slug === slug)
+  return entries.some(
+    (entry) => entry.ownerId === ownerId && entry.slug === slug
+  )
 }
 
 export async function addPrototype(entry: PrototypeEntry): Promise<void> {
@@ -42,14 +44,14 @@ export async function addPrototype(entry: PrototypeEntry): Promise<void> {
 }
 
 export async function removePrototype({
-  owner,
+  ownerId,
   slug,
 }: PrototypeKey): Promise<PrototypeEntry> {
   let removedPrototype: PrototypeEntry | undefined
 
   await updatePrototypes((metadata) => {
     removedPrototype = metadata.entries.find(
-      (entry) => entry.owner === owner && entry.slug === slug
+      (entry) => entry.ownerId === ownerId && entry.slug === slug
     )
 
     if (!removedPrototype) {
@@ -59,7 +61,7 @@ export async function removePrototype({
     return {
       ...metadata,
       entries: metadata.entries.filter(
-        (entry) => !(entry.owner === owner && entry.slug === slug)
+        (entry) => !(entry.ownerId === ownerId && entry.slug === slug)
       ),
     }
   })
@@ -103,7 +105,8 @@ export async function addPrototypeIfAvailable(
   await updatePrototypes((metadata) => {
     const exists = metadata.entries.some(
       (currentEntry) =>
-        currentEntry.owner === entry.owner && currentEntry.slug === entry.slug
+        currentEntry.ownerId === entry.ownerId &&
+        currentEntry.slug === entry.slug
     )
 
     if (exists) {
