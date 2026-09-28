@@ -1,4 +1,3 @@
-import { PrototypeKey } from "@/types/prototypes"
 import { withKeyedLock } from "@/lib/fs/keyed-lock"
 import {
   addPrototype,
@@ -10,8 +9,8 @@ import { prototypeDirectory } from "./path"
 import {
   DirectoryRemovalTransaction,
   prepareDirectoryRemoval,
-} from "../fs/atomic-remove-directory"
-import { isValidPrototypeKey } from "./validate"
+} from "@/lib/fs/atomic-remove-directory"
+import { getOwnerBySlug } from "../owners/catalog"
 
 export class DeletePrototypeError extends Error {
   readonly code: "INVALID_KEY" | "NOT_FOUND"
