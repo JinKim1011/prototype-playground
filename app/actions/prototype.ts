@@ -2,10 +2,11 @@
 
 import { revalidatePath } from "next/cache"
 import { createPrototype, CreatePrototypeError } from "@/lib/prototypes/create"
+import { getOwnerById } from "@/lib/owners/catalog"
 
 type CreatePrototypeErrors = {
   title?: string
-  owner?: string
+  ownerId?: string
   fromTemplateId?: string
 }
 
@@ -27,16 +28,16 @@ export async function createPrototypeAction(
   }
 
   const title = String(formData.get("title") ?? "").trim()
-  const owner = String(formData.get("owner") ?? "").trim()
+  const ownerId = String(formData.get("ownerId") ?? "").trim()
   const description = String(formData.get("description") ?? "").trim()
   const fromTemplateId = String(formData.get("fromTemplateId") ?? "").trim()
 
-  if (!title || !owner || !fromTemplateId) {
+  if (!title || !ownerId || !fromTemplateId) {
     return {
       status: "error",
       errors: {
         title: !title ? "Please enter a prototype title" : undefined,
-        owner: !owner ? "Please select or create an owner" : undefined,
+        ownerId: !ownerId ? "Please select or create an owner" : undefined,
         fromTemplateId: !fromTemplateId
           ? "Please select a template"
           : undefined,
@@ -47,13 +48,19 @@ export async function createPrototypeAction(
   try {
     const entry = await createPrototype({
       title,
-      owner,
+      ownerId,
       description,
       fromTemplateId,
     })
 
+    const owner = await getOwnerById(entry.ownerId)
+
+    if (!owner) {
+      throw new CreatePrototypeError("INVALID_INPUT", "Owner not found")
+    }
+
     revalidatePath("/prototypes")
-    revalidatePath(`/${entry.owner}/${entry.slug}`)
+    revalidatePath(`/${owner.slug}/${entry.slug}`)
 
     return {
       status: "success",
