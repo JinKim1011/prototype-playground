@@ -23,7 +23,7 @@ export function PrototypeItemActions({
     event.stopPropagation()
 
     try {
-      await openInEditor(`/${ownerSlug}/${slug}`)
+      await openInEditor(`/${ownerSlug}/${prototype.slug}`)
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Failed to open editor"
