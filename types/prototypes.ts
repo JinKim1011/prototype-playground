@@ -3,7 +3,7 @@ export type PrototypeKey = {
   slug: string
 }
 
-export type CreatePrototypeInput = Pick<PrototypeKey, "owner"> & {
+export type CreatePrototypeInput = {
   title: string
   ownerId: string
   description?: string
