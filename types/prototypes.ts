@@ -1,3 +1,8 @@
+export type PrototypeCatalogKey = {
+  ownerId: string
+  slug: string
+}
+
 export type CreatePrototypeInput = {
   title: string
   ownerId: string
