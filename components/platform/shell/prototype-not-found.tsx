@@ -5,7 +5,9 @@ import Link from "next/link"
 
 type PrototypeNotFoundReason = "missing-entry" | "missing-files"
 
-type PrototypeNotFoundProps = PrototypeKey & {
+type PrototypeNotFoundProps = {
+  owner: string
+  slug: string
   reason: PrototypeNotFoundReason
 }
 
