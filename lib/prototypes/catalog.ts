@@ -31,7 +31,7 @@ export async function prototypeExists(
 ): Promise<boolean> {
   const entries = await getAllPrototypes()
   return entries.some(
-    (entry) => entry.ownerId === ownerId && entry.slug === slug
+    (entry) => entry.ownerId === ownerId && entry.slug === prototypeSlug
   )
 }
 
