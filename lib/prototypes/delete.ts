@@ -51,7 +51,7 @@ export async function deletePrototype({
 
     try {
       transaction = await prepareDirectoryRemoval(
-        await prototypeDirectory({ ownerId, slug })
+        prototypeDirectory(ownerSlug, prototypeSlug)
       )
 
       await removePrototype(ownerSlug, prototypeSlug)
