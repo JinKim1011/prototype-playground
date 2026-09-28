@@ -4,6 +4,7 @@ import { execFile } from "node:child_process"
 import { promisify } from "node:util"
 import { isValidateSegment } from "@/lib/prototypes/validate"
 import { getTemplatePage } from "@/lib/templates/path"
+import { getOwnerBySlug } from "@/lib/owners/catalog"
 
 const execFileAsync = promisify(execFile)
 
@@ -49,18 +50,24 @@ export async function POST(request: Request) {
       )
     }
 
-    const [owner, slug] = segments
+    const [ownerSlug, slug] = segments
 
-    if (!isValidateSegment(owner) || !isValidateSegment(slug)) {
+    if (!isValidateSegment(ownerSlug) || !isValidateSegment(slug)) {
       return NextResponse.json(
         { error: "Invalid prototype pathname" },
         { status: 400 }
       )
     }
 
+    const owner = await getOwnerBySlug(ownerSlug)
+
+    if (!owner) {
+      return NextResponse.json({ error: "Owner not found" }, { status: 404 })
+    }
+
     await execFileAsync("code", [
       "--reuse-window",
-      prototypePage({ owner, slug }),
+      prototypePage(owner.slug, slug),
     ])
 
     return NextResponse.json({ ok: true })
