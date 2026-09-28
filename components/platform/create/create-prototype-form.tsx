@@ -26,6 +26,7 @@ import {
 import { Button } from "@/components/platform/ui/button"
 import { Textarea } from "@/components/platform/ui/textarea"
 import { TemplateEntry } from "@/types/templates"
+import { OwnerEntry } from "@/types/owners"
 
 const initialState: CreatePrototypeState = {
   status: "idle",
@@ -33,10 +34,12 @@ const initialState: CreatePrototypeState = {
 
 type CreatePrototypeFormProps = {
   templates: TemplateEntry[]
+  owners: OwnerEntry[]
 }
 
 export default function CreatePrototypeForm({
   templates,
+  owners,
 }: CreatePrototypeFormProps) {
   const [state, formAction, pending] = useActionState(
     createPrototypeAction,
@@ -54,6 +57,11 @@ export default function CreatePrototypeForm({
   const templateItems = templates.map((tempalte) => ({
     value: tempalte.id,
     label: tempalte.title,
+  }))
+
+  const ownerItems = owners.map((owner) => ({
+    value: owner.id,
+    label: owner.title,
   }))
 
   return (
