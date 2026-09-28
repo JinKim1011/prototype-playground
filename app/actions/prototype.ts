@@ -26,10 +26,10 @@ export async function createPrototypeAction(
     }
   }
 
-  const title = String(formData.get("title") ?? "")
-  const owner = String(formData.get("owner") ?? "")
-  const description = String(formData.get("description") ?? "")
-  const fromTemplateId = String(formData.get("fromTemplateId") ?? "")
+  const title = String(formData.get("title") ?? "").trim()
+  const owner = String(formData.get("owner") ?? "").trim()
+  const description = String(formData.get("description") ?? "").trim()
+  const fromTemplateId = String(formData.get("fromTemplateId") ?? "").trim()
 
   if (!title || !owner || !fromTemplateId) {
     return {
