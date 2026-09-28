@@ -41,9 +41,9 @@ export function PrototypeItemGroup({ prototypes, owners }: Props) {
   return (
     <>
       <PrototypeToggleGroup
-        owners={owners}
-        value={effectiveSelectedOwner}
-        onValueChange={setSelectedOwner}
+        owners={availableOwners}
+        value={effectiveSelectedOwnerId}
+        onValueChange={setSelectedOwnerId}
         className="mt-4"
       />
       <ItemGroup className="-mx-2 w-[calc(100%+1rem)] py-2">
@@ -55,9 +55,21 @@ export function PrototypeItemGroup({ prototypes, owners }: Props) {
             Created prototypes will appear here.
           </Typography>
         ) : (
-          visiblePrototypes.map((prototype) => (
-            <PrototypeItem key={prototype.id} prototype={prototype} />
-          ))
+          visiblePrototypes.map((prototype) => {
+            const owner = ownersById.get(prototype.ownerId)
+
+            if (!owner) {
+              return null
+            }
+
+            return (
+              <PrototypeItem
+                key={prototype.id}
+                prototype={prototype}
+                owner={owner}
+              />
+            )
+          })
         )}
       </ItemGroup>
     </>
