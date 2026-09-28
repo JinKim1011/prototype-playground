@@ -39,12 +39,12 @@ export default function CreateTemplateForm() {
     <div className="w-full max-w-md p-4">
       <form action={formAction} noValidate>
         <FieldGroup>
-          <FieldSet className="gap-2">
+          <FieldSet className="gap-1">
             <Field>
               <FieldLegend>Details</FieldLegend>
               <Input
                 id="title"
-                placeholder="Enter title"
+                placeholder="Title"
                 name="title"
                 required
                 aria-invalid={!!state.errors?.title}
