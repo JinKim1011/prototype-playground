@@ -12,7 +12,7 @@ export type CreatePrototypeInput = Pick<PrototypeKey, "owner"> & {
 export type PrototypeEntry = {
   id: string
   owner: string
-  templateId?: string | null
+  templateId: string
   slug: string
   title: string
   description: string
