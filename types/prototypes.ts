@@ -9,10 +9,15 @@ export type CreatePrototypeInput = Pick<PrototypeKey, "owner"> & {
   fromTemplateId?: string
 }
 
-export type PrototypeEntry = PrototypeListItem & {
-  description: string
-  createdAt: string
+export type PrototypeEntry = {
+  id: string
+  owner: string
   templateId?: string | null
+  slug: string
+  title: string
+  description: string
+  updatedAt: string
+  createdAt: string
 }
 
 export type PrototypesFile = {
