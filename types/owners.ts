@@ -1,6 +1,6 @@
 export type OwnerEntry = {
   id: string
-  name: string
+  title: string
   slug: string
 }
 
