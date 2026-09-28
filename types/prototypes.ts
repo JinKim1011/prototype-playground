@@ -1,8 +1,3 @@
-export type PrototypeKey = {
-  ownerId: string
-  slug: string
-}
-
 export type CreatePrototypeInput = {
   title: string
   ownerId: string
