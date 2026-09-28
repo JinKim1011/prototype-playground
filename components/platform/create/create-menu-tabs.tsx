@@ -7,12 +7,14 @@ import {
 import { TemplateEntry } from "@/types/templates"
 import CreateTemplateForm from "./create-template-form"
 import CreatePrototyeForm from "./create-prototype-form"
+import { type OwnerEntry } from "@/types/owners"
 
 type CreateMenuProps = {
   templates: TemplateEntry[]
+  owners: OwnerEntry[]
 }
 
-export default function CreateMenuTabs({ templates }: CreateMenuProps) {
+export default function CreateMenuTabs({ templates, owners }: CreateMenuProps) {
   return (
     <Tabs>
       <div className="w-full justify-center border-b-[0.5px] border-border pt-1">
@@ -24,7 +26,7 @@ export default function CreateMenuTabs({ templates }: CreateMenuProps) {
         </TabsList>
       </div>
       <TabsContent value="prototype">
-        <CreatePrototyeForm templates={templates} />
+        <CreatePrototyeForm templates={templates} owners={owners} />
       </TabsContent>
       <TabsContent value="template">
         <CreateTemplateForm />
