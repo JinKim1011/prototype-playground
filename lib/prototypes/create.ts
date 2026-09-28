@@ -54,13 +54,13 @@ export async function createPrototype(
 
   const template = await getTemplate(templateId)
   const templateDirectory = getTemplateDirectory(template.slug)
-  const destinationDirectory = prototypeDirectory({ owner, slug })
+  const destinationDirectory = prototypeDirectory({ ownerId, slug })
 
   const now = new Date().toISOString()
 
   const entry: PrototypeEntry = {
-    id: `prototype:${owner}:${slug}`,
-    owner,
+    id: `prototype:${ownerEntry.slug}:${slug}`,
+    ownerId,
     slug,
     title,
     description: input.description?.trim() ?? "",
@@ -95,7 +95,7 @@ export async function createPrototype(
       await transaction?.rollback().catch(() => {})
 
       if (metadataOwned) {
-        await removePrototype({ owner, slug }).catch(() => {})
+        await removePrototype({ ownerId, slug }).catch(() => {})
         await generatePrototypeRegistry().catch(() => {})
       }
 
