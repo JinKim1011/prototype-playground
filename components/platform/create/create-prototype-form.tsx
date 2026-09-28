@@ -68,7 +68,7 @@ export default function CreatePrototypeForm({
     <div className="w-full p-4">
       <form action={formAction} noValidate>
         <FieldGroup>
-          <FieldSet className="gap-2">
+          <FieldSet className="gap-1">
             <FieldLegend>Details</FieldLegend>
             <Field data-invalid={!!state.errors?.title}>
               <Input
@@ -120,7 +120,7 @@ export default function CreatePrototypeForm({
             </Field>
           </FieldSet>
 
-          <FieldSet className="gap-2">
+          <FieldSet>
             <FieldLegend>Template</FieldLegend>
 
             <Field data-invalid={!!state.errors?.fromTemplateId}>
