@@ -6,13 +6,19 @@ import { PencilSimpleLineIcon, TrashSimpleIcon } from "@phosphor-icons/react"
 import { toast } from "@/components/platform/ui/toaster"
 import { openInEditor } from "@/lib/dev/open-in-editor"
 
-type Props = {
-  owner: string
+type PrototypeItemActionsProps = {
+  ownerId: string
+  ownerSlug: string
   slug: string
   title: string
 }
 
-export function PrototypeItemActions({ owner, slug, title }: Props) {
+export function PrototypeItemActions({
+  ownerId,
+  ownerSlug,
+  slug,
+  title,
+}: PrototypeItemActionsProps) {
   const router = useRouter()
 
   async function handleOpenInEditor(event: React.MouseEvent) {
@@ -20,7 +26,7 @@ export function PrototypeItemActions({ owner, slug, title }: Props) {
     event.stopPropagation()
 
     try {
-      await openInEditor(`/${owner}/${slug}`)
+      await openInEditor(`/${ownerSlug}/${slug}`)
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Failed to open editor"
@@ -36,7 +42,7 @@ export function PrototypeItemActions({ owner, slug, title }: Props) {
       const response = await fetch("/api/prototypes", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ owner, slug }),
+        body: JSON.stringify({ ownerId, slug }),
       })
 
       if (!response.ok) {
