@@ -85,7 +85,7 @@ export async function createPrototype(
 
       transaction = await prepareDirectoryCopy(
         templateDirectory,
-        destinationDirectory
+        await destinationDirectory
       )
 
       await generatePrototypeRegistry()
