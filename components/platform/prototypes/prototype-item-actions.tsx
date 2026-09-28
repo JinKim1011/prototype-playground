@@ -5,14 +5,17 @@ import { Button } from "@/components/platform/ui/button"
 import { PencilSimpleLineIcon, TrashSimpleIcon } from "@phosphor-icons/react"
 import { toast } from "@/components/platform/ui/toaster"
 import { openInEditor } from "@/lib/dev/open-in-editor"
+import type { PrototypeListItem } from "@/types/prototypes"
 
-type Props = {
-  owner: string
-  slug: string
-  title: string
+type PrototypeItemActionsProps = {
+  prototype: PrototypeListItem
+  ownerSlug: string
 }
 
-export function PrototypeItemActions({ owner, slug, title }: Props) {
+export function PrototypeItemActions({
+  prototype,
+  ownerSlug,
+}: PrototypeItemActionsProps) {
   const router = useRouter()
 
   async function handleOpenInEditor(event: React.MouseEvent) {
@@ -20,7 +23,7 @@ export function PrototypeItemActions({ owner, slug, title }: Props) {
     event.stopPropagation()
 
     try {
-      await openInEditor(`/${owner}/${slug}`)
+      await openInEditor(`/${ownerSlug}/${prototype.slug}`)
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Failed to open editor"
@@ -32,11 +35,16 @@ export function PrototypeItemActions({ owner, slug, title }: Props) {
     event.preventDefault()
     event.stopPropagation()
 
+    const title = prototype.title
+
     try {
       const response = await fetch("/api/prototypes", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ owner, slug }),
+        body: JSON.stringify({
+          ownerId: prototype.ownerId,
+          slug: prototype.slug,
+        }),
       })
 
       if (!response.ok) {
@@ -59,7 +67,7 @@ export function PrototypeItemActions({ owner, slug, title }: Props) {
         type="button"
         size="icon-xs"
         variant="outline"
-        aria-label={`Edit ${title}`}
+        aria-label={`Edit ${prototype.title}`}
         className="hover:bg-foreground/10"
         onClick={handleOpenInEditor}
       >
@@ -71,7 +79,7 @@ export function PrototypeItemActions({ owner, slug, title }: Props) {
         size="icon-xs"
         variant="outline"
         className="hover:bg-foreground/10"
-        aria-label={`Delete ${title}`}
+        aria-label={`Delete ${prototype.title}`}
         onClick={handleDelete}
       >
         <TrashSimpleIcon />

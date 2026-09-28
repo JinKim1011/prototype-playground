@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 import { revalidatePath } from "next/cache"
 import { createPrototype, CreatePrototypeError } from "@/lib/prototypes/create"
 import { deletePrototype, DeletePrototypeError } from "@/lib/prototypes/delete"
+import { getOwnerById } from "@/lib/owners/catalog"
 
 const createPrototypeStatus: Record<CreatePrototypeError["code"], number> = {
   DUPLICATE_SLUG: 409,
@@ -25,8 +26,13 @@ export async function POST(request: Request) {
   try {
     const input = await request.json()
     const entry = await createPrototype(input)
+    const owner = await getOwnerById(entry.ownerId)
 
-    revalidatePath(`/${entry.owner}/${entry.slug}`)
+    if (!owner) {
+      return NextResponse.json({ error: "Owner not found" }, { status: 404 })
+    }
+
+    revalidatePath(`/${owner.slug}/${entry.slug}`)
     revalidatePath("/prototypes")
 
     return NextResponse.json(entry, { status: 201 })
@@ -55,10 +61,18 @@ export async function DELETE(request: Request) {
 
   try {
     const input = await request.json()
+    const owner = await getOwnerById(input.ownerId)
 
-    await deletePrototype({ owner: input.owner, slug: input.slug })
+    if (!owner) {
+      return NextResponse.json({ error: "Owner not found" }, { status: 404 })
+    }
 
-    revalidatePath(`/${input.owner}/${input.slug}`)
+    await deletePrototype({
+      ownerSlug: owner.slug,
+      prototypeSlug: input.slug,
+    })
+
+    revalidatePath(`/${owner.slug}/${input.slug}`)
     revalidatePath("/prototypes")
 
     return new NextResponse(null, { status: 204 })

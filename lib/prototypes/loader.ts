@@ -1,23 +1,25 @@
-import type { PrototypeKey } from "@/types/prototypes"
 import type { ComponentType } from "react"
+import type { PrototypeRouteKey } from "@/lib/prototypes/keys"
 
 const RETRY_ATTEMPTS = process.env.NODE_ENV === "development" ? 5 : 1
 
 const RETRY_DELAY_MS = 150
 
 export async function loadPrototypeModuleWithRetry({
-  owner,
-  slug,
-}: PrototypeKey): Promise<ComponentType> {
+  ownerSlug,
+  prototypeSlug,
+}: PrototypeRouteKey): Promise<ComponentType> {
   let lastError: unknown
 
   for (let attempt = 0; attempt < RETRY_ATTEMPTS; attempt++) {
     try {
-      const module = await import(`@/prototypes/${owner}/${slug}/page`)
+      const module = await import(
+        `@/prototypes/${ownerSlug}/${prototypeSlug}/page`
+      )
 
       if (!module.default) {
         throw new Error(
-          `Prototype "${owner}/${slug}" does not export a default component`
+          `Prototype "${ownerSlug}/${prototypeSlug}" does not export a default component`
         )
       }
 

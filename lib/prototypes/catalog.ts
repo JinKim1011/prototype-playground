@@ -1,5 +1,8 @@
-import type { PrototypeEntry, PrototypesFile } from "@/types/prototypes"
-import type { PrototypeKey } from "@/types/prototypes"
+import type {
+  PrototypeEntry,
+  PrototypesFile,
+  PrototypeCatalogKey,
+} from "@/types/prototypes"
 import { readFile } from "node:fs/promises"
 import { writeFileAtomically } from "@/lib/fs/atomic-write"
 import path from "node:path"
@@ -27,11 +30,13 @@ export async function getAllPrototypes(): Promise<PrototypeEntry[]> {
 }
 
 export async function prototypeExists({
-  owner,
+  ownerId,
   slug,
-}: PrototypeKey): Promise<boolean> {
+}: PrototypeCatalogKey): Promise<boolean> {
   const entries = await getAllPrototypes()
-  return entries.some((entry) => entry.owner === owner && entry.slug === slug)
+  return entries.some(
+    (entry) => entry.ownerId === ownerId && entry.slug === slug
+  )
 }
 
 export async function addPrototype(entry: PrototypeEntry): Promise<void> {
@@ -42,14 +47,14 @@ export async function addPrototype(entry: PrototypeEntry): Promise<void> {
 }
 
 export async function removePrototype({
-  owner,
+  ownerId,
   slug,
-}: PrototypeKey): Promise<PrototypeEntry> {
+}: PrototypeCatalogKey): Promise<PrototypeEntry> {
   let removedPrototype: PrototypeEntry | undefined
 
   await updatePrototypes((metadata) => {
     removedPrototype = metadata.entries.find(
-      (entry) => entry.owner === owner && entry.slug === slug
+      (entry) => entry.slug === slug && entry.ownerId === ownerId
     )
 
     if (!removedPrototype) {
@@ -59,7 +64,7 @@ export async function removePrototype({
     return {
       ...metadata,
       entries: metadata.entries.filter(
-        (entry) => !(entry.owner === owner && entry.slug === slug)
+        (entry) => !(entry.slug === slug && entry.ownerId === ownerId)
       ),
     }
   })
@@ -103,7 +108,8 @@ export async function addPrototypeIfAvailable(
   await updatePrototypes((metadata) => {
     const exists = metadata.entries.some(
       (currentEntry) =>
-        currentEntry.owner === entry.owner && currentEntry.slug === entry.slug
+        currentEntry.ownerId === entry.ownerId &&
+        currentEntry.slug === entry.slug
     )
 
     if (exists) {

@@ -7,12 +7,14 @@ import {
 import { Button } from "@/components/platform/ui/button"
 import CreateMenuTabs from "@/components/platform/create/create-menu-tabs"
 import { CaretDownIcon } from "@phosphor-icons/react/dist/ssr"
+import { type OwnerEntry } from "@/types/owners"
 
 type CreateMenuProps = {
   templates: TemplateEntry[]
+  owners: OwnerEntry[]
 }
 
-export function CreateMenu({ templates }: CreateMenuProps) {
+export function CreateMenu({ templates, owners }: CreateMenuProps) {
   return (
     <Popover>
       <PopoverTrigger
@@ -23,8 +25,8 @@ export function CreateMenu({ templates }: CreateMenuProps) {
           </Button>
         }
       />
-      <PopoverContent className="w-90" align="end">
-        <CreateMenuTabs templates={templates} />
+      <PopoverContent className="w-80" align="end">
+        <CreateMenuTabs templates={templates} owners={owners} />
       </PopoverContent>
     </Popover>
   )

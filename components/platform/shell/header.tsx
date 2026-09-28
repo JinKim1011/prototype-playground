@@ -1,9 +1,11 @@
 import { Typography } from "@/components/platform/ui/typography"
 import { CreateMenu } from "@/components/platform/create/create-menu"
 import { readTemplateCatalog } from "@/lib/templates/catalog"
+import { getOwners } from "@/lib/owners/catalog"
 
 export async function Header() {
   const catalog = await readTemplateCatalog()
+  const owners = await getOwners()
   const templates = catalog.templates
 
   return (
@@ -11,7 +13,7 @@ export async function Header() {
       <Typography as="h1" variant="heading">
         Prototype Playground
       </Typography>
-      <CreateMenu templates={templates} />
+      <CreateMenu templates={templates} owners={owners} />
     </header>
   )
 }

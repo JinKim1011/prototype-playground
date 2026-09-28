@@ -26,6 +26,7 @@ import {
 import { Button } from "@/components/platform/ui/button"
 import { Textarea } from "@/components/platform/ui/textarea"
 import { TemplateEntry } from "@/types/templates"
+import { OwnerEntry } from "@/types/owners"
 
 const initialState: CreatePrototypeState = {
   status: "idle",
@@ -33,10 +34,12 @@ const initialState: CreatePrototypeState = {
 
 type CreatePrototypeFormProps = {
   templates: TemplateEntry[]
+  owners: OwnerEntry[]
 }
 
 export default function CreatePrototypeForm({
   templates,
+  owners,
 }: CreatePrototypeFormProps) {
   const [state, formAction, pending] = useActionState(
     createPrototypeAction,
@@ -56,11 +59,16 @@ export default function CreatePrototypeForm({
     label: tempalte.title,
   }))
 
+  const ownerItems = owners.map((owner) => ({
+    value: owner.id,
+    label: owner.title,
+  }))
+
   return (
     <div className="w-full p-4">
       <form action={formAction} noValidate>
         <FieldGroup>
-          <FieldSet className="gap-2">
+          <FieldSet className="gap-1">
             <FieldLegend>Details</FieldLegend>
             <Field data-invalid={!!state.errors?.title}>
               <Input
@@ -76,18 +84,31 @@ export default function CreatePrototypeForm({
               <FieldError id="title-error">{state.errors?.title}</FieldError>
             </Field>
 
-            <Field data-invalid={!!state.errors?.owner}>
-              <Input
-                id="owner"
-                name="owner"
-                placeholder="Enter owner"
-                required
-                aria-invalid={!!state.errors?.owner}
+            <Field data-invalid={!!state.errors?.ownerId}>
+              <Select
+                items={ownerItems}
+                name="ownerId"
+                aria-invalid={!!state.errors?.ownerId}
                 aria-describedby={
-                  state.errors?.owner ? "owner-error" : undefined
+                  state.errors?.ownerId ? "owner-error" : undefined
                 }
-              />
-              <FieldError id="owner-error">{state.errors?.owner}</FieldError>
+                required
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Owner" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Select an owner or create one</SelectLabel>
+                    {ownerItems.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              <FieldError id="owner-error">{state.errors?.ownerId}</FieldError>
             </Field>
 
             <Field>
@@ -99,7 +120,7 @@ export default function CreatePrototypeForm({
             </Field>
           </FieldSet>
 
-          <FieldSet className="gap-2">
+          <FieldSet>
             <FieldLegend>Template</FieldLegend>
 
             <Field data-invalid={!!state.errors?.fromTemplateId}>

@@ -1,11 +1,11 @@
-import type { PrototypeKey } from "@/types/prototypes"
 import { buttonVariants } from "@/components/platform/ui/button"
 import { Typography } from "@/components/platform/ui/typography"
+import type { PrototypeRouteKey } from "@/lib/prototypes/keys"
 import Link from "next/link"
 
 type PrototypeNotFoundReason = "missing-entry" | "missing-files"
 
-type PrototypeNotFoundProps = PrototypeKey & {
+type PrototypeNotFoundProps = PrototypeRouteKey & {
   reason: PrototypeNotFoundReason
 }
 
@@ -16,8 +16,8 @@ const messages: Record<PrototypeNotFoundReason, string> = {
 }
 
 export function PrototypeNotFound({
-  owner,
-  slug,
+  ownerSlug,
+  prototypeSlug,
   reason,
 }: PrototypeNotFoundProps) {
   const message = messages[reason]
@@ -28,7 +28,7 @@ export function PrototypeNotFound({
         Prototype not found
       </Typography>
       <Typography as="h2" variant="body" className="max-w-md">
-        {message} {owner}/{slug}
+        {message} {ownerSlug}/{prototypeSlug}
       </Typography>
 
       <Link href="/prototypes" className={buttonVariants()}>

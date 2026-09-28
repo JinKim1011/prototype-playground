@@ -14,6 +14,7 @@ import {
   DirectoryTransaction,
 } from "@/lib/fs/atomic-copy-directory"
 import { withKeyedLock } from "@/lib/fs/keyed-lock"
+import { getOwnerById } from "../owners/catalog"
 
 export class CreatePrototypeError extends Error {
   readonly code: "DUPLICATE_SLUG" | "INVALID_SEGMENT" | "INVALID_INPUT"
@@ -33,13 +34,13 @@ export async function createPrototype(
     throw new CreatePrototypeError("INVALID_INPUT", "Title is required")
   }
 
-  const owner = slugify(input.owner)
-  if (!owner) {
-    throw new CreatePrototypeError(
-      "INVALID_INPUT",
-      "Owner must contain at least one letter or number"
-    )
+  const ownerEntry = await getOwnerById(input.ownerId)
+
+  if (!ownerEntry) {
+    throw new CreatePrototypeError("INVALID_INPUT", "Owner not found")
   }
+
+  const ownerId = ownerEntry.id
 
   const slug = slugify(title)
   if (!slug) {
@@ -53,13 +54,13 @@ export async function createPrototype(
 
   const template = await getTemplate(templateId)
   const templateDirectory = getTemplateDirectory(template.slug)
-  const destinationDirectory = prototypeDirectory({ owner, slug })
+  const destinationDirectory = prototypeDirectory(ownerEntry.slug, slug)
 
   const now = new Date().toISOString()
 
   const entry: PrototypeEntry = {
-    id: `prototype:${owner}:${slug}`,
-    owner,
+    id: `prototype:${ownerEntry.slug}:${slug}`,
+    ownerId,
     slug,
     title,
     description: input.description?.trim() ?? "",
@@ -84,7 +85,7 @@ export async function createPrototype(
 
       transaction = await prepareDirectoryCopy(
         templateDirectory,
-        destinationDirectory
+        await destinationDirectory
       )
 
       await generatePrototypeRegistry()
@@ -94,7 +95,10 @@ export async function createPrototype(
       await transaction?.rollback().catch(() => {})
 
       if (metadataOwned) {
-        await removePrototype({ owner, slug }).catch(() => {})
+        await removePrototype({
+          ownerId,
+          slug,
+        }).catch(() => {})
         await generatePrototypeRegistry().catch(() => {})
       }
 

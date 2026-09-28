@@ -1,12 +1,13 @@
-import { PrototypeKey } from "@/types/prototypes"
 import path from "node:path"
 
 const prototypesRoot = path.join(process.cwd(), "prototypes")
 
-export function prototypeDirectory({ owner, slug }: PrototypeKey) {
-  return path.join(prototypesRoot, owner, slug)
+export function prototypeDirectory(ownerSlug: string, prototypeSlug: string) {
+  return path.join(prototypesRoot, ownerSlug, prototypeSlug)
 }
 
-export function prototypePage({ owner, slug }: PrototypeKey) {
-  return path.join(prototypeDirectory({ owner, slug }), "page.tsx")
+export function prototypePage(ownerSlug: string, prototypeSlug: string) {
+  const directory = prototypeDirectory(ownerSlug, prototypeSlug)
+
+  return path.join(directory, "page.tsx")
 }

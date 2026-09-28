@@ -31,7 +31,7 @@ function FieldLegend({
       data-slot="field-legend"
       data-variant={variant}
       className={cn(
-        "mb-2.5 data-[variant=label]:font-medium data-[variant=legend]:font-medium",
+        "mb-1.5 data-[variant=label]:font-medium data-[variant=legend]:font-medium",
         variant === "label"
           ? typographyStyles({ variant: "label-small" })
           : typographyStyles({ variant: "label" }),

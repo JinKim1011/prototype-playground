@@ -1,4 +1,3 @@
-import { PrototypeKey } from "@/types/prototypes"
 import { withKeyedLock } from "@/lib/fs/keyed-lock"
 import {
   addPrototype,
@@ -10,8 +9,9 @@ import { prototypeDirectory } from "./path"
 import {
   DirectoryRemovalTransaction,
   prepareDirectoryRemoval,
-} from "../fs/atomic-remove-directory"
-import { isValidPrototypeKey } from "./validate"
+} from "@/lib/fs/atomic-remove-directory"
+import { getOwnerBySlug } from "../owners/catalog"
+import type { PrototypeRouteKey } from "@/lib/prototypes/keys"
 
 export class DeletePrototypeError extends Error {
   readonly code: "INVALID_KEY" | "NOT_FOUND"
@@ -24,22 +24,25 @@ export class DeletePrototypeError extends Error {
 }
 
 export async function deletePrototype({
-  owner,
-  slug,
-}: PrototypeKey): Promise<void> {
-  if (
-    typeof owner !== "string" ||
-    typeof slug !== "string" ||
-    !isValidPrototypeKey({ owner, slug })
-  ) {
+  ownerSlug,
+  prototypeSlug,
+}: PrototypeRouteKey): Promise<void> {
+  if (typeof ownerSlug !== "string" || typeof prototypeSlug !== "string") {
     throw new DeletePrototypeError("INVALID_KEY", "Invalid prototype key")
+  }
+
+  const owner = await getOwnerBySlug(ownerSlug)
+
+  if (!owner) {
+    throw new DeletePrototypeError("NOT_FOUND", "Owner not found")
   }
 
   await withKeyedLock("prototype-publication", async () => {
     const entries = await getAllPrototypes()
     const entry = entries.find(
       (currentPrototype) =>
-        currentPrototype.owner === owner && currentPrototype.slug === slug
+        currentPrototype.ownerId === owner.id &&
+        currentPrototype.slug === prototypeSlug
     )
 
     if (!entry) {
@@ -51,10 +54,13 @@ export async function deletePrototype({
 
     try {
       transaction = await prepareDirectoryRemoval(
-        prototypeDirectory({ owner, slug })
+        prototypeDirectory(ownerSlug, prototypeSlug)
       )
 
-      await removePrototype({ owner, slug })
+      await removePrototype({
+        ownerId: owner.id,
+        slug: prototypeSlug,
+      })
       metadataRemoved = true
 
       if (!metadataRemoved) {
