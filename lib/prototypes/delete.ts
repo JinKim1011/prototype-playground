@@ -11,6 +11,7 @@ import {
   prepareDirectoryRemoval,
 } from "@/lib/fs/atomic-remove-directory"
 import { getOwnerBySlug } from "../owners/catalog"
+import type { PrototypeRouteKey } from "@/lib/prototypes/keys"
 
 export class DeletePrototypeError extends Error {
   readonly code: "INVALID_KEY" | "NOT_FOUND"
@@ -22,10 +23,10 @@ export class DeletePrototypeError extends Error {
   }
 }
 
-export async function deletePrototype(
-  ownerSlug: string,
-  prototypeSlug: string
-): Promise<void> {
+export async function deletePrototype({
+  ownerSlug,
+  prototypeSlug,
+}: PrototypeRouteKey): Promise<void> {
   if (typeof ownerSlug !== "string" || typeof prototypeSlug !== "string") {
     throw new DeletePrototypeError("INVALID_KEY", "Invalid prototype key")
   }

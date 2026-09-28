@@ -1,13 +1,14 @@
 import type { ComponentType } from "react"
+import type { PrototypeRouteKey } from "@/lib/prototypes/keys"
 
 const RETRY_ATTEMPTS = process.env.NODE_ENV === "development" ? 5 : 1
 
 const RETRY_DELAY_MS = 150
 
-export async function loadPrototypeModuleWithRetry(
-  ownerSlug: string,
-  prototypeSlug: string
-): Promise<ComponentType> {
+export async function loadPrototypeModuleWithRetry({
+  ownerSlug,
+  prototypeSlug,
+}: PrototypeRouteKey): Promise<ComponentType> {
   let lastError: unknown
 
   for (let attempt = 0; attempt < RETRY_ATTEMPTS; attempt++) {

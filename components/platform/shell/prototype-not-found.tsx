@@ -1,12 +1,11 @@
 import { buttonVariants } from "@/components/platform/ui/button"
 import { Typography } from "@/components/platform/ui/typography"
+import type { PrototypeRouteKey } from "@/lib/prototypes/keys"
 import Link from "next/link"
 
 type PrototypeNotFoundReason = "missing-entry" | "missing-files"
 
-type PrototypeNotFoundProps = {
-  ownerSlug: string
-  prototypeSlug: string
+type PrototypeNotFoundProps = PrototypeRouteKey & {
   reason: PrototypeNotFoundReason
 }
 
