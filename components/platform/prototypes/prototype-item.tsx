@@ -8,13 +8,15 @@ import {
 } from "@/components/platform/ui/item"
 import { PrototypeItemActions } from "@/components/platform/prototypes/prototype-item-actions"
 import type { PrototypeListItem } from "@/types/prototypes"
+import { OwnerEntry } from "@/types/owners"
 
-type Props = {
+type PrototypeItemProps = {
   prototype: PrototypeListItem
+  owner: OwnerEntry
 }
 
-export function PrototypeItem({ prototype }: Props) {
-  const prototypePath = `${prototype.owner.toLowerCase()}/${prototype.slug}`
+export async function PrototypeItem({ prototype, owner }: PrototypeItemProps) {
+  const prototypePath = `${owner.slug}/${prototype.slug}`
 
   return (
     <Item size="xs" className="relative">
@@ -40,7 +42,7 @@ export function PrototypeItem({ prototype }: Props) {
         <ItemContent className="flex min-w-0 items-center gap-2">
           <ItemTitle>{prototype.title}</ItemTitle>
           <ItemDescription>
-            <span className="group-hover/item:hidden">{prototype.owner}</span>
+            <span className="group-hover/item:hidden">{owner.title}</span>
 
             <span className="hidden group-hover/item:inline">
               {prototypePath}
@@ -51,7 +53,7 @@ export function PrototypeItem({ prototype }: Props) {
 
       <div className="relative z-10">
         <PrototypeItemActions
-          owner={prototype.owner}
+          owner={prototype.ownerId}
           slug={prototype.slug}
           title={prototype.title}
         />
