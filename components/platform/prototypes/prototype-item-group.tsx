@@ -6,28 +6,36 @@ import { PrototypeToggleGroup } from "@/components/platform/prototypes/prototype
 import { useState } from "react"
 import type { PrototypeListItem } from "@/types/prototypes"
 import { Typography } from "../ui/typography"
+import { OwnerEntry } from "@/types/owners"
 
 type Props = {
   prototypes: PrototypeListItem[]
+  owners: OwnerEntry[]
 }
 
-export function PrototypeItemGroup({ prototypes }: Props) {
-  const [selectedOwner, setSelectedOwner] = useState("all")
+export function PrototypeItemGroup({ prototypes, owners }: Props) {
+  const [selectedOwnerId, setSelectedOwnerId] = useState("all")
 
-  const owners = Array.from(
-    new Set(prototypes.map((prototype) => prototype.owner))
-  ).sort()
+  const ownersById = new Map(owners.map((owner) => [owner.id, owner]))
 
-  const effectiveSelectedOwner =
-    selectedOwner === "all" || owners.includes(selectedOwner)
-      ? selectedOwner
+  const availableOwners = Array.from(
+    new Set(prototypes.map((prototype) => prototype.ownerId))
+  )
+    .map((ownerId) => ownersById.get(ownerId))
+    .filter((owner): owner is OwnerEntry => owner !== undefined)
+    .sort((first, second) => first.title.localeCompare(second.title))
+
+  const effectiveSelectedOwnerId =
+    selectedOwnerId === "all" ||
+    availableOwners.some((owner) => owner.id === selectedOwnerId)
+      ? selectedOwnerId
       : "all"
 
   const visiblePrototypes =
-    effectiveSelectedOwner === "all"
+    effectiveSelectedOwnerId === "all"
       ? prototypes
       : prototypes.filter(
-          (prototype) => prototype.owner === effectiveSelectedOwner
+          (prototype) => prototype.ownerId === effectiveSelectedOwnerId
         )
 
   return (
