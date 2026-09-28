@@ -31,13 +31,13 @@ const initialState: CreatePrototypeState = {
   status: "idle",
 }
 
-type CreatePrototyeFormProps = {
+type CreatePrototypeFormProps = {
   templates: TemplateEntry[]
 }
 
-export default function CreatePrototyeForm({
+export default function CreatePrototypeForm({
   templates,
-}: CreatePrototyeFormProps) {
+}: CreatePrototypeFormProps) {
   const [state, formAction, pending] = useActionState(
     createPrototypeAction,
     initialState
