@@ -24,13 +24,13 @@ export class DeletePrototypeError extends Error {
 }
 
 export async function deletePrototype({
-  owner,
+  ownerId,
   slug,
 }: PrototypeKey): Promise<void> {
   if (
-    typeof owner !== "string" ||
+    typeof ownerId !== "string" ||
     typeof slug !== "string" ||
-    !isValidPrototypeKey({ owner, slug })
+    !isValidPrototypeKey({ ownerId, slug })
   ) {
     throw new DeletePrototypeError("INVALID_KEY", "Invalid prototype key")
   }
@@ -39,7 +39,7 @@ export async function deletePrototype({
     const entries = await getAllPrototypes()
     const entry = entries.find(
       (currentPrototype) =>
-        currentPrototype.owner === owner && currentPrototype.slug === slug
+        currentPrototype.ownerId === ownerId && currentPrototype.slug === slug
     )
 
     if (!entry) {
@@ -51,10 +51,10 @@ export async function deletePrototype({
 
     try {
       transaction = await prepareDirectoryRemoval(
-        prototypeDirectory({ owner, slug })
+        await prototypeDirectory({ ownerId, slug })
       )
 
-      await removePrototype({ owner, slug })
+      await removePrototype({ ownerId, slug })
       metadataRemoved = true
 
       if (!metadataRemoved) {
