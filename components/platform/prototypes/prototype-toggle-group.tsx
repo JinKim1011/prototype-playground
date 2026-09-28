@@ -4,9 +4,10 @@ import {
   ToggleGroup,
   ToggleGroupItem,
 } from "@/components/platform/ui/toggle-group"
+import { OwnerEntry } from "@/types/owners"
 
 type PrototypeToggleGroupProps = {
-  owners: string[]
+  owners: OwnerEntry[]
   value: string
   onValueChange: (owner: string) => void
   className?: string
@@ -39,8 +40,8 @@ export function PrototypeToggleGroup({
     >
       <ToggleGroupItem value="all">All</ToggleGroupItem>
       {owners.map((owner) => (
-        <ToggleGroupItem key={owner} value={owner}>
-          {owner}
+        <ToggleGroupItem key={owner.id} value={owner.id}>
+          {owner.title}
         </ToggleGroupItem>
       ))}
     </ToggleGroup>
