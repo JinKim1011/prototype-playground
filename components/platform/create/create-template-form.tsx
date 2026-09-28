@@ -40,8 +40,8 @@ export default function CreateTemplateForm() {
       <form action={formAction} noValidate>
         <FieldGroup>
           <FieldSet className="gap-1">
+            <FieldLegend>Details</FieldLegend>
             <Field>
-              <FieldLegend>Details</FieldLegend>
               <Input
                 id="title"
                 placeholder="Title"
