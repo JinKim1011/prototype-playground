@@ -25,8 +25,13 @@ export async function POST(request: Request) {
   try {
     const input = await request.json()
     const entry = await createPrototype(input)
+    const owner = await getOwnerById(entry.ownerId)
 
-    revalidatePath(`/${entry.owner}/${entry.slug}`)
+    if (!owner) {
+      throw new CreatePrototypeError("INVALID_INPUT", "Owner not found")
+    }
+
+    revalidatePath(`/${owner.slug}/${entry.slug}`)
     revalidatePath("/prototypes")
 
     return NextResponse.json(entry, { status: 201 })
