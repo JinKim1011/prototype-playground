@@ -4,14 +4,8 @@ import { getOwnerById } from "../owners/catalog"
 
 const prototypesRoot = path.join(process.cwd(), "prototypes")
 
-export async function prototypeDirectory({ ownerId, slug }: PrototypeKey) {
-  const owner = await getOwnerById(ownerId)
-
-  if (!owner) {
-    throw new Error(`Onwer(${ownerId}) not found.`)
-  }
-
-  return path.join(prototypesRoot, owner.slug, slug)
+export function prototypeDirectory(ownerSlug: string, prototypeSlug: string) {
+  return path.join(prototypesRoot, ownerSlug, prototypeSlug)
 }
 
 export async function prototypePage({ ownerId, slug }: PrototypeKey) {
