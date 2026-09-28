@@ -5,19 +5,16 @@ import { Button } from "@/components/platform/ui/button"
 import { PencilSimpleLineIcon, TrashSimpleIcon } from "@phosphor-icons/react"
 import { toast } from "@/components/platform/ui/toaster"
 import { openInEditor } from "@/lib/dev/open-in-editor"
+import type { PrototypeListItem } from "@/types/prototypes"
 
 type PrototypeItemActionsProps = {
-  ownerId: string
+  prototype: PrototypeListItem
   ownerSlug: string
-  slug: string
-  title: string
 }
 
 export function PrototypeItemActions({
-  ownerId,
+  prototype,
   ownerSlug,
-  slug,
-  title,
 }: PrototypeItemActionsProps) {
   const router = useRouter()
 
