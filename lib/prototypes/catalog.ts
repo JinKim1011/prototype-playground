@@ -50,7 +50,7 @@ export async function removePrototype(
 
   await updatePrototypes((metadata) => {
     removedPrototype = metadata.entries.find(
-      (entry) => entry.ownerId === ownerId && entry.slug === slug
+      (entry) => entry.slug === prototypeSlug && entry.ownerId === ownerId
     )
 
     if (!removedPrototype) {
@@ -60,7 +60,7 @@ export async function removePrototype(
     return {
       ...metadata,
       entries: metadata.entries.filter(
-        (entry) => !(entry.ownerId === ownerId && entry.slug === slug)
+        (entry) => !(entry.slug === prototypeSlug && entry.ownerId === ownerId)
       ),
     }
   })
