@@ -29,7 +29,7 @@ export async function POST(request: Request) {
     const owner = await getOwnerById(entry.ownerId)
 
     if (!owner) {
-      throw new CreatePrototypeError("INVALID_INPUT", "Owner not found")
+      return NextResponse.json({ error: "Owner not found" }, { status: 404 })
     }
 
     revalidatePath(`/${owner.slug}/${entry.slug}`)
