@@ -41,7 +41,10 @@ export function PrototypeItemActions({
       const response = await fetch("/api/prototypes", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ownerId, slug }),
+        body: JSON.stringify({
+          ownerId: prototype.ownerId,
+          slug: prototype.slug,
+        }),
       })
 
       if (!response.ok) {
