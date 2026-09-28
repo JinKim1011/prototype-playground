@@ -25,7 +25,7 @@ export function CreateMenu({ templates, owners }: CreateMenuProps) {
           </Button>
         }
       />
-      <PopoverContent className="w-90" align="end">
+      <PopoverContent className="w-80" align="end">
         <CreateMenuTabs templates={templates} owners={owners} />
       </PopoverContent>
     </Popover>
