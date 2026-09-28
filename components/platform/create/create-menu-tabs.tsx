@@ -17,7 +17,7 @@ type CreateMenuProps = {
 export default function CreateMenuTabs({ templates, owners }: CreateMenuProps) {
   return (
     <Tabs>
-      <div className="w-full justify-center border-b-[0.5px] border-border pt-1">
+      <div className="w-full justify-center border-b-[0.5px] border-border">
         <TabsList variant="line">
           <TabsTrigger value="prototype" className="ml-4">
             Prototype
