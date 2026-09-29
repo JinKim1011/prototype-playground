@@ -41,3 +41,11 @@ export async function getOwnerBySlug(
 
   return owners.find((owner) => owner.slug === slug)
 }
+
+async function addOwner(owner: OwnerEntry): Promise<void> {
+  const data = await readOwnersFile()
+
+  data.owners.push(owner)
+
+  await writeOwnersFile(data)
+}
