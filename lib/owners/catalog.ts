@@ -20,7 +20,7 @@ export async function getOwners(): Promise<OwnerEntry[]> {
   return data.owners
 }
 
-async function ownerExists(slug: string): Promise<boolean> {
+export async function ownerExists(slug: string): Promise<boolean> {
   const owners = await getOwners()
 
   return owners.some((owner) => owner.slug === slug)
@@ -42,7 +42,7 @@ export async function getOwnerBySlug(
   return owners.find((owner) => owner.slug === slug)
 }
 
-async function addOwner(owner: OwnerEntry): Promise<void> {
+export async function addOwner(owner: OwnerEntry): Promise<void> {
   const data = await readOwnersFile()
 
   data.owners.push(owner)
