@@ -25,8 +25,7 @@ export function OwnerCombobox({
   errorId,
 }: CreateOwnerComboboxProps) {
   const [query, setQuery] = useState("")
-  const [selectedOwner, setSelectedOwner] = useState<OwnerEntry | null>(null)
-  const [creating, setCreating] = useState(false)
+  const [selectedOwner, setSelectedOwner] = useState<OwnerValue | null>(null)
 
   const normalizedQuery = query.trim().toLocaleLowerCase()
 
