@@ -45,33 +45,7 @@ export function OwnerCombobox({
       : []),
   ]
 
-  async function handleValueChange(value: OwnerValue | null): Promise<void> {
-    if (!value) {
-      setSelectedOwner(null)
-      return
-    }
-
-    if (isCreateOwnerOption(value)) {
-      setCreating(true)
-
-      try {
-        const result = await createOwnerAction({
-          title: value.title,
-        })
-
-        if (!result.ok) {
-          toast.error(result.message)
-          return
-        }
-        setOwnerItems((current) => [...current, result.owner])
-        setSelectedOwner(result.owner)
-      } finally {
-        setCreating(false)
-      }
-
-      return
-    }
-
+  function handleValueChange(value: OwnerValue | null): void {
     setSelectedOwner(value)
   }
 
