@@ -48,10 +48,20 @@ export async function createPrototypeAction(
     }
   }
 
+  let createdOwner: OwnerEntry | undefined
+
   try {
+    let resolvedOwnerId = ownerId
+
+    if (!resolvedOwnerId && ownerTitle) {
+      createdOwner = await createOwner({ title: ownerTitle })
+
+      resolvedOwnerId = createdOwner.id
+    }
+
     const entry = await createPrototype({
       title,
-      ownerId,
+      ownerId: resolvedOwnerId,
       description,
       fromTemplateId,
     })
