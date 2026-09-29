@@ -80,10 +80,15 @@ export async function createPrototypeAction(
       message: `${entry.title} was created successfully`,
     }
   } catch (error) {
+    if (createdOwner) {
+      await removeOwner(createdOwner.id)
+    }
+
     return {
       status: "error",
       message:
-        error instanceof CreatePrototypeError
+        error instanceof CreatePrototypeError ||
+        error instanceof CreateOwnerError
           ? error.message
           : "Failed to create prototype",
     }
