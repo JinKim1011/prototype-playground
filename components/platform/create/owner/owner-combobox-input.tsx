@@ -15,13 +15,11 @@ export function OwnerComboboxInput({
   invalid,
   errorId,
 }: OwnerComboboxInputProps) {
-  const ownerId =
-    selectedOwner && !isCreateOwnerOption(selectedOwner) ? selectedOwner.id : ""
+  const isNewOwner = selectedOwner && !isCreateOwnerOption(selectedOwner)
 
-  const ownerTitle =
-    selectedOwner && isCreateOwnerOption(selectedOwner)
-      ? selectedOwner.title
-      : ""
+  const ownerId = isNewOwner ? selectedOwner.id : ""
+
+  const ownerTitle = isNewOwner ? selectedOwner.title : ""
 
   return (
     <>
