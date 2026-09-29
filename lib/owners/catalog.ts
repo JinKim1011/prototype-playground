@@ -1,12 +1,17 @@
-import { readFile } from "node:fs/promises"
+import { readFile, writeFile } from "node:fs/promises"
 import { OwnerEntry, OwnersFile } from "@/types/owners"
 import path from "node:path"
 
 const ownersPath = path.join(process.cwd(), "data", "owners.json")
 
-export async function getOwners(): Promise<OwnerEntry[]> {
+async function readOwnersFile(): Promise<OwnersFile> {
   const json = await readFile(ownersPath, "utf-8")
-  const data = JSON.parse(json) as OwnersFile
+
+  return JSON.parse(json) as OwnersFile
+}
+
+export async function getOwners(): Promise<OwnerEntry[]> {
+  const data = await readOwnersFile()
 
   return data.owners
 }
