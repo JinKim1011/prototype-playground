@@ -29,6 +29,7 @@ export async function createPrototypeAction(
 
   const title = String(formData.get("title") ?? "").trim()
   const ownerId = String(formData.get("ownerId") ?? "").trim()
+  const ownerTitle = String(formData.get("ownerTitle") ?? "").trim()
   const description = String(formData.get("description") ?? "").trim()
   const fromTemplateId = String(formData.get("fromTemplateId") ?? "").trim()
 
