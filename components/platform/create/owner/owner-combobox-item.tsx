@@ -12,14 +12,9 @@ type OwnerComboboxItemProps = {
 export function OwnerComboboxItem({ item, creating }: OwnerComboboxItemProps) {
   const createOption = isCreateOwnerOption(item)
   const optionTitle = createOption ? `Create ${item.title}` : item.title
-  const optionKey = createOption ? `Create ${item.title}` : item.id
 
   return (
-    <ComboboxItem
-      key={optionKey}
-      value={item}
-      disabled={createOption && creating}
-    >
+    <ComboboxItem value={item} disabled={createOption && creating}>
       {optionTitle}
     </ComboboxItem>
   )
