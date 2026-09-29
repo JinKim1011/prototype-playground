@@ -24,7 +24,6 @@ export function OwnerCombobox({
   invalid,
   errorId,
 }: CreateOwnerComboboxProps) {
-  const [ownerItems, setOwnerItems] = useState(owners)
   const [query, setQuery] = useState("")
   const [selectedOwner, setSelectedOwner] = useState<OwnerEntry | null>(null)
   const [creating, setCreating] = useState(false)
@@ -40,7 +39,7 @@ export function OwnerCombobox({
   const showCreateOption = normalizedQuery.length > 0 && !hasIdenticalOwner
 
   const comboboxItems: OwnerValue[] = [
-    ...ownerItems,
+    ...owners,
     ...(showCreateOption
       ? [{ type: "create" as const, title: query.trim() }]
       : []),
