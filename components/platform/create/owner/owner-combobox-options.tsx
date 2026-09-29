@@ -11,11 +11,7 @@ import {
   isCreateOwnerOption,
 } from "@/components/platform/create/owner/owner-combobox-utils"
 
-type OwnerComboboxOptionsProps = {
-  creating: boolean
-}
-
-export function OwnerComboboxOptions({ creating }: OwnerComboboxOptionsProps) {
+export function OwnerComboboxOptions() {
   return (
     <ComboboxContent>
       <ComboboxList>
@@ -29,7 +25,6 @@ export function OwnerComboboxOptions({ creating }: OwnerComboboxOptionsProps) {
                   isCreateOwnerOption(item) ? `create:${item.title}` : item.id
                 }
                 item={item}
-                creating={creating}
               />
             )}
           </ComboboxCollection>
