@@ -4,11 +4,11 @@ function normalizeOwnerName(name: string) {
   return name.trim().replace(/\s+/g, " ")
 }
 
-function ownerSlugFromName(name: string) {
+export function ownerSlugFromName(name: string) {
   return name.toLowerCase().replace(/ /g, "-")
 }
 
-function assertOwnerName(name: string) {
+export function assertOwnerName(name: string) {
   const nomalized = normalizeOwnerName(name)
 
   if (!nomalized || !OWNER_NAME.test(name)) {
