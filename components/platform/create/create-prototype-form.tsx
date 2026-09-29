@@ -27,6 +27,7 @@ import { Button } from "@/components/platform/ui/button"
 import { Textarea } from "@/components/platform/ui/textarea"
 import { TemplateEntry } from "@/types/templates"
 import { OwnerEntry } from "@/types/owners"
+import { OwnerCombobox } from "@/components/platform/create/owner/owner-combobox"
 
 const initialState: CreatePrototypeState = {
   status: "idle",
@@ -59,17 +60,13 @@ export default function CreatePrototypeForm({
     label: tempalte.title,
   }))
 
-  const ownerItems = owners.map((owner) => ({
-    value: owner.id,
-    label: owner.title,
-  }))
-
   return (
     <div className="w-full p-4">
       <form action={formAction} noValidate>
         <FieldGroup>
           <FieldSet className="gap-1">
             <FieldLegend>Details</FieldLegend>
+
             <Field data-invalid={!!state.errors?.title}>
               <Input
                 id="title"
@@ -85,29 +82,12 @@ export default function CreatePrototypeForm({
             </Field>
 
             <Field data-invalid={!!state.errors?.ownerId}>
-              <Select
-                items={ownerItems}
-                name="ownerId"
-                aria-invalid={!!state.errors?.ownerId}
-                aria-describedby={
-                  state.errors?.ownerId ? "owner-error" : undefined
-                }
-                required
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Owner" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Select an owner or create one</SelectLabel>
-                    {ownerItems.map((item) => (
-                      <SelectItem key={item.value} value={item.value}>
-                        {item.label}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              <OwnerCombobox
+                owners={owners}
+                invalid={!!state.errors?.ownerId}
+                errorId="owner-error"
+              />
+
               <FieldError id="owner-error">{state.errors?.ownerId}</FieldError>
             </Field>
 
