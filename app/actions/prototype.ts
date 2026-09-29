@@ -2,7 +2,9 @@
 
 import { revalidatePath } from "next/cache"
 import { createPrototype, CreatePrototypeError } from "@/lib/prototypes/create"
-import { getOwnerById } from "@/lib/owners/catalog"
+import { createOwner, CreateOwnerError } from "@/lib/owners/create"
+import { removeOwner, getOwnerById } from "@/lib/owners/catalog"
+import type { OwnerEntry } from "@/types/owners"
 
 type CreatePrototypeErrors = {
   title?: string
