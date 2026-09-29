@@ -89,7 +89,7 @@ export function OwnerCombobox({
         invalid={invalid}
         errorId={errorId}
       />
-      <OwnerComboboxOptions creating={creating} />
+      <OwnerComboboxOptions />
     </Combobox>
   )
 }
