@@ -10,6 +10,10 @@ async function readOwnersFile(): Promise<OwnersFile> {
   return JSON.parse(json) as OwnersFile
 }
 
+async function writeOwnersFile(data: OwnersFile): Promise<void> {
+  await writeFile(ownersPath, JSON.stringify(data, null, 2), "utf-8")
+}
+
 export async function getOwners(): Promise<OwnerEntry[]> {
   const data = await readOwnersFile()
 
