@@ -33,12 +33,14 @@ export async function createPrototypeAction(
   const description = String(formData.get("description") ?? "").trim()
   const fromTemplateId = String(formData.get("fromTemplateId") ?? "").trim()
 
-  if (!title || !ownerId || !fromTemplateId) {
+  const hasOwner = Boolean(ownerId || ownerTitle)
+
+  if (!title || !hasOwner || !fromTemplateId) {
     return {
       status: "error",
       errors: {
         title: !title ? "Please enter a prototype title" : undefined,
-        ownerId: !ownerId ? "Please select or create an owner" : undefined,
+        ownerId: !hasOwner ? "Please select or create an owner" : undefined,
         fromTemplateId: !fromTemplateId
           ? "Please select a template"
           : undefined,
