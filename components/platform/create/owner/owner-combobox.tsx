@@ -30,7 +30,7 @@ export function OwnerCombobox({
 
   const normalizedQuery = query.trim().toLocaleLowerCase()
 
-  const hasIdenticalOwner = ownerItems.some(
+  const hasIdenticalOwner = owners.some(
     (owner) =>
       owner.title.toLocaleLowerCase() === normalizedQuery ||
       owner.slug.toLocaleLowerCase() === normalizedQuery
