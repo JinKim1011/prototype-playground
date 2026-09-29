@@ -7,14 +7,13 @@ import { typographyStyles } from "@/components/platform/ui/typography"
 
 type OwnerComboboxItemProps = {
   item: OwnerValue
-  creating: boolean
 }
 
-export function OwnerComboboxItem({ item, creating }: OwnerComboboxItemProps) {
+export function OwnerComboboxItem({ item }: OwnerComboboxItemProps) {
   const createOption = isCreateOwnerOption(item)
 
   return (
-    <ComboboxItem value={item} disabled={createOption && creating}>
+    <ComboboxItem value={item}>
       {createOption ? (
         <>
           Create
