@@ -2,33 +2,37 @@
 
 import { revalidatePath } from "next/cache"
 import { CreateOwnerInput } from "@/types/owners"
-import { createOwner, CreateOwnerError } from "@/lib/owners/create"
+import {
+  createOwner,
+  CreateOwnerError,
+  type CreateOwnerActionResult,
+} from "@/lib/owners/create"
 
-export async function createOwnerAction(input: CreateOwnerInput) {
+export async function createOwnerAction(
+  input: CreateOwnerInput
+): Promise<CreateOwnerActionResult> {
   try {
     const owner = await createOwner(input)
 
     revalidatePath("/prototypes")
 
     return {
-      ok: true as const,
+      ok: true,
       owner,
     }
   } catch (error) {
     if (error instanceof CreateOwnerError) {
       return {
-        status: "error",
-        message:
-          error instanceof CreateOwnerError
-            ? error.message
-            : "Failed to create template",
+        ok: false,
+        code: error.code,
+        message: error.message,
       }
     }
 
     return {
-      ok: false as const,
-      code: "UNKNOWN_ERROR" as const,
-      error: "Unable to create owner",
+      ok: false,
+      code: "UNKNOWN_ERROR",
+      message: "Unable to create owner",
     }
   }
 }
