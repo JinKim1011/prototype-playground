@@ -2,17 +2,6 @@ import { CreateOwnerInput, OwnerEntry } from "@/types/owners"
 import { assertOwnerName, ownerSlugFromName } from "@/lib/owners/validate"
 import { addOwner, ownerExists } from "@/lib/owners/catalog"
 
-export type CreateOwnerActionResult =
-  | {
-      ok: true
-      owner: OwnerEntry
-    }
-  | {
-      ok: false
-      code: "INVALID_INPUT" | "DUPLICATE_OWNER" | "UNKNOWN_ERROR"
-      message: string
-    }
-
 export class CreateOwnerError extends Error {
   readonly code: "INVALID_INPUT" | "DUPLICATE_OWNER"
 
