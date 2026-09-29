@@ -1,6 +1,12 @@
 import { CreateOwnerInput, OwnerEntry } from "@/types/owners"
 import { assertOwnerName, ownerSlugFromName } from "@/lib/owners/validate"
 import { addOwner, ownerExists } from "@/lib/owners/catalog"
+import {
+  ownerPrototypeDirectory,
+  removeOwnerPrototypeDirectory,
+  directoryExists,
+} from "@/lib/owners/path"
+import { mkdir } from "node:fs/promises"
 
 export class CreateOwnerError extends Error {
   readonly code: "INVALID_INPUT" | "DUPLICATE_OWNER"
@@ -35,8 +41,19 @@ export async function createOwner(
     title,
     slug,
   }
+  const directory = ownerPrototypeDirectory(slug)
+  const existedBefore = await directoryExists(directory)
 
-  await addOwner(owner)
+  try {
+    await mkdir(directory, { recursive: true })
 
-  return owner
+    await addOwner(owner)
+
+    return owner
+  } catch (error) {
+    if (!existedBefore) {
+      await removeOwnerPrototypeDirectory(slug)
+    }
+    throw error
+  }
 }
