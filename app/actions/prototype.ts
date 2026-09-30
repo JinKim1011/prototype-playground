@@ -97,8 +97,12 @@ export async function createPrototypeAction(
     }
   }
 
-  revalidatePath("/prototypes")
-  revalidatePath(`/${owner.slug}/${entry.slug}`)
+  try {
+    revalidatePath("/prototypes")
+    revalidatePath(`/${owner.slug}/${entry.slug}`)
+  } catch (error) {
+    console.error("Failed to revalidate prototype paths", error)
+  }
 
   return {
     status: "success",
