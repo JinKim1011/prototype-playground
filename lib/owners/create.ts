@@ -76,24 +76,28 @@ export async function createOwner(
 ): Promise<OwnerCreationTransaction> {
   const owner = buildOwner(input)
 
-  if (await ownerExists(owner.slug)) {
-    throw new CreateOwnerError("DUPLICATE_OWNER")
-  }
-
-  const directory = ownerPrototypeDirectory(owner.slug)
-  const existedBefore = await directoryExists(directory)
-
-  try {
-    await mkdir(directory, { recursive: true })
-    await addOwner(owner)
-
-    return createTransaction(owner, existedBefore)
-  } catch (error) {
-    if (!existedBefore) {
-      await removeOwnerPrototypeDirectory(owner.slug).catch((cleanupError) => {
-        console.error("Failed to clean up owner directory", cleanupError)
-      })
+  return withKeyedLock(OWNER_CATALOG_LOCK, async () => {
+    if (await ownerExists(owner.slug)) {
+      throw new CreateOwnerError("DUPLICATE_OWNER")
     }
-    throw error
-  }
+
+    const directory = ownerPrototypeDirectory(owner.slug)
+    const existedBefore = await directoryExists(directory)
+
+    try {
+      await mkdir(directory, { recursive: true })
+      await addOwner(owner)
+
+      return createTransaction(owner, existedBefore)
+    } catch (error) {
+      if (!existedBefore) {
+        await removeOwnerPrototypeDirectory(owner.slug).catch(
+          (cleanupError) => {
+            console.error("Failed to clean up owner directory", cleanupError)
+          }
+        )
+      }
+      throw error
+    }
+  })
 }
