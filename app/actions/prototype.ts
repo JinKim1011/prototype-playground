@@ -64,7 +64,16 @@ export async function createPrototypeAction(
 
     if (!resolvedOwnerId && ownerTitle) {
       ownerTransaction = await createOwner({ title: ownerTitle })
-      resolvedOwnerId = ownerTransaction.owner.id
+      owner = ownerTransaction.owner
+      resolvedOwnerId = owner.id
+    } else {
+      const existingOwner = await getOwnerById(resolvedOwnerId)
+
+      if (!existingOwner) {
+        throw new CreatePrototypeError("INVALID_INPUT", "Owner not found")
+      }
+
+      owner = existingOwner
     }
 
     entry = await createPrototype({
@@ -73,8 +82,6 @@ export async function createPrototypeAction(
       description,
       fromTemplateId,
     })
-
-    owner = ownerTransaction?.owner ?? (await getOwnerById(entry.ownerId))!
 
     await ownerTransaction?.commit()
   } catch (error) {
