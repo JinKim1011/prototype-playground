@@ -15,11 +15,17 @@ export type OwnerCreationTransaction = {
   rollback(): Promise<void>
 }
 
+const CREATE_OWNER_ERROR_MESSAGES: Record<CreateOwnerError["code"], string> = {
+  INVALID_INPUT:
+    "Owner name must contain letters separated by spaces or hyphens.",
+  DUPLICATE_OWNER: "An owner with this name already exists.",
+}
+
 export class CreateOwnerError extends Error {
   readonly code: "INVALID_INPUT" | "DUPLICATE_OWNER"
 
   constructor(code: CreateOwnerError["code"], message?: string) {
-    super(message ?? code)
+    super(message ?? CREATE_OWNER_ERROR_MESSAGES[code])
     this.name = "CreateOwnerError"
     this.code = code
   }
