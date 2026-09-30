@@ -2,9 +2,14 @@
 
 import { revalidatePath } from "next/cache"
 import { createPrototype, CreatePrototypeError } from "@/lib/prototypes/create"
-import { createOwner, CreateOwnerError } from "@/lib/owners/create"
-import { removeOwner, getOwnerById } from "@/lib/owners/catalog"
+import {
+  createOwner,
+  CreateOwnerError,
+  type OwnerCreationTransaction,
+} from "@/lib/owners/create"
+import { getOwnerById } from "@/lib/owners/catalog"
 import type { OwnerEntry } from "@/types/owners"
+import { PrototypeEntry } from "@/types/prototypes"
 
 type CreatePrototypeErrors = {
   title?: string
@@ -73,9 +78,7 @@ export async function createPrototypeAction(
 
     await ownerTransaction?.commit()
   } catch (error) {
-    if (createdOwner) {
-      await removeOwner(createdOwner.id)
-    }
+    await ownerTransaction?.rollback().catch(() => {})
 
     return {
       status: "error",
