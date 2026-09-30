@@ -59,19 +59,28 @@ function createTransaction(owner: OwnerEntry, existedBefore: boolean) {
       })
     },
     async rollback() {
-      await withKeyedLock(OWNER_CATALOG_LOCK, async () => {
+      await updateOwners(async (data) => {
         if (settled) {
-          return
+          return {
+            data,
+            result: undefined,
+          }
         }
-
-        await removeOwner(owner.id)
 
         if (!existedBefore) {
           await removeOwnerPrototypeDirectory(owner.slug)
         }
 
-        settled = true
+        return {
+          data: {
+            ...data,
+            owners: data.owners.filter((entry) => entry.id !== owner.id),
+          },
+          result: undefined,
+        }
       })
+
+      settled = true
     },
   }
 }
