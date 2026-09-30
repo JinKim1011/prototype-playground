@@ -1,4 +1,4 @@
-import { readFile, writeFile } from "node:fs/promises"
+import { readFile } from "node:fs/promises"
 import { OwnerEntry, OwnersFile } from "@/types/owners"
 import path from "node:path"
 import { writeFileAtomically } from "@/lib/fs/atomic-write"
@@ -26,10 +26,6 @@ async function updateOwners(
 
     await writeFileAtomically(ownersPath, JSON.stringify(nextData, null, 2))
   })
-}
-
-async function writeOwnersFile(data: OwnersFile): Promise<void> {
-  await writeFile(ownersPath, JSON.stringify(data, null, 2), "utf-8")
 }
 
 export async function getOwners(): Promise<OwnerEntry[]> {
