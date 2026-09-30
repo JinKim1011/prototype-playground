@@ -11,6 +11,33 @@ import { getOwnerById } from "@/lib/owners/catalog"
 import type { OwnerEntry } from "@/types/owners"
 import type { PrototypeEntry } from "@/types/prototypes"
 
+type ResolvedOwner = {
+  owner: OwnerEntry
+  transaction?: OwnerCreationTransaction
+}
+
+async function resolveOwner(
+  ownerId: string,
+  ownerTitle: string
+): Promise<ResolvedOwner> {
+  if (ownerId) {
+    const owner = await getOwnerById(ownerId)
+
+    if (!owner) {
+      throw new CreatePrototypeError("INVALID_INPUT", "Owner not found")
+    }
+
+    return { owner }
+  }
+
+  const transaction = await createOwner({ title: ownerTitle })
+
+  return {
+    owner: transaction.owner,
+    transaction,
+  }
+}
+
 type CreatePrototypeErrors = {
   title?: string
   ownerId?: string
@@ -60,25 +87,14 @@ export async function createPrototypeAction(
   let owner: OwnerEntry
 
   try {
-    let resolvedOwnerId = ownerId
+    let resolvedOwner = await resolveOwner(ownerId, ownerTitle)
 
-    if (!resolvedOwnerId && ownerTitle) {
-      ownerTransaction = await createOwner({ title: ownerTitle })
-      owner = ownerTransaction.owner
-      resolvedOwnerId = owner.id
-    } else {
-      const existingOwner = await getOwnerById(resolvedOwnerId)
-
-      if (!existingOwner) {
-        throw new CreatePrototypeError("INVALID_INPUT", "Owner not found")
-      }
-
-      owner = existingOwner
-    }
+    owner = resolvedOwner.owner
+    ownerTransaction = resolvedOwner.transaction
 
     entry = await createPrototype({
       title,
-      ownerId: resolvedOwnerId,
+      ownerId: owner.id,
       description,
       fromTemplateId,
     })
