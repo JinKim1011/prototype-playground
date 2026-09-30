@@ -68,15 +68,16 @@ export async function addOwner(owner: OwnerEntry): Promise<void> {
 }
 
 export async function removeOwner(id: string): Promise<void> {
-  const data = await readOwnersFile()
-  const nextOwners = data.owners.filter((owner) => owner.id != id)
+  await updateOwners((data) => {
+    const owners = data.owners.filter((owner) => owner.id !== id)
 
-  if (nextOwners.length === data.owners.length) {
-    return
-  }
+    if (owners.length === data.owners.length) {
+      return data
+    }
 
-  await writeOwnersFile({
-    ...data,
-    owners: nextOwners,
+    return {
+      ...data,
+      owners,
+    }
   })
 }
