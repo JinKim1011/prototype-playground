@@ -3,40 +3,12 @@
 import { revalidatePath } from "next/cache"
 import { createPrototype, CreatePrototypeError } from "@/lib/prototypes/create"
 import {
-  createOwner,
   CreateOwnerError,
   type OwnerCreationTransaction,
 } from "@/lib/owners/create"
-import { getOwnerById } from "@/lib/owners/catalog"
 import type { OwnerEntry } from "@/types/owners"
 import type { PrototypeEntry } from "@/types/prototypes"
-
-type ResolvedOwner = {
-  owner: OwnerEntry
-  transaction?: OwnerCreationTransaction
-}
-
-async function resolveOwner(
-  ownerId: string,
-  ownerTitle: string
-): Promise<ResolvedOwner> {
-  if (ownerId) {
-    const owner = await getOwnerById(ownerId)
-
-    if (!owner) {
-      throw new CreatePrototypeError("INVALID_INPUT", "Owner not found")
-    }
-
-    return { owner }
-  }
-
-  const transaction = await createOwner({ title: ownerTitle })
-
-  return {
-    owner: transaction.owner,
-    transaction,
-  }
-}
+import { resolveOwner } from "@/lib/owners/resolve"
 
 type CreatePrototypeErrors = {
   title?: string
