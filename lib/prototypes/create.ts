@@ -14,7 +14,7 @@ import {
   DirectoryTransaction,
 } from "@/lib/fs/atomic-copy-directory"
 import { withKeyedLock } from "@/lib/fs/keyed-lock"
-import { getOwnerById } from "../owners/catalog"
+import { getOwnerById } from "@/lib/owners/catalog"
 
 export class CreatePrototypeError extends Error {
   readonly code: "DUPLICATE_SLUG" | "INVALID_SEGMENT" | "INVALID_INPUT"

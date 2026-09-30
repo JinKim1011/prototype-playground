@@ -2,12 +2,46 @@
 
 import { revalidatePath } from "next/cache"
 import { createPrototype, CreatePrototypeError } from "@/lib/prototypes/create"
-import { getOwnerById } from "@/lib/owners/catalog"
+import {
+  CreateOwnerError,
+  type OwnerCreationTransaction,
+} from "@/lib/owners/create"
+import type { OwnerEntry } from "@/types/owners"
+import type { PrototypeEntry } from "@/types/prototypes"
+import { resolveOwner } from "@/lib/owners/resolve"
 
 type CreatePrototypeErrors = {
   title?: string
   ownerId?: string
   fromTemplateId?: string
+}
+
+function getCreatePrototypeErrorMessage(error: unknown): string {
+  if (
+    error instanceof CreatePrototypeError ||
+    error instanceof CreateOwnerError
+  ) {
+    return error.message
+  }
+
+  return "Failed to create prototype"
+}
+
+function revalidatePrototypePaths(
+  owner: OwnerEntry,
+  entry: PrototypeEntry
+): void {
+  try {
+    revalidatePath("/prototypes")
+  } catch (error) {
+    console.error("Failed to revalidate prototypes path", error)
+  }
+
+  try {
+    revalidatePath(`/${owner.slug}/${entry.slug}`)
+  } catch (error) {
+    console.error("Failed to revalidate prototype path", error)
+  }
 }
 
 export type CreatePrototypeState = {
@@ -29,15 +63,18 @@ export async function createPrototypeAction(
 
   const title = String(formData.get("title") ?? "").trim()
   const ownerId = String(formData.get("ownerId") ?? "").trim()
+  const ownerTitle = String(formData.get("ownerTitle") ?? "").trim()
   const description = String(formData.get("description") ?? "").trim()
   const fromTemplateId = String(formData.get("fromTemplateId") ?? "").trim()
 
-  if (!title || !ownerId || !fromTemplateId) {
+  const hasOwner = Boolean(ownerId || ownerTitle)
+
+  if (!title || !hasOwner || !fromTemplateId) {
     return {
       status: "error",
       errors: {
         title: !title ? "Please enter a prototype title" : undefined,
-        ownerId: !ownerId ? "Please select or create an owner" : undefined,
+        ownerId: !hasOwner ? "Please select or create an owner" : undefined,
         fromTemplateId: !fromTemplateId
           ? "Please select a template"
           : undefined,
@@ -45,34 +82,37 @@ export async function createPrototypeAction(
     }
   }
 
+  let ownerTransaction: OwnerCreationTransaction | undefined
+  let entry: PrototypeEntry
+  let owner: OwnerEntry
+
   try {
-    const entry = await createPrototype({
+    const resolvedOwner = await resolveOwner(ownerId, ownerTitle)
+
+    owner = resolvedOwner.owner
+    ownerTransaction = resolvedOwner.transaction
+
+    entry = await createPrototype({
       title,
-      ownerId,
+      ownerId: owner.id,
       description,
       fromTemplateId,
     })
 
-    const owner = await getOwnerById(entry.ownerId)
-
-    if (!owner) {
-      throw new CreatePrototypeError("INVALID_INPUT", "Owner not found")
-    }
-
-    revalidatePath("/prototypes")
-    revalidatePath(`/${owner.slug}/${entry.slug}`)
-
-    return {
-      status: "success",
-      message: `${entry.title} was created successfully`,
-    }
+    await ownerTransaction?.commit()
   } catch (error) {
+    await ownerTransaction?.rollback().catch(() => {})
+
     return {
       status: "error",
-      message:
-        error instanceof CreatePrototypeError
-          ? error.message
-          : "Failed to create prototype",
+      message: getCreatePrototypeErrorMessage(error),
     }
+  }
+
+  revalidatePrototypePaths(owner, entry)
+
+  return {
+    status: "success",
+    message: `${entry.title} was created successfully`,
   }
 }

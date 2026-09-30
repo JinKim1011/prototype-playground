@@ -7,3 +7,7 @@ export type OwnerEntry = {
 export type OwnersFile = {
   owners: OwnerEntry[]
 }
+
+export type CreateOwnerInput = {
+  title: string
+}
