@@ -1,12 +1,18 @@
 import { CreateOwnerInput, OwnerEntry } from "@/types/owners"
 import { assertOwnerName, ownerSlugFromName } from "@/lib/owners/validate"
-import { addOwner, ownerExists } from "@/lib/owners/catalog"
+import { addOwner, ownerExists, removeOwner } from "@/lib/owners/catalog"
 import {
   ownerPrototypeDirectory,
   removeOwnerPrototypeDirectory,
   directoryExists,
 } from "@/lib/owners/path"
 import { mkdir } from "node:fs/promises"
+
+export type OwnerCreationTransaction = {
+  owner: OwnerEntry
+  commit(): Promise<void>
+  rollback(): Promise<void>
+}
 
 export class CreateOwnerError extends Error {
   readonly code: "INVALID_INPUT" | "DUPLICATE_OWNER"
@@ -34,18 +40,52 @@ function buildOwner(input: CreateOwnerInput): OwnerEntry {
     title,
     slug,
   }
-  const directory = ownerPrototypeDirectory(slug)
+}
+
+function createTransaction(owner: OwnerEntry, existedBefore: boolean) {
+  let settled = false
+
+  return {
+    owner,
+    async commit() {
+      settled = true
+    },
+    async rollback() {
+      if (settled) {
+        return
+      }
+
+      await removeOwner(owner.id)
+
+      if (!existedBefore) {
+        await removeOwnerPrototypeDirectory(owner.slug)
+      }
+    },
+  }
+}
+
+export async function createOwner(
+  input: CreateOwnerInput
+): Promise<OwnerCreationTransaction> {
+  const owner = buildOwner(input)
+
+  if (await ownerExists(owner.slug)) {
+    throw new CreateOwnerError("DUPLICATE_OWNER")
+  }
+
+  const directory = ownerPrototypeDirectory(owner.slug)
   const existedBefore = await directoryExists(directory)
 
   try {
     await mkdir(directory, { recursive: true })
-
     await addOwner(owner)
 
-    return owner
+    return createTransaction(owner, existedBefore)
   } catch (error) {
     if (!existedBefore) {
-      await removeOwnerPrototypeDirectory(slug)
+      await removeOwnerPrototypeDirectory(owner.slug).catch((cleanupError) => {
+        console.error("Failed to clean up owner directory", cleanupError)
+      })
     }
     throw error
   }
