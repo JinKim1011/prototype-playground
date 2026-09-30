@@ -63,8 +63,11 @@ export async function getOwnerBySlug(
 
 export async function addOwner(owner: OwnerEntry): Promise<void> {
   await updateOwners((data) => ({
-    ...data,
-    owners: [...data.owners, owner],
+    data: {
+      ...data,
+      owners: [...data.owners, owner],
+    },
+    result: undefined,
   }))
 }
 
@@ -73,12 +76,18 @@ export async function removeOwner(id: string): Promise<void> {
     const owners = data.owners.filter((owner) => owner.id !== id)
 
     if (owners.length === data.owners.length) {
-      return data
+      return {
+        data,
+        result: undefined,
+      }
     }
 
     return {
-      ...data,
-      owners,
+      data: {
+        ...data,
+        owners,
+      },
+      result: undefined,
     }
   })
 }
