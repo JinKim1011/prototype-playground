@@ -1,12 +1,15 @@
 import { CreateOwnerInput, OwnerEntry } from "@/types/owners"
 import { assertOwnerName, ownerSlugFromName } from "@/lib/owners/validate"
 import { addOwner, ownerExists, removeOwner } from "@/lib/owners/catalog"
+import { withKeyedLock } from "@/lib/fs/keyed-lock"
 import {
   ownerPrototypeDirectory,
   removeOwnerPrototypeDirectory,
   directoryExists,
 } from "@/lib/owners/path"
 import { mkdir } from "node:fs/promises"
+
+const OWNER_CATALOG_LOCK = "owner-catalog"
 
 export type OwnerCreationTransaction = {
   owner: OwnerEntry
@@ -48,18 +51,22 @@ function createTransaction(owner: OwnerEntry, existedBefore: boolean) {
   return {
     owner,
     async commit() {
-      settled = true
+      await withKeyedLock(OWNER_CATALOG_LOCK, async () => {
+        settled = true
+      })
     },
     async rollback() {
-      if (settled) {
-        return
-      }
+      await withKeyedLock(OWNER_CATALOG_LOCK, async () => {
+        if (settled) {
+          return
+        }
 
-      await removeOwner(owner.id)
+        await removeOwner(owner.id)
 
-      if (!existedBefore) {
-        await removeOwnerPrototypeDirectory(owner.slug)
-      }
+        if (!existedBefore) {
+          await removeOwnerPrototypeDirectory(owner.slug)
+        }
+      })
     },
   }
 }
