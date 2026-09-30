@@ -1,11 +1,6 @@
 import { CreateOwnerInput, OwnerEntry } from "@/types/owners"
 import { assertOwnerName, ownerSlugFromName } from "@/lib/owners/validate"
-import {
-  OWNER_CATALOG_LOCK,
-  addOwner,
-  ownerExists,
-  removeOwner,
-} from "@/lib/owners/catalog"
+import { OWNER_CATALOG_LOCK, updateOwners } from "@/lib/owners/catalog"
 import { withKeyedLock } from "@/lib/fs/keyed-lock"
 import {
   ownerPrototypeDirectory,
