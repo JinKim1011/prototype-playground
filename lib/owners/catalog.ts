@@ -71,24 +71,3 @@ export async function addOwner(owner: OwnerEntry): Promise<void> {
     result: undefined,
   }))
 }
-
-export async function removeOwner(id: string): Promise<void> {
-  await updateOwners((data) => {
-    const owners = data.owners.filter((owner) => owner.id !== id)
-
-    if (owners.length === data.owners.length) {
-      return {
-        data,
-        result: undefined,
-      }
-    }
-
-    return {
-      data: {
-        ...data,
-        owners,
-      },
-      result: undefined,
-    }
-  })
-}
