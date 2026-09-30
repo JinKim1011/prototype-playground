@@ -5,7 +5,7 @@ import { writeFileAtomically } from "@/lib/fs/atomic-write"
 import { withKeyedLock } from "@/lib/fs/keyed-lock"
 
 const ownersPath = path.join(process.cwd(), "data", "owners.json")
-const OWNER_CATALOG_LOCK = "owner-catalog"
+export const OWNER_CATALOG_LOCK = "owner-catalog"
 
 async function readOwnersFile(): Promise<OwnersFile> {
   const json = await readFile(ownersPath, "utf-8")

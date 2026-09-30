@@ -1,6 +1,11 @@
 import { CreateOwnerInput, OwnerEntry } from "@/types/owners"
 import { assertOwnerName, ownerSlugFromName } from "@/lib/owners/validate"
-import { addOwner, ownerExists, removeOwner } from "@/lib/owners/catalog"
+import {
+  OWNER_CATALOG_LOCK,
+  addOwner,
+  ownerExists,
+  removeOwner,
+} from "@/lib/owners/catalog"
 import { withKeyedLock } from "@/lib/fs/keyed-lock"
 import {
   ownerPrototypeDirectory,
@@ -8,8 +13,6 @@ import {
   directoryExists,
 } from "@/lib/owners/path"
 import { mkdir } from "node:fs/promises"
-
-const OWNER_CATALOG_LOCK = "owner-catalog"
 
 export type OwnerCreationTransaction = {
   owner: OwnerEntry
