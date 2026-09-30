@@ -18,26 +18,19 @@ export class CreateOwnerError extends Error {
   }
 }
 
-export async function createOwner(
-  input: CreateOwnerInput
-): Promise<OwnerEntry> {
+function buildOwner(input: CreateOwnerInput): OwnerEntry {
   let title: string
 
   try {
     title = assertOwnerName(input.title)
-  } catch (error) {
+  } catch {
     throw new CreateOwnerError("INVALID_INPUT")
   }
 
   const slug = ownerSlugFromName(title)
-  const id = `owner:${slug}`
 
-  if (await ownerExists(slug)) {
-    throw new CreateOwnerError("DUPLICATE_OWNER")
-  }
-
-  const owner: OwnerEntry = {
-    id,
+  return {
+    id: `owner:${slug}`,
     title,
     slug,
   }
