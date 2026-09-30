@@ -13,18 +13,23 @@ async function readOwnersFile(): Promise<OwnersFile> {
   return JSON.parse(json) as OwnersFile
 }
 
-async function updateOwners(
-  update: (data: OwnersFile) => OwnersFile
-): Promise<void> {
-  await withKeyedLock(OWNER_CATALOG_LOCK, async () => {
+export async function updateOwners<T>(
+  update: (data: OwnersFile) =>
+    | Promise<{ data: OwnersFile; result: T }>
+    | {
+        data: OwnersFile
+        result: T
+      }
+): Promise<T> {
+  return withKeyedLock(OWNER_CATALOG_LOCK, async () => {
     const data = await readOwnersFile()
-    const nextData = update(data)
+    const { data: nextData, result } = await update(data)
 
-    if (nextData === data) {
-      return
+    if (nextData !== data) {
+      await writeFileAtomically(ownersPath, JSON.stringify(nextData, null, 2))
     }
 
-    await writeFileAtomically(ownersPath, JSON.stringify(nextData, null, 2))
+    return result
   })
 }
 
