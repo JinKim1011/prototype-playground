@@ -1,13 +1,31 @@
 import { readFile, writeFile } from "node:fs/promises"
 import { OwnerEntry, OwnersFile } from "@/types/owners"
 import path from "node:path"
+import { writeFileAtomically } from "@/lib/fs/atomic-write"
+import { withKeyedLock } from "@/lib/fs/keyed-lock"
 
 const ownersPath = path.join(process.cwd(), "data", "owners.json")
+const OWNER_CATALOG_LOCK = "owner-catalog"
 
 async function readOwnersFile(): Promise<OwnersFile> {
   const json = await readFile(ownersPath, "utf-8")
 
   return JSON.parse(json) as OwnersFile
+}
+
+async function updateOwners(
+  update: (data: OwnersFile) => OwnersFile
+): Promise<void> {
+  await withKeyedLock(OWNER_CATALOG_LOCK, async () => {
+    const data = await readOwnersFile()
+    const nextData = update(data)
+
+    if (nextData === data) {
+      return
+    }
+
+    await writeFileAtomically(ownersPath, JSON.stringify(nextData, null, 2))
+  })
 }
 
 async function writeOwnersFile(data: OwnersFile): Promise<void> {
