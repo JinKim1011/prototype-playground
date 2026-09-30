@@ -40,12 +40,6 @@ export async function getOwners(): Promise<OwnerEntry[]> {
   return data.owners
 }
 
-export async function ownerExists(slug: string): Promise<boolean> {
-  const owners = await getOwners()
-
-  return owners.some((owner) => owner.slug === slug)
-}
-
 export async function getOwnerById(
   id: string
 ): Promise<OwnerEntry | undefined> {
