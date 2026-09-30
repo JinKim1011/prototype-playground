@@ -9,7 +9,7 @@ import {
 } from "@/lib/owners/create"
 import { getOwnerById } from "@/lib/owners/catalog"
 import type { OwnerEntry } from "@/types/owners"
-import { PrototypeEntry } from "@/types/prototypes"
+import type { PrototypeEntry } from "@/types/prototypes"
 
 type CreatePrototypeErrors = {
   title?: string
