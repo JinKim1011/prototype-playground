@@ -50,37 +50,28 @@ export async function createPrototypeAction(
     }
   }
 
-  let createdOwner: OwnerEntry | undefined
+  let ownerTransaction: OwnerCreationTransaction | undefined
+  let entry: PrototypeEntry
+  let owner: OwnerEntry
 
   try {
     let resolvedOwnerId = ownerId
 
     if (!resolvedOwnerId && ownerTitle) {
-      createdOwner = await createOwner({ title: ownerTitle })
-
-      resolvedOwnerId = createdOwner.id
+      ownerTransaction = await createOwner({ title: ownerTitle })
+      resolvedOwnerId = ownerTransaction.owner.id
     }
 
-    const entry = await createPrototype({
+    entry = await createPrototype({
       title,
       ownerId: resolvedOwnerId,
       description,
       fromTemplateId,
     })
 
-    const owner = await getOwnerById(entry.ownerId)
+    owner = ownerTransaction?.owner ?? (await getOwnerById(entry.ownerId))!
 
-    if (!owner) {
-      throw new CreatePrototypeError("INVALID_INPUT", "Owner not found")
-    }
-
-    revalidatePath("/prototypes")
-    revalidatePath(`/${owner.slug}/${entry.slug}`)
-
-    return {
-      status: "success",
-      message: `${entry.title} was created successfully`,
-    }
+    await ownerTransaction?.commit()
   } catch (error) {
     if (createdOwner) {
       await removeOwner(createdOwner.id)
