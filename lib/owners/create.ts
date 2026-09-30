@@ -66,6 +66,8 @@ function createTransaction(owner: OwnerEntry, existedBefore: boolean) {
         if (!existedBefore) {
           await removeOwnerPrototypeDirectory(owner.slug)
         }
+
+        settled = true
       })
     },
   }
