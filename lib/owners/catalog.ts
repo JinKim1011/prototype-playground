@@ -61,11 +61,10 @@ export async function getOwnerBySlug(
 }
 
 export async function addOwner(owner: OwnerEntry): Promise<void> {
-  const data = await readOwnersFile()
-
-  data.owners.push(owner)
-
-  await writeOwnersFile(data)
+  await updateOwners((data) => ({
+    ...data,
+    owners: [...data.owners, owner],
+  }))
 }
 
 export async function removeOwner(id: string): Promise<void> {
