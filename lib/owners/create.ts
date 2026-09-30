@@ -100,9 +100,14 @@ export async function createOwner(
 
     try {
       await mkdir(directory, { recursive: true })
-      await addOwner(owner)
 
-      return createTransaction(owner, existedBefore)
+      return {
+        data: {
+          ...data,
+          owners: [...data.owners, owner],
+        },
+        result: createTransaction(owner, existedBefore),
+      }
     } catch (error) {
       if (!existedBefore) {
         await removeOwnerPrototypeDirectory(owner.slug).catch(
@@ -111,6 +116,7 @@ export async function createOwner(
           }
         )
       }
+
       throw error
     }
   })
