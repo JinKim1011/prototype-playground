@@ -55,6 +55,23 @@ function getCreatePrototypeErrorMessage(error: unknown): string {
   return "Failed to create prototype"
 }
 
+function revalidatePrototypePaths(
+  owner: OwnerEntry,
+  entry: PrototypeEntry
+): void {
+  try {
+    revalidatePath("/prototypes")
+  } catch (error) {
+    console.error("Failed to revalidate prototypes path", error)
+  }
+
+  try {
+    revalidatePath(`/${owner.slug}/${entry.slug}`)
+  } catch (error) {
+    console.error("Failed to revalidate prototype path", error)
+  }
+}
+
 export type CreatePrototypeState = {
   status: "idle" | "error" | "success"
   message?: string
@@ -98,7 +115,7 @@ export async function createPrototypeAction(
   let owner: OwnerEntry
 
   try {
-    let resolvedOwner = await resolveOwner(ownerId, ownerTitle)
+    const resolvedOwner = await resolveOwner(ownerId, ownerTitle)
 
     owner = resolvedOwner.owner
     ownerTransaction = resolvedOwner.transaction
@@ -120,12 +137,7 @@ export async function createPrototypeAction(
     }
   }
 
-  try {
-    revalidatePath("/prototypes")
-    revalidatePath(`/${owner.slug}/${entry.slug}`)
-  } catch (error) {
-    console.error("Failed to revalidate prototype paths", error)
-  }
+  revalidatePrototypePaths(owner, entry)
 
   return {
     status: "success",
