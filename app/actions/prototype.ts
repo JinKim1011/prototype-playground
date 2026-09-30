@@ -44,6 +44,17 @@ type CreatePrototypeErrors = {
   fromTemplateId?: string
 }
 
+function getCreatePrototypeErrorMessage(error: unknown): string {
+  if (
+    error instanceof CreatePrototypeError ||
+    error instanceof CreateOwnerError
+  ) {
+    return error.message
+  }
+
+  return "Failed to create prototype"
+}
+
 export type CreatePrototypeState = {
   status: "idle" | "error" | "success"
   message?: string
@@ -105,11 +116,7 @@ export async function createPrototypeAction(
 
     return {
       status: "error",
-      message:
-        error instanceof CreatePrototypeError ||
-        error instanceof CreateOwnerError
-          ? error.message
-          : "Failed to create prototype",
+      message: getCreatePrototypeErrorMessage(error),
     }
   }
 
