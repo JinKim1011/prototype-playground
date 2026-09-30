@@ -89,4 +89,12 @@ export async function createPrototypeAction(
           : "Failed to create prototype",
     }
   }
+
+  revalidatePath("/prototypes")
+  revalidatePath(`/${owner.slug}/${entry.slug}`)
+
+  return {
+    status: "success",
+    message: `${entry.title} was created successfully`,
+  }
 }
