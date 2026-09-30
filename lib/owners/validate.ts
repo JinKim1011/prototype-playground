@@ -9,13 +9,13 @@ export function ownerSlugFromName(name: string) {
 }
 
 export function assertOwnerName(name: string) {
-  const nomalized = normalizeOwnerName(name)
+  const normalized = normalizeOwnerName(name)
 
-  if (!nomalized || !OWNER_NAME.test(name)) {
+  if (!normalized || !OWNER_NAME.test(normalized)) {
     throw new Error(
       "Owner name must contain letters separated by spaces or hyphens."
     )
   }
 
-  return nomalized
+  return normalized
 }
