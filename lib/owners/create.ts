@@ -81,8 +81,8 @@ export async function createOwner(
 ): Promise<OwnerCreationTransaction> {
   const owner = buildOwner(input)
 
-  return withKeyedLock(OWNER_CATALOG_LOCK, async () => {
-    if (await ownerExists(owner.slug)) {
+  return updateOwners(async (data) => {
+    if (data.owners.some((existing) => existing.slug === owner.slug)) {
       throw new CreateOwnerError("DUPLICATE_OWNER")
     }
 
