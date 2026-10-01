@@ -65,7 +65,7 @@ export async function Header() {
       <div className="flex h-fit w-fit">
         <ModeToggle />
 
-        <Separator orientation="vertical" className="my-2 mr-4 ml-1.5" />
+        <Separator orientation="vertical" className="my-2 mr-3.5 ml-1.5" />
 
         <CreateMenu templates={templates} owners={owners} />
       </div>
