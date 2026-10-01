@@ -106,7 +106,7 @@ export function TemplateItemActions({ slug, title }: TemplateItemActionsProps) {
           <TooltipContent sideOffset={2}>Delete</TooltipContent>
 
           <DialogContent>
-            <DialogTitle>Delete prototype?</DialogTitle>
+            <DialogTitle>Delete template?</DialogTitle>
 
             <div className="flex justify-end gap-2">
               <DialogClose render={<Button variant="outline">Cancel</Button>} />
