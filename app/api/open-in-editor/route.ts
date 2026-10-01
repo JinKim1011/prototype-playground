@@ -1,4 +1,4 @@
-import { prototypePage } from "@/lib/prototypes/path"
+import { usePrototypePage } from "@/lib/prototypes/path"
 import { NextResponse } from "next/server"
 import { execFile } from "node:child_process"
 import { promisify } from "node:util"
@@ -67,7 +67,7 @@ export async function POST(request: Request) {
 
     await execFileAsync("code", [
       "--reuse-window",
-      prototypePage(owner.slug, slug),
+      usePrototypePage(owner.slug, slug),
     ])
 
     return NextResponse.json({ ok: true })

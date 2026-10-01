@@ -1,5 +1,5 @@
 import { access } from "node:fs/promises"
-import { prototypePage } from "@/lib/prototypes/path"
+import { usePrototypePage } from "@/lib/prototypes/path"
 import type { PrototypeRouteKey } from "@/lib/prototypes/keys"
 
 export async function prototypeSourceExists({
@@ -7,7 +7,7 @@ export async function prototypeSourceExists({
   prototypeSlug,
 }: PrototypeRouteKey): Promise<boolean> {
   try {
-    await access(prototypePage(ownerSlug, prototypeSlug))
+    await access(usePrototypePage(ownerSlug, prototypeSlug))
     return true
   } catch {
     return false
