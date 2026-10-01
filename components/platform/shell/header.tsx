@@ -41,7 +41,7 @@ export async function Header() {
                 </Link>
               }
             />
-            <TooltipContent>Link to blog post</TooltipContent>
+            <TooltipContent side="bottom">Link to blog post</TooltipContent>
           </Tooltip>{" "}
           or view the{" "}
           <Tooltip>
@@ -57,7 +57,7 @@ export async function Header() {
                 </Link>
               }
             />
-            <TooltipContent>Link to GitHub</TooltipContent>
+            <TooltipContent side="bottom">Link to GitHub</TooltipContent>
           </Tooltip>
         </Typography>
       </div>
