@@ -30,7 +30,7 @@ export function ModeToggle() {
       />
       <TooltipContent
         sideOffset={2}
-      >{`Change to ${resolvedTheme === "dark" ? "dark" : "light"}`}</TooltipContent>
+      >{`Change to ${resolvedTheme === "dark" ? "light" : "dark"}`}</TooltipContent>
     </Tooltip>
   )
 }
