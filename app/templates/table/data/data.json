@@ -1,0 +1,36 @@
+{
+  "content": {
+    "title": "Records",
+    "description": "Review and manage the records in this workspace."
+  },
+  "rows": [
+    {
+      "id": "REC-001",
+      "name": "Website redesign",
+      "owner": "Alex Morgan",
+      "status": "Active",
+      "updated": "Today"
+    },
+    {
+      "id": "REC-002",
+      "name": "Mobile improvements",
+      "owner": "Jamie Lee",
+      "status": "Review",
+      "updated": "Yesterday"
+    },
+    {
+      "id": "REC-003",
+      "name": "Content migration",
+      "owner": "Taylor Smith",
+      "status": "Draft",
+      "updated": "3 days ago"
+    },
+    {
+      "id": "REC-004",
+      "name": "Analytics setup",
+      "owner": "Jordan Williams",
+      "status": "Active",
+      "updated": "4 days ago"
+    }
+  ]
+}
