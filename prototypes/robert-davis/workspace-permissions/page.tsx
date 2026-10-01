@@ -23,7 +23,7 @@ import {
 } from "@/components/prototypes/table"
 import { Typography } from "@/components/prototypes/typography"
 
-export default function TableTemplatePage() {
+export default function WorkspacePermissionsPage() {
   const [query, setQuery] = useState("")
 
   const filteredRows = data.rows.filter((row) => {
@@ -52,17 +52,15 @@ export default function TableTemplatePage() {
       <Card>
         <CardHeader className="gap-4 border-b">
           <div className="grid gap-1">
-            <CardTitle>All records</CardTitle>
-            <CardDescription>
-              Search, review, and manage workspace records.
-            </CardDescription>
+            <CardTitle>{data.content.tableTitle}</CardTitle>
+            <CardDescription>{data.content.tableDescription}</CardDescription>
           </div>
 
           <Input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search records"
-            aria-label="Search records"
+            placeholder={data.content.searchPlaceholder}
+            aria-label={data.content.searchPlaceholder}
             className="max-w-sm"
           />
         </CardHeader>
@@ -72,9 +70,9 @@ export default function TableTemplatePage() {
             <TableHeader>
               <TableRow>
                 <TableHead>ID</TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Owner</TableHead>
-                <TableHead>Status</TableHead>
+                <TableHead>Member</TableHead>
+                <TableHead>Role</TableHead>
+                <TableHead>Access</TableHead>
                 <TableHead>Updated</TableHead>
                 <TableHead className="text-right">Action</TableHead>
               </TableRow>
@@ -92,7 +90,7 @@ export default function TableTemplatePage() {
                         variant={
                           row.status === "Active"
                             ? "default"
-                            : row.status === "Review"
+                            : row.status === "Pending"
                               ? "secondary"
                               : "outline"
                         }
@@ -108,9 +106,11 @@ export default function TableTemplatePage() {
                         type="button"
                         size="sm"
                         variant="ghost"
-                        onClick={() => handleRowAction(row.name)}
+                        onClick={() => {
+                          toast.success(`Opened permissions for ${row.name}`)
+                        }}
                       >
-                        View
+                        Manage
                       </Button>
                     </TableCell>
                   </TableRow>
