@@ -22,7 +22,7 @@ export function DesignSystemUpdateButton() {
     <Button
       type="button"
       size="sm"
-      variant="secondary"
+      variant="outline"
       aria-label="open-design-system-link-json"
       onClick={handleOpenInEditor}
     >

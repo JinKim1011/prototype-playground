@@ -6,9 +6,6 @@ export default async function DesignSystemPage() {
   const links = await getDesignSystemLinks()
   return (
     <>
-      <div className="mt-4">
-        <DesignSystemUpdateButton />
-      </div>
       <DesignSystemItemGroup
         links={links.map((link) => ({
           id: link.id,
@@ -16,6 +13,8 @@ export default async function DesignSystemPage() {
           url: link.url,
         }))}
       />
+
+      <DesignSystemUpdateButton />
     </>
   )
 }
