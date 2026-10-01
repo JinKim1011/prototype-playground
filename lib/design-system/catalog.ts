@@ -10,7 +10,7 @@ async function readDesignSystemLinksFile(): Promise<DesignSystemLinksFile> {
   return JSON.parse(json) as DesignSystemLinksFile
 }
 
-async function getDesignSystemLinks(): Promise<DesignSystemLink[]> {
+export async function getDesignSystemLinks(): Promise<DesignSystemLink[]> {
   const data = await readDesignSystemLinksFile()
 
   return data.links
