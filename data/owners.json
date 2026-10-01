@@ -19,6 +19,11 @@
       "id": "owner:john-smith",
       "title": "John Smith",
       "slug": "john-smith"
+    },
+    {
+      "id": "owner:jennifer-brown",
+      "title": "Jennifer Brown",
+      "slug": "jennifer-brown"
     }
   ]
 }

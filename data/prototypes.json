@@ -59,6 +59,16 @@
       "createdAt": "2026-10-01T21:36:46.575Z",
       "updatedAt": "2026-10-01T21:36:46.575Z",
       "templateId": "template:application-shell"
+    },
+    {
+      "id": "prototype:jennifer-brown:campaign-analytics",
+      "ownerId": "owner:jennifer-brown",
+      "slug": "campaign-analytics",
+      "title": "Campaign Analytics",
+      "description": "A reporting workspace for reviewing campaign performance, engagement trends, and conversion metrics.",
+      "createdAt": "2026-10-01T21:37:45.958Z",
+      "updatedAt": "2026-10-01T21:37:45.958Z",
+      "templateId": "template:dashboard"
     }
   ]
 }
