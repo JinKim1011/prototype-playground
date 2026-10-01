@@ -1,29 +1,29 @@
 {
-  "profile": {
-    "fullName": "Alex Morgan",
-    "email": "alex@example.com",
-    "category": "general",
-    "notes": "Add supporting information about this profile.",
-    "notifications": true
+  "settings": {
+    "workspaceName": "Threadline Growth",
+    "billingEmail": "billing@threadline.example",
+    "plan": "team",
+    "notes": "Workspace billing is managed by the operations team.",
+    "autoRenew": true
   },
-  "categories": [
+  "plans": [
     {
-      "value": "general",
-      "label": "General"
+      "value": "starter",
+      "label": "Starter"
     },
     {
-      "value": "personal",
-      "label": "Personal"
+      "value": "team",
+      "label": "Team"
     },
     {
-      "value": "work",
-      "label": "Work"
+      "value": "enterprise",
+      "label": "Enterprise"
     }
   ],
   "content": {
-    "title": "Profile settings",
-    "description": "Update your information and preferences.",
-    "sectionTitle": "General information",
-    "sectionDescription": "Add or update the details associated with this profile."
+    "title": "Billing and workspace settings",
+    "description": "Manage workspace details, subscription settings, and billing preferences.",
+    "sectionTitle": "Workspace and billing",
+    "sectionDescription": "Keep your workspace and subscription information up to date."
   }
 }

@@ -23,10 +23,10 @@ import {
 import { Textarea } from "@/components/prototypes/textarea"
 import { Typography } from "@/components/prototypes/typography"
 
-export default function FormTemplatePage() {
+export default function BillingAndWorkspaceSettings() {
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    toast.success("Changes saved")
+    toast.success("Billing and workspace settings saved")
   }
 
   return (
@@ -46,45 +46,44 @@ export default function FormTemplatePage() {
       <form onSubmit={handleSubmit}>
         <Card>
           <CardHeader>
-            <CardTitle>General information</CardTitle>
-            <CardDescription>
-              Add or update the details associated with this profile.
-            </CardDescription>
+            <CardTitle>{data.content.sectionTitle}</CardTitle>
+            <CardDescription>{data.content.sectionDescription}</CardDescription>
           </CardHeader>
 
           <CardContent className="grid gap-5">
             <div className="grid gap-2">
-              <Label htmlFor="full-name">Full name</Label>
+              <Label htmlFor="workspace-name">Workspace name</Label>
               <Input
-                id="full-name"
-                name="fullName"
-                defaultValue={data.profile.fullName}
-                placeholder="Enter a name"
+                id="workspace-name"
+                name="workspaceName"
+                defaultValue={data.settings.workspaceName}
+                placeholder="Enter a workspace name"
               />
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="email">Email address</Label>
+              <Label htmlFor="billing-email">Billing email</Label>
               <Input
-                id="email"
-                name="email"
+                id="billing-email"
+                name="billingEmail"
                 type="email"
-                defaultValue={data.profile.email}
-                placeholder="name@example.com"
+                defaultValue={data.settings.billingEmail}
+                placeholder="billing@example.com"
               />
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="category">Category</Label>
-              <Select name="category" defaultValue={data.profile.category}>
-                <SelectTrigger id="category" className="w-full">
+              <Label htmlFor="plan">Subscription plan</Label>
+
+              <Select name="plan" defaultValue={data.settings.plan}>
+                <SelectTrigger id="plan" className="w-full">
                   <SelectValue />
                 </SelectTrigger>
 
                 <SelectContent>
-                  {data.categories.map((category) => (
-                    <SelectItem key={category.value} value={category.value}>
-                      {category.label}
+                  {data.plans.map((plan) => (
+                    <SelectItem key={plan.value} value={plan.value}>
+                      {plan.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -92,29 +91,30 @@ export default function FormTemplatePage() {
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="notes">Additional notes</Label>
+              <Label htmlFor="notes">Billing notes</Label>
               <Textarea
                 id="notes"
                 name="notes"
-                defaultValue={data.profile.notes}
-                placeholder="Add supporting information"
+                defaultValue={data.settings.notes}
+                placeholder="Add billing notes"
               />
             </div>
 
             <label className="flex items-start gap-3 border-t pt-4">
               <input
                 type="checkbox"
-                name="notifications"
-                defaultChecked={data.profile.notifications}
+                name="autoRenew"
+                defaultChecked={data.settings.autoRenew}
                 className="mt-0.5 size-4 accent-primary"
               />
-              <span className="grid gap-1">
-                <span className="text-xs font-medium">
-                  Enable notifications
-                </span>
-                <span className="text-xs text-muted-foreground">
-                  Receive updates about changes and activity.
-                </span>
+
+              <span className="text-xs font-medium">
+                Enable automatic renewal
+              </span>
+
+              <span className="text-xs text-muted-foreground">
+                Automatically renew the workspace subscription at the end of
+                each billing period.
               </span>
             </label>
           </CardContent>
