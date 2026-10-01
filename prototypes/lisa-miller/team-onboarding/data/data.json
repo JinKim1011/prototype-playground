@@ -1,7 +1,7 @@
 {
   "content": {
-    "title": "Set up your workspace",
-    "description": "Complete these steps to get started."
+    "title": "Set up your Threadline workspace",
+    "description": "Create a shared space for your team to plan, build, and collaborate."
   },
   "progress": {
     "value": 33,
@@ -11,21 +11,21 @@
     {
       "number": 1,
       "title": "Workspace details",
-      "description": "Add the basic information for your workspace."
+      "description": "Choose a name and size for your Threadline workspace."
     },
     {
       "number": 2,
-      "title": "Invite members",
+      "title": "Invite teammates",
       "description": "Bring your team into the workspace."
     },
     {
       "number": 3,
-      "title": "Finish setup",
-      "description": "Review your preferences and complete setup."
+      "title": "Connect tools",
+      "description": "Connect the services your team uses every day."
     }
   ],
   "fields": {
-    "workspaceName": "My workspace",
-    "teamSize": "1-10"
+    "workspaceName": "Threadline Growth",
+    "teamSize": "11-50"
   }
 }

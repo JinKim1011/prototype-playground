@@ -28,7 +28,7 @@ import {
 } from "@/components/prototypes/select"
 import { Typography } from "@/components/prototypes/typography"
 
-export default function OnboardingTemplatePage() {
+export default function TeamOnboardingPage() {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     toast.success("Workspace details saved")
@@ -77,10 +77,10 @@ export default function OnboardingTemplatePage() {
       <form onSubmit={handleSubmit}>
         <Card>
           <CardHeader>
-            <CardTitle>Workspace details</CardTitle>
-            <CardDescription>
-              Add the basic information for your workspace.
-            </CardDescription>
+            <CardHeader>
+              <CardTitle>{data.steps[0].title}</CardTitle>
+              <CardDescription>{data.steps[0].description}</CardDescription>
+            </CardHeader>
           </CardHeader>
 
           <CardContent className="grid gap-5">
@@ -101,11 +101,10 @@ export default function OnboardingTemplatePage() {
                 <SelectTrigger id="team-size" className="w-full">
                   <SelectValue />
                 </SelectTrigger>
-
                 <SelectContent>
-                  <SelectItem value="1-10">1-10 members</SelectItem>
-                  <SelectItem value="11-50">11-50 members</SelectItem>
-                  <SelectItem value="51+">51+ members</SelectItem>
+                  <SelectItem value="1-10">1-10 people</SelectItem>
+                  <SelectItem value="11-50">11-50 people</SelectItem>
+                  <SelectItem value="51+">51+ people</SelectItem>
                 </SelectContent>
               </Select>
             </div>
