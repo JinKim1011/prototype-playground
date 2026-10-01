@@ -1,6 +1,6 @@
 ---
 description: Rules for creating and editing prototypes and templates
-globs: prototypes/**/page.tsx,app/templates/**/*
+globs: prototypes/**/*,app/templates/**/*
 alwaysApply: false
 ---
 
@@ -22,10 +22,10 @@ Prototype routes use:
 /{owner}/{slug}
 ```
 
-Prototype source is loaded by:
+Prototype source is loaded through:
 
 ```text
-page.tsx
+app/[owner]/[slug]/page.tsx
 ```
 
 Prototype identifiers use:
