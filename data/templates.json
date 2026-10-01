@@ -7,6 +7,46 @@
       "description": "A blank starting point for a new prototype.",
       "createdAt": "2026-09-19T00:00:00.000Z",
       "updatedAt": "2026-09-19T00:00:00.000Z"
+    },
+    {
+      "id": "template:dashboard",
+      "title": "Dashboard",
+      "slug": "dashboard",
+      "createdAt": "2026-10-01T20:49:30.212Z",
+      "updatedAt": "2026-10-01T20:49:30.212Z",
+      "description": "A reusable dashboard layout with navigation, summary cards, activity, and data visualization."
+    },
+    {
+      "id": "template:application-shell",
+      "title": "Application Shell",
+      "slug": "application-shell",
+      "createdAt": "2026-10-01T20:49:48.579Z",
+      "updatedAt": "2026-10-01T20:49:48.579Z",
+      "description": "A reusable application frame with sidebar navigation, header, content area, and account controls."
+    },
+    {
+      "id": "template:form",
+      "title": "Form",
+      "slug": "form",
+      "createdAt": "2026-10-01T20:49:59.990Z",
+      "updatedAt": "2026-10-01T20:49:59.990Z",
+      "description": "A reusable form layout with labels, inputs, validation states, actions, and supporting information."
+    },
+    {
+      "id": "template:table",
+      "title": "Table",
+      "slug": "table",
+      "createdAt": "2026-10-01T20:50:11.894Z",
+      "updatedAt": "2026-10-01T20:50:11.894Z",
+      "description": "A reusable data table layout with columns, filters, status indicators, row actions, and pagination."
+    },
+    {
+      "id": "template:onboarding",
+      "title": "Onboarding",
+      "slug": "onboarding",
+      "createdAt": "2026-10-01T20:50:22.061Z",
+      "updatedAt": "2026-10-01T20:50:22.061Z",
+      "description": "A reusable guided flow with welcome content, progress steps, setup fields, and completion state."
     }
   ]
 }
