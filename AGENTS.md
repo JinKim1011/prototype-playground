@@ -35,12 +35,12 @@ Prototype-specific guidance lives in:
 
 ### Routes
 
-| Purpose | Route |
-| --- | --- |
-| Prototype | `/{owner}/{slug}` |
-| Template preview | `/templates/{slug}` |
-| Prototype catalog | `/prototypes` |
-| Template catalog | `/templates` |
+| Purpose           | Route               |
+| ----------------- | ------------------- |
+| Prototype         | `/{owner}/{slug}`   |
+| Template preview  | `/templates/{slug}` |
+| Prototype catalog | `/prototypes`       |
+| Template catalog  | `/templates`        |
 
 ### Prototype Source
 
@@ -60,11 +60,11 @@ Templates are previewable and are copied into a new prototype when selected.
 
 ### Catalogs
 
-| Data | Source |
-| --- | --- |
-| Prototypes | `data/prototypes.json` |
-| Owners | `data/owners.json` |
-| Templates | `data/templates.json` |
+| Data                | Source                    |
+| ------------------- | ------------------------- |
+| Prototypes          | `data/prototypes.json`    |
+| Owners              | `data/owners.json`        |
+| Templates           | `data/templates.json`     |
 | Design-system links | `data/design-system.json` |
 
 ### Generated Files
