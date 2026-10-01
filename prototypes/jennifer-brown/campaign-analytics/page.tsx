@@ -7,7 +7,7 @@ import { SidebarInset, SidebarProvider } from "./components/sidebar"
 
 import data from "./data/data.json"
 
-export default function Page() {
+export default function CampaignAnalyticsPage() {
   return (
     <SidebarProvider
       style={
