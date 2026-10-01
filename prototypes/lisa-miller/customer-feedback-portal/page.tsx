@@ -23,7 +23,7 @@ import {
 } from "@/components/prototypes/table"
 import { Typography } from "@/components/prototypes/typography"
 
-export default function TableTemplatePage() {
+export default function CustomerFeedbackPortalPage() {
   const [query, setQuery] = useState("")
 
   const filteredRows = data.rows.filter((row) => {
@@ -52,17 +52,15 @@ export default function TableTemplatePage() {
       <Card>
         <CardHeader className="gap-4 border-b">
           <div className="grid gap-1">
-            <CardTitle>All records</CardTitle>
-            <CardDescription>
-              Search, review, and manage workspace records.
-            </CardDescription>
+            <CardTitle>{data.content.tableTitle}</CardTitle>
+            <CardDescription>{data.content.tableDescription}</CardDescription>
           </div>
 
           <Input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search records"
-            aria-label="Search records"
+            placeholder={data.content.searchPlaceholder}
+            aria-label={data.content.searchPlaceholder}
             className="max-w-sm"
           />
         </CardHeader>
@@ -72,8 +70,8 @@ export default function TableTemplatePage() {
             <TableHeader>
               <TableRow>
                 <TableHead>ID</TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Owner</TableHead>
+                <TableHead>Feedback</TableHead>
+                <TableHead>Submitted by</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Updated</TableHead>
                 <TableHead className="text-right">Action</TableHead>
@@ -90,9 +88,9 @@ export default function TableTemplatePage() {
                     <TableCell>
                       <Badge
                         variant={
-                          row.status === "Active"
+                          row.status === "New"
                             ? "default"
-                            : row.status === "Review"
+                            : row.status === "In review"
                               ? "secondary"
                               : "outline"
                         }
@@ -108,7 +106,9 @@ export default function TableTemplatePage() {
                         type="button"
                         size="sm"
                         variant="ghost"
-                        onClick={() => handleRowAction(row.name)}
+                        onClick={() => {
+                          toast.success(`Opened feedback: ${row.name}`)
+                        }}
                       >
                         View
                       </Button>

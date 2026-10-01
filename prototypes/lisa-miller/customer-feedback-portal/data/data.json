@@ -1,35 +1,38 @@
 {
   "content": {
-    "title": "Records",
-    "description": "Review and manage the records in this workspace."
+    "title": "Customer feedback",
+    "description": "Review customer ideas, requests, and reported issues.",
+    "tableTitle": "Feedback inbox",
+    "tableDescription": "Search, review, and manage feedback from Threadline customers.",
+    "searchPlaceholder": "Search feedback"
   },
   "rows": [
     {
-      "id": "REC-001",
-      "name": "Website redesign",
-      "owner": "Alex Morgan",
-      "status": "Active",
+      "id": "FB-001",
+      "name": "Faster project search",
+      "owner": "Maya Chen",
+      "status": "New",
       "updated": "Today"
     },
     {
-      "id": "REC-002",
-      "name": "Mobile improvements",
-      "owner": "Jamie Lee",
-      "status": "Review",
+      "id": "FB-002",
+      "name": "Add calendar integrations",
+      "owner": "Daniel Brooks",
+      "status": "In review",
       "updated": "Yesterday"
     },
     {
-      "id": "REC-003",
-      "name": "Content migration",
-      "owner": "Taylor Smith",
-      "status": "Draft",
-      "updated": "3 days ago"
+      "id": "FB-003",
+      "name": "Improve mobile navigation",
+      "owner": "Emily Carter",
+      "status": "Planned",
+      "updated": "2 days ago"
     },
     {
-      "id": "REC-004",
-      "name": "Analytics setup",
-      "owner": "Jordan Williams",
-      "status": "Active",
+      "id": "FB-004",
+      "name": "Export project activity",
+      "owner": "Sarah Mitchell",
+      "status": "Resolved",
       "updated": "4 days ago"
     }
   ]
