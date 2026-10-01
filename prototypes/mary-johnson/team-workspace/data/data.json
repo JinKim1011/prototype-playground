@@ -1,0 +1,29 @@
+{
+  "brand": {
+    "name": "Workspace",
+    "description": "A reusable application shell"
+  },
+  "navigation": [
+    {
+      "label": "Overview",
+      "active": true
+    },
+    {
+      "label": "Activity",
+      "active": false
+    },
+    {
+      "label": "Settings",
+      "active": false
+    },
+    {
+      "label": "Help",
+      "active": false
+    }
+  ],
+  "user": {
+    "name": "Alex Morgan",
+    "email": "alex@example.com",
+    "initials": "AM"
+  }
+}

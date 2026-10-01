@@ -9,6 +9,16 @@
       "createdAt": "2026-10-01T21:32:21.017Z",
       "updatedAt": "2026-10-01T21:32:21.017Z",
       "templateId": "template:dashboard"
+    },
+    {
+      "id": "prototype:mary-johnson:team-workspace",
+      "ownerId": "owner:mary-johnson",
+      "slug": "team-workspace",
+      "title": "Team Workspace",
+      "description": "A shared workspace for navigating projects, reviewing activity, and accessing team tools.",
+      "createdAt": "2026-10-01T21:33:23.082Z",
+      "updatedAt": "2026-10-01T21:33:23.082Z",
+      "templateId": "template:application-shell"
     }
   ]
 }
