@@ -6,7 +6,7 @@ import { useRender } from "@base-ui/react/use-render"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 
-import { useIsMobile } from "@/app/templates/dashboard/lib/use-mobile"
+import { useIsMobile } from "../lib/use-mobile"
 import { Button } from "@/components/prototypes/button"
 import { Input } from "@/components/prototypes/input"
 import { Separator } from "@/components/prototypes/separator"
@@ -16,7 +16,7 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "@/app/templates/dashboard/components/sheet"
+} from "../components/sheet"
 import { Skeleton } from "@/components/prototypes/skeleton"
 import {
   Tooltip,

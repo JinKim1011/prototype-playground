@@ -7,7 +7,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/app/templates/dashboard/components/sidebar"
+} from "../components/sidebar"
 import { PlusCircleIcon, EnvelopeIcon } from "@phosphor-icons/react"
 
 export function NavMain({

@@ -42,7 +42,7 @@ import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
 import { toast } from "sonner"
 import { z } from "zod"
 
-import { useIsMobile } from "@/app/templates/dashboard/lib/use-mobile"
+import { useIsMobile } from "../lib/use-mobile"
 import { Badge } from "@/components/prototypes/badge"
 import { Button } from "@/components/prototypes/button"
 import {
@@ -50,7 +50,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
   type ChartConfig,
-} from "@/app/templates/dashboard/components/chart"
+} from "../components/chart"
 import { Checkbox } from "@/components/prototypes/checkbox"
 import {
   Drawer,
@@ -61,7 +61,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/app/templates/dashboard/components/drawer"
+} from "../components/drawer"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,

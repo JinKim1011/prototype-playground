@@ -8,7 +8,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/app/templates/dashboard/components/sidebar"
+} from "../components/sidebar"
 
 export function NavSecondary({
   items,

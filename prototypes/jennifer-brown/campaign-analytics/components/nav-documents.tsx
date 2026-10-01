@@ -15,7 +15,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/app/templates/dashboard/components/sidebar"
+} from "../components/sidebar"
 import {
   DotsThreeOutlineIcon,
   FolderIcon,
