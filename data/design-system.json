@@ -1,17 +1,102 @@
 {
   "links": [
     {
+      "id": "component-avatar",
+      "title": "Avatar",
+      "url": "https://ui.shadcn.com/docs/components/base/avatar"
+    },
+    {
+      "id": "component-badge",
+      "title": "Badge",
+      "url": "https://ui.shadcn.com/docs/components/base/badge"
+    },
+    {
+      "id": "component-breadcrumb",
+      "title": "Breadcrumb",
+      "url": "https://ui.shadcn.com/docs/components/base/breadcrumb"
+    },
+    {
       "id": "component-button",
       "title": "Button",
       "url": "https://ui.shadcn.com/docs/components/base/button"
     },
     {
-      "id": "component-toast",
-      "title": "Toast",
-      "url": "https://ui.shadcn.com/docs/components/base/toast"
+      "id": "component-card",
+      "title": "Card",
+      "url": "https://ui.shadcn.com/docs/components/base/card"
     },
     {
-      "id": "tokens-typography",
+      "id": "component-checkbox",
+      "title": "Checkbox",
+      "url": "https://ui.shadcn.com/docs/components/base/checkbox"
+    },
+    {
+      "id": "component-dropdown-menu",
+      "title": "Dropdown Menu",
+      "url": "https://ui.shadcn.com/docs/components/base/dropdown-menu"
+    },
+    {
+      "id": "component-input",
+      "title": "Input",
+      "url": "https://ui.shadcn.com/docs/components/base/input"
+    },
+    {
+      "id": "component-label",
+      "title": "Label",
+      "url": "https://ui.shadcn.com/docs/components/base/label"
+    },
+    {
+      "id": "component-progress",
+      "title": "Progress",
+      "url": "https://ui.shadcn.com/docs/components/base/progress"
+    },
+    {
+      "id": "component-select",
+      "title": "Select",
+      "url": "https://ui.shadcn.com/docs/components/base/select"
+    },
+    {
+      "id": "component-separator",
+      "title": "Separator",
+      "url": "https://ui.shadcn.com/docs/components/base/separator"
+    },
+    {
+      "id": "component-skeleton",
+      "title": "Skeleton",
+      "url": "https://ui.shadcn.com/docs/components/base/skeleton"
+    },
+    {
+      "id": "component-sonner",
+      "title": "Sonner",
+      "url": "https://ui.shadcn.com/docs/components/base/sonner"
+    },
+    {
+      "id": "component-switch",
+      "title": "Switch",
+      "url": "https://ui.shadcn.com/docs/components/base/switch"
+    },
+    {
+      "id": "component-table",
+      "title": "Table",
+      "url": "https://ui.shadcn.com/docs/components/base/table"
+    },
+    {
+      "id": "component-tabs",
+      "title": "Tabs",
+      "url": "https://ui.shadcn.com/docs/components/base/tabs"
+    },
+    {
+      "id": "component-textarea",
+      "title": "Textarea",
+      "url": "https://ui.shadcn.com/docs/components/base/textarea"
+    },
+    {
+      "id": "component-tooltip",
+      "title": "Tooltip",
+      "url": "https://ui.shadcn.com/docs/components/base/tooltip"
+    },
+    {
+      "id": "component-typography",
       "title": "Typography",
       "url": "https://ui.shadcn.com/docs/components/base/typography"
     }
