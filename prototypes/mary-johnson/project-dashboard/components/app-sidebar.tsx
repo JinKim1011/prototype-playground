@@ -55,7 +55,7 @@ const data = {
       icon: <ChartBarIcon />,
     },
     {
-      title: "Projects",
+      title: "Workspaces",
       url: "#",
       icon: <FolderIcon />,
     },
