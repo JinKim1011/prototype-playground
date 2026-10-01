@@ -37,5 +37,5 @@ Add local preferences here, for example:
 This file contains local developer context only.
 
 - Repository-wide conventions come from `AGENTS.md`.
-- General Cursor workflow comes from `.cursor/rules/project.mdc`.
+- General Cursor workflow comes from `.cursor/rules/cursor-workflow.mdc`.
 - Prototype workflow comes from `.cursor/rules/prototyping.mdc`.
