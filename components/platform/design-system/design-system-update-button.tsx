@@ -39,9 +39,7 @@ export function DesignSystemUpdateButton() {
           </Button>
         }
       />
-      <TooltipContent sideOffset={2}>
-        Open file : design-system.json
-      </TooltipContent>
+      <TooltipContent sideOffset={2}>Open design-system.json</TooltipContent>
     </Tooltip>
   )
 }
