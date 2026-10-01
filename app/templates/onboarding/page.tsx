@@ -1,7 +1,6 @@
 "use client"
 
-import type { FormEvent, MouseEvent } from "react"
-import { usePathname } from "next/navigation"
+import type { FormEvent } from "react"
 import data from "./data/data.json"
 import { toast } from "@/components/prototypes/sonner"
 import { Button } from "@/components/prototypes/button"
@@ -28,31 +27,8 @@ import {
   SelectValue,
 } from "@/components/prototypes/select"
 import { Typography } from "@/components/prototypes/typography"
-import { openInEditor } from "./lib/openInEditor"
 
 export default function OnboardingTemplatePage() {
-  const pathname = usePathname()
-  const isPreview = pathname.startsWith("/templates/")
-
-  async function handleOpenInEditor(event: MouseEvent) {
-    event.preventDefault()
-    event.stopPropagation()
-
-    try {
-      if (isPreview) {
-        toast.error("This is template preview mode")
-        return
-      }
-
-      await openInEditor(window.location.pathname)
-      toast.success("Opened Onboarding in editor")
-    } catch (error) {
-      toast.error(
-        error instanceof Error ? error.message : "Failed to open editor"
-      )
-    }
-  }
-
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     toast.success("Workspace details saved")

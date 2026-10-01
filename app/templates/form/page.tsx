@@ -1,7 +1,6 @@
 "use client"
 
 import data from "./data/data.json"
-import { usePathname } from "next/navigation"
 import { toast } from "@/components/prototypes/sonner"
 import { Button } from "@/components/prototypes/button"
 import {
@@ -23,31 +22,8 @@ import {
 } from "@/components/prototypes/select"
 import { Textarea } from "@/components/prototypes/textarea"
 import { Typography } from "@/components/prototypes/typography"
-import { openInEditor } from "./lib/openInEditor"
 
 export default function FormTemplatePage() {
-  const pathname = usePathname()
-  const isPreview = pathname.startsWith("/templates/")
-
-  async function handleOpenInEditor(event: React.MouseEvent) {
-    event.preventDefault()
-    event.stopPropagation()
-
-    try {
-      if (isPreview) {
-        toast.error("This is template preview mode")
-        return
-      }
-
-      await openInEditor(window.location.pathname)
-      toast.success("Opened Form in editor")
-    } catch (error) {
-      toast.error(
-        error instanceof Error ? error.message : "Failed to open editor"
-      )
-    }
-  }
-
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     toast.success("Changes saved")

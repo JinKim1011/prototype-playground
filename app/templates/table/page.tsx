@@ -1,8 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import type { MouseEvent } from "react"
-import { usePathname } from "next/navigation"
 import data from "./data/data.json"
 import { toast } from "@/components/prototypes/sonner"
 import { Badge } from "@/components/prototypes/badge"
@@ -24,36 +22,14 @@ import {
   TableRow,
 } from "@/components/prototypes/table"
 import { Typography } from "@/components/prototypes/typography"
-import { openInEditor } from "./lib/openInEditor"
 
 export default function TableTemplatePage() {
-  const pathname = usePathname()
-  const isPreview = pathname.startsWith("/templates/")
   const [query, setQuery] = useState("")
 
   const filteredRows = data.rows.filter((row) => {
     const searchableText = `${row.id} ${row.name} ${row.owner} ${row.status}`
     return searchableText.toLowerCase().includes(query.toLowerCase())
   })
-
-  async function handleOpenInEditor(event: MouseEvent) {
-    event.preventDefault()
-    event.stopPropagation()
-
-    try {
-      if (isPreview) {
-        toast.error("This is template preview mode")
-        return
-      }
-
-      await openInEditor(window.location.pathname)
-      toast.success("Opened Table in editor")
-    } catch (error) {
-      toast.error(
-        error instanceof Error ? error.message : "Failed to open editor"
-      )
-    }
-  }
 
   function handleRowAction(name: string) {
     toast.success(`Selected ${name}`)
