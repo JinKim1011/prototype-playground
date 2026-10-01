@@ -26,7 +26,13 @@ export async function POST(request: Request) {
       )
     }
 
+    const pathname = input.pathname.trim()
     const segments = input.pathname.split("/").filter(Boolean)
+
+    if (pathname === "/data/design-system.json") {
+      await execFileAsync("code", ["--reuse-window", "data/design-system.json"])
+      return NextResponse.json({ ok: true })
+    }
 
     if (segments[0] === "templates") {
       const slug = segments[1]
