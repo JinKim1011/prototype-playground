@@ -1,0 +1,41 @@
+---
+description: Local owner identity and prototype scope
+alwaysApply: true
+---
+
+# Local Owner Context
+
+Set these values for your local workspace:
+
+- Display name: TODO
+- Owner ID: owner:TODO
+- Owner slug: TODO
+- Prototype directory: `prototypes/TODO/`
+
+## Ownership
+
+When working on prototypes:
+
+- Work inside `prototypes/TODO/` unless the task explicitly targets another area.
+- Do not edit another owner's prototype.
+- Do not create or modify prototype catalog entries manually.
+- Do not edit `prototypes/registry.ts`.
+- Use the existing playground creation flow when creating a prototype or owner.
+- Keep prototype-specific components inside the owned prototype directory.
+
+## Personal Preferences
+
+Add local preferences here, for example:
+
+- Preferred visual direction:
+- Preferred component patterns:
+- Accessibility requirements:
+- Other project-specific preferences:
+
+## Scope
+
+This file contains local developer context only.
+
+- Repository-wide conventions come from `AGENTS.md`.
+- General Cursor workflow comes from `.cursor/rules/project.mdc`.
+- Prototype workflow comes from `.cursor/rules/prototyping.mdc`.
