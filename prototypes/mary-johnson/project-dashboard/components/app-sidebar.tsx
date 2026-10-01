@@ -45,12 +45,12 @@ const data = {
       icon: <SquaresFourIcon />,
     },
     {
-      title: "Lifecycle",
+      title: "Projects",
       url: "#",
       icon: <ListIcon />,
     },
     {
-      title: "Analytics",
+      title: "Activity",
       url: "#",
       icon: <ChartBarIcon />,
     },
@@ -67,7 +67,7 @@ const data = {
   ],
   navClouds: [
     {
-      title: "Capture",
+      title: "Workspaces",
       icon: <CameraIcon />,
       isActive: true,
       url: "#",
@@ -83,7 +83,7 @@ const data = {
       ],
     },
     {
-      title: "Proposal",
+      title: "Reports",
       icon: <FileTextIcon />,
       url: "#",
       items: [
@@ -98,7 +98,7 @@ const data = {
       ],
     },
     {
-      title: "Prompts",
+      title: "Templates",
       icon: <FileTextIcon />,
       url: "#",
       items: [
@@ -159,7 +159,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               render={<a href="#" />}
             >
               <CommandIcon className="size-5!" />
-              <span className="text-base font-semibold">Acme Inc.</span>
+              <span className="text-base font-semibold">Threadline</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
