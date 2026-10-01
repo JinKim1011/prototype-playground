@@ -1,0 +1,53 @@
+---
+description: Cursor workflow conventions for prototype-playground
+alwaysApply: true
+---
+
+# Cursor Workflow
+
+`AGENTS.md` is the canonical source for repository architecture, paths, component boundaries, stack conventions, and generated-file rules. Read it before making changes.
+
+## Working Rules
+
+- Start from the smallest relevant file, symbol, route, or failing check.
+- Follow existing repository patterns before introducing abstractions.
+- Keep changes within the ownership boundary defined by the task and `.cursor/rules/owner.local.mdc`.
+- Keep prototype code independent from `components/platform/`.
+- Keep prototype-specific components inside their prototype directory when they are not reusable.
+- Use existing components and shared tokens before creating new primitives.
+- Keep client-only behavior limited to components that require it.
+- Do not modify generated or infrastructure files unless the task requires it.
+- Never manually edit `prototypes/registry.ts`.
+- Preserve atomic creation, update, and rollback behavior in catalog and filesystem operations.
+- Do not add comments unless they explain a non-obvious decision.
+
+## Validation
+
+Run the narrowest relevant check after editing:
+
+```bash
+pnpm typecheck
+pnpm lint
+```
+
+For broader changes, also run:
+
+```bash
+pnpm build
+```
+
+When changing a prototype, verify its route:
+
+```text
+http://localhost:3000/{owner}/{slug}
+```
+
+## Local Context
+
+Developer-specific identity, owner scope, prototype directory, and preferences belong in:
+
+```text
+.cursor/rules/owner.local.mdc
+```
+
+This file is local and must not be committed.
