@@ -10,6 +10,14 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/platform/ui/tooltip"
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/platform/ui/dialog"
 
 type TemplateItemActionsProps = {
   slug: string
@@ -32,10 +40,7 @@ export function TemplateItemActions({ slug, title }: TemplateItemActionsProps) {
     }
   }
 
-  async function handleDelete(event: React.MouseEvent) {
-    event.preventDefault()
-    event.stopPropagation()
-
+  async function handleDelete() {
     try {
       const response = await fetch("/api/templates", {
         method: "DELETE",
@@ -78,21 +83,39 @@ export function TemplateItemActions({ slug, title }: TemplateItemActionsProps) {
       </Tooltip>
 
       <Tooltip>
-        <TooltipTrigger
-          render={
-            <Button
-              type="button"
-              size="icon-xs"
-              variant="outline"
-              className="hover:bg-foreground/10"
-              aria-label={`Delete ${title}`}
-              onClick={handleDelete}
-            >
-              <TrashSimpleIcon />
-            </Button>
-          }
-        />
-        <TooltipContent sideOffset={2}>Delete</TooltipContent>
+        <Dialog>
+          <TooltipTrigger
+            render={
+              <DialogTrigger
+                render={
+                  <Button
+                    type="button"
+                    size="icon-xs"
+                    variant="outline"
+                    className="hover:bg-foreground/10"
+                    aria-label={`Delete ${title}`}
+                    onClick={(event) => event.stopPropagation()}
+                  >
+                    <TrashSimpleIcon />
+                  </Button>
+                }
+              />
+            }
+          />
+
+          <TooltipContent sideOffset={2}>Delete</TooltipContent>
+
+          <DialogContent>
+            <DialogTitle>Delete prototype?</DialogTitle>
+
+            <div className="flex justify-end gap-2">
+              <DialogClose render={<Button variant="outline">Cancel</Button>} />
+              <Button variant="destructive" onClick={handleDelete}>
+                Delete
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
       </Tooltip>
     </div>
   )
