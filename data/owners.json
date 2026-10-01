@@ -1,3 +1,9 @@
 {
-  "owners": []
+  "owners": [
+    {
+      "id": "owner:mary-johnson",
+      "title": "Mary Johnson",
+      "slug": "mary-johnson"
+    }
+  ]
 }

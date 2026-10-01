@@ -1,3 +1,14 @@
 {
-  "entries": []
+  "entries": [
+    {
+      "id": "prototype:mary-johnson:project-dashboard",
+      "ownerId": "owner:mary-johnson",
+      "slug": "project-dashboard",
+      "title": "Project Dashboard",
+      "description": "A workspace overview for tracking active projects, progress, recent activity, and important milestones.",
+      "createdAt": "2026-10-01T21:32:21.017Z",
+      "updatedAt": "2026-10-01T21:32:21.017Z",
+      "templateId": "template:dashboard"
+    }
+  ]
 }
