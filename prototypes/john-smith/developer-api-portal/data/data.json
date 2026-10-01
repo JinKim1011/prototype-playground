@@ -1,7 +1,7 @@
 {
   "brand": {
-    "name": "Workspace",
-    "description": "A reusable application shell"
+    "name": "Threadline API",
+    "description": "Build integrations with workspace and project data."
   },
   "navigation": [
     {
@@ -9,7 +9,15 @@
       "active": true
     },
     {
-      "label": "Activity",
+      "label": "API Reference",
+      "active": false
+    },
+    {
+      "label": "Guides",
+      "active": false
+    },
+    {
+      "label": "Changelog",
       "active": false
     },
     {
@@ -17,13 +25,27 @@
       "active": false
     },
     {
-      "label": "Help",
+      "label": "Support",
       "active": false
     }
   ],
   "user": {
-    "name": "Alex Morgan",
-    "email": "alex@example.com",
-    "initials": "AM"
+    "name": "John Smith",
+    "email": "john.smith@example.com",
+    "initials": "JS"
+  },
+  "content": {
+    "title": "Developer API",
+    "description": "Manage API access and explore the Threadline platform.",
+    "endpoint": {
+      "method": "GET",
+      "path": "/v1/projects",
+      "description": "Retrieve the projects available in your workspace."
+    },
+    "quickStart": {
+      "title": "Quick start",
+      "description": "Make your first request with the Threadline API.",
+      "code": "curl https://api.threadline.example/v1/projects \\\n  -H \"Authorization: Bearer YOUR_API_KEY\""
+    }
   }
 }
