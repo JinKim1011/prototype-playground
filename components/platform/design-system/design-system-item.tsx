@@ -45,11 +45,11 @@ export function DesignSystemItem({ link }: DesignSystemItemProps) {
 
         <ItemContent className="flex min-w-0 items-center gap-2">
           <ItemTitle>{link.title}</ItemTitle>
-          <ItemDescription>
-            <span className="hidden group-hover/item:inline">{link.url}</span>
-          </ItemDescription>
         </ItemContent>
       </div>
+      <ItemDescription>
+        <span className="hidden group-hover/item:inline">{link.url}</span>
+      </ItemDescription>
     </Item>
   )
 }
