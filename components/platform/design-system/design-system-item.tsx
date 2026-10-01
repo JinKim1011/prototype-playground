@@ -30,7 +30,7 @@ export function DesignSystemItem({ link }: DesignSystemItemProps) {
       <div className="pointer-events-none flex min-w-0 flex-1 items-center gap-3">
         <ItemMedia
           variant={faviconFailed ? "icon" : "image"}
-          className="h-9 w-9 shrink-0 border-[0.5px] bg-muted"
+          className="h-6 w-6 shrink-0 rounded-sm border-[0.5px] bg-muted"
         >
           {faviconFailed ? (
             <GlobeIcon aria-hidden="true" />
