@@ -15,8 +15,8 @@ export async function Header() {
   const templates = catalog.templates
 
   return (
-    <header className="flex pt-20 pb-10">
-      <div className="flex flex-1 flex-col gap-2">
+    <header className="flex pt-20 pb-12">
+      <div className="flex flex-1 flex-col gap-3">
         <Typography as="h1" variant="heading">
           Prototype Playground
         </Typography>
