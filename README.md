@@ -2,7 +2,7 @@
 
 A shared Next.js playground for creating, browsing, previewing, and sharing UI prototypes.
 
-Each prototype is stored as source code under `prototypes/` and receives a permanent URL at `/{owner}/{slug}`. Templates can be previewed before being copied into a new prototype. This is a clean rebuild based on the default shadcn/ui component model. The repository is designed so teams can replace the generated components and semantic tokens with their own design system.
+Each prototype is stored as source code under `prototypes/` and is available at a stable URL based on `/{owner}/{slug}`. Templates can be previewed before being copied into a new prototype. This is a clean rebuild based on the default shadcn/ui component model. The repository is designed so teams can replace the generated components and semantic tokens with their own design system.
 
 - Next.js
 - TypeScript
@@ -11,13 +11,15 @@ Each prototype is stored as source code under `prototypes/` and receives a perma
 
 ## Features
 
-- Browse prototypes from a shared playground. (TBD)
-- Open prototypes at `/{owner}/{slug}`. (TBD)
-- Create prototypes from templates. (TBD)
-- Preview templates at `/templates/{slug}`. (TBD)
-- Copy template source into standalone prototype folders. (TBD)
-- Link to public design-system documentation. (TBD)
-- Keep agent context next to the project and prototype code. (TBD)
+- Browse prototypes and templates from a shared playground.
+- Open prototypes at `/{owner}/{slug}`.
+- Create prototypes from templates, using an existing owner or creating a new owner.
+- Create and preview templates at `/templates/{slug}`.
+- Copy complete template directories into standalone prototype folders.
+- Link to public design-system documentation.
+- Keep repository-wide and local agent context next to the project and prototype code.
+
+Creation and deletion flows are intended for local development. They keep filesystem directories, JSON catalogs, and the generated prototype registry synchronized, and roll back partial changes when an operation fails.
 
 ## Getting Started
 
@@ -33,16 +35,17 @@ Open `http://localhost:3000` in your browser.
 
 ## Local Agent Setup
 
-Create the local owner configuration when prototype support is enabled:
+The local owner file is optional application context for agents working on prototypes. Create it once for your workspace:
 
 `cp .cursor/rules/owner.local.mdc.template .cursor/rules/owner.local.mdc`
 
-Set your display name, owner slug, and prototype directory in the copied file. The local file is gitignored.
+Set your display name, owner ID, owner slug, and prototype directory in the copied file. The local file is gitignored and is not required to run the application.
 
 ## Architecture
 
 A prototype consists of:
 
+- An owner entry in `data/owners.json`.
 - A prototype entry in `data/prototypes.json`.
 - A page at `prototypes/{owner}/{slug}/page.tsx`.
 - A generated entry in `prototypes/registry.ts`.
@@ -51,7 +54,22 @@ The composite `{owner}:{slug}` identifier connects the metadata entry, URL, and 
 
 Templates live under `app/templates/{slug}/page.tsx`. The same source is used for template previews and copied into new prototypes.
 
-The generated registry is never edited manually.
+Templates and design-system links are cataloged in `data/templates.json` and `data/design-system.json`. The generated registry is never edited manually.
+
+### Creation Flow
+
+Use the playground controls to create owners, prototypes, and templates. Do not manually update a catalog, create an owner directory, or edit the generated registry as part of normal creation.
+
+When creating a prototype, the playground:
+
+1. Resolves an existing owner or creates a new one.
+2. Copies the selected template directory into `prototypes/{owner}/{slug}/`.
+3. Updates `data/prototypes.json`.
+4. Regenerates `prototypes/registry.ts`.
+
+When creating a template, it copies the blank template into `app/templates/{slug}/` and updates `data/templates.json`. Failed operations roll back partial files and catalog changes.
+
+After creation, edit prototype and template source directly. Catalog and registry updates should go through the playground flow.
 
 ## Project Structure
 
@@ -60,7 +78,8 @@ The generated registry is never edited manually.
 - `components/platform/shell/` — playground shell and platform-level layout components.
 - `components/platform/ui/` — shadcn components used by the playground.
 - `components/prototypes/` — shadcn components supplied to prototype authors and consumers.
-- `data/` — prototype and template catalogs.
+- `data/` — owner, prototype, template, and design-system catalogs.
+- `types/` — TypeScript types for catalog entries and design-system links.
 - `lib/` — shared utilities and playground logic.
 - `prototypes/` — standalone prototype source files and the generated registry.
 - `.cursor/rules/` - shared agent instructions.
