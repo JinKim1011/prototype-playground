@@ -25,6 +25,7 @@ export function DesignSystemUpdateButton() {
       variant="outline"
       aria-label="open-design-system-link-json"
       onClick={handleOpenInEditor}
+      className="mt-4"
     >
       Edit list
     </Button>
