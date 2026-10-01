@@ -1,29 +1,28 @@
 {
-  "profile": {
-    "fullName": "Alex Morgan",
-    "email": "alex@example.com",
-    "category": "general",
-    "notes": "Add supporting information about this profile.",
-    "notifications": true
+  "integration": {
+    "provider": "github",
+    "endpoint": "https://api.github.com",
+    "notes": "Use this connection for repository and deployment updates.",
+    "enabled": true
   },
-  "categories": [
+  "providers": [
     {
-      "value": "general",
-      "label": "General"
+      "value": "github",
+      "label": "GitHub"
     },
     {
-      "value": "personal",
-      "label": "Personal"
+      "value": "slack",
+      "label": "Slack"
     },
     {
-      "value": "work",
-      "label": "Work"
+      "value": "linear",
+      "label": "Linear"
     }
   ],
   "content": {
-    "title": "Profile settings",
-    "description": "Update your information and preferences.",
-    "sectionTitle": "General information",
-    "sectionDescription": "Add or update the details associated with this profile."
+    "title": "Integration settings",
+    "description": "Connect external services and manage integration preferences.",
+    "sectionTitle": "Service connection",
+    "sectionDescription": "Configure the service used by this workspace."
   }
 }
