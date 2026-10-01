@@ -1,35 +1,45 @@
 {
   "content": {
-    "title": "Records",
-    "description": "Review and manage the records in this workspace."
+    "title": "Workspace permissions",
+    "description": "Manage member roles and access levels across the workspace.",
+    "tableTitle": "Team access",
+    "tableDescription": "Review who can access this workspace and what they can do.",
+    "searchPlaceholder": "Search members"
   },
   "rows": [
     {
-      "id": "REC-001",
-      "name": "Website redesign",
-      "owner": "Alex Morgan",
+      "id": "MEM-001",
+      "name": "Mary Johnson",
+      "owner": "Admin",
       "status": "Active",
       "updated": "Today"
     },
     {
-      "id": "REC-002",
-      "name": "Mobile improvements",
-      "owner": "Jamie Lee",
-      "status": "Review",
+      "id": "MEM-002",
+      "name": "Lisa Miller",
+      "owner": "Editor",
+      "status": "Active",
       "updated": "Yesterday"
     },
     {
-      "id": "REC-003",
-      "name": "Content migration",
-      "owner": "Taylor Smith",
-      "status": "Draft",
+      "id": "MEM-003",
+      "name": "Jennifer Brown",
+      "owner": "Editor",
+      "status": "Active",
+      "updated": "2 days ago"
+    },
+    {
+      "id": "MEM-004",
+      "name": "John Smith",
+      "owner": "Developer",
+      "status": "Active",
       "updated": "3 days ago"
     },
     {
-      "id": "REC-004",
-      "name": "Analytics setup",
-      "owner": "Jordan Williams",
-      "status": "Active",
+      "id": "MEM-005",
+      "name": "Alex Morgan",
+      "owner": "Viewer",
+      "status": "Pending",
       "updated": "4 days ago"
     }
   ]
