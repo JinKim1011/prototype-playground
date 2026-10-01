@@ -48,7 +48,9 @@ export function DesignSystemItem({ link }: DesignSystemItemProps) {
         </ItemContent>
       </div>
       <ItemDescription>
-        <span className="hidden group-hover/item:inline">{link.url}</span>
+        <span className="hidden group-focus-within/item:inline group-hover/item:inline">
+          {link.url}
+        </span>
       </ItemDescription>
     </Item>
   )
