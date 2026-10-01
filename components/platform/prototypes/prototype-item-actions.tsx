@@ -6,6 +6,11 @@ import { PencilSimpleLineIcon, TrashSimpleIcon } from "@phosphor-icons/react"
 import { toast } from "@/components/platform/ui/toaster"
 import { openInEditor } from "@/lib/dev/open-in-editor"
 import type { PrototypeListItem } from "@/types/prototypes"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/platform/ui/tooltip"
 
 type PrototypeItemActionsProps = {
   prototype: PrototypeListItem
@@ -63,27 +68,41 @@ export function PrototypeItemActions({
 
   return (
     <div className="pointer-events-none flex w-fit gap-0.5 opacity-0 transition-opacity group-focus-within/item:pointer-events-auto group-focus-within/item:opacity-100 group-hover/item:pointer-events-auto group-hover/item:opacity-100">
-      <Button
-        type="button"
-        size="icon-xs"
-        variant="outline"
-        aria-label={`Edit ${prototype.title}`}
-        className="hover:bg-foreground/10"
-        onClick={handleOpenInEditor}
-      >
-        <PencilSimpleLineIcon />
-      </Button>
+      <Tooltip>
+        <TooltipTrigger
+          render={
+            <Button
+              type="button"
+              size="icon-xs"
+              variant="outline"
+              aria-label={`Edit ${prototype.title}`}
+              className="hover:bg-foreground/10"
+              onClick={handleOpenInEditor}
+            >
+              <PencilSimpleLineIcon />
+            </Button>
+          }
+        />
+        <TooltipContent sideOffset={2}>Open in editor</TooltipContent>
+      </Tooltip>
 
-      <Button
-        type="button"
-        size="icon-xs"
-        variant="outline"
-        className="hover:bg-foreground/10"
-        aria-label={`Delete ${prototype.title}`}
-        onClick={handleDelete}
-      >
-        <TrashSimpleIcon />
-      </Button>
+      <Tooltip>
+        <TooltipTrigger
+          render={
+            <Button
+              type="button"
+              size="icon-xs"
+              variant="outline"
+              className="hover:bg-foreground/10"
+              aria-label={`Delete ${prototype.title}`}
+              onClick={handleDelete}
+            >
+              <TrashSimpleIcon />
+            </Button>
+          }
+        />
+        <TooltipContent sideOffset={2}>Delete</TooltipContent>
+      </Tooltip>
     </div>
   )
 }
