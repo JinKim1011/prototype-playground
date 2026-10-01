@@ -5,7 +5,7 @@ import { PrototypeItem } from "@/components/platform/prototypes/prototype-item"
 import { PrototypeToggleGroup } from "@/components/platform/prototypes/prototype-toggle-group"
 import { useState } from "react"
 import type { PrototypeListItem } from "@/types/prototypes"
-import { Typography } from "../ui/typography"
+import { Typography } from "@/components/platform/ui/typography"
 import { OwnerEntry } from "@/types/owners"
 
 type PrototypeItemGroupProps = {
@@ -53,7 +53,7 @@ export function PrototypeItemGroup({
         {visiblePrototypes.length === 0 ? (
           <Typography
             variant="label-small"
-            className="flex h-13.5 w-full items-center justify-center text-muted-foreground"
+            className="flex w-full items-center justify-center py-20 text-muted-foreground"
           >
             Created prototypes will appear here.
           </Typography>

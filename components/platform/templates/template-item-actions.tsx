@@ -5,6 +5,18 @@ import { Button } from "@/components/platform/ui/button"
 import { PencilSimpleLineIcon, TrashSimpleIcon } from "@phosphor-icons/react"
 import { toast } from "@/components/platform/ui/toaster"
 import { openInEditor } from "@/lib/dev/open-in-editor"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/platform/ui/tooltip"
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/platform/ui/dialog"
 
 type TemplateItemActionsProps = {
   slug: string
@@ -27,10 +39,7 @@ export function TemplateItemActions({ slug, title }: TemplateItemActionsProps) {
     }
   }
 
-  async function handleDelete(event: React.MouseEvent) {
-    event.preventDefault()
-    event.stopPropagation()
-
+  async function handleDelete() {
     try {
       const response = await fetch("/api/templates", {
         method: "DELETE",
@@ -54,27 +63,59 @@ export function TemplateItemActions({ slug, title }: TemplateItemActionsProps) {
 
   return (
     <div className="pointer-events-none flex w-fit gap-0.5 opacity-0 transition-opacity group-focus-within/item:pointer-events-auto group-focus-within/item:opacity-100 group-hover/item:pointer-events-auto group-hover/item:opacity-100">
-      <Button
-        type="button"
-        size="icon-xs"
-        variant="outline"
-        aria-label={`Edit ${title}`}
-        className="hover:bg-foreground/10"
-        onClick={handleOpenInEditor}
-      >
-        <PencilSimpleLineIcon />
-      </Button>
+      <Tooltip>
+        <TooltipTrigger
+          render={
+            <Button
+              type="button"
+              size="icon-xs"
+              variant="outline"
+              aria-label={`Edit ${title}`}
+              className="hover:bg-foreground/10"
+              onClick={handleOpenInEditor}
+            >
+              <PencilSimpleLineIcon />
+            </Button>
+          }
+        />
+        <TooltipContent sideOffset={2}>Edit in editor</TooltipContent>
+      </Tooltip>
 
-      <Button
-        type="button"
-        size="icon-xs"
-        variant="outline"
-        className="hover:bg-foreground/10"
-        aria-label={`Delete ${title}`}
-        onClick={handleDelete}
-      >
-        <TrashSimpleIcon />
-      </Button>
+      <Tooltip>
+        <Dialog>
+          <TooltipTrigger
+            render={
+              <DialogTrigger
+                render={
+                  <Button
+                    type="button"
+                    size="icon-xs"
+                    variant="outline"
+                    className="hover:bg-foreground/10"
+                    aria-label={`Delete ${title}`}
+                    onClick={(event) => event.stopPropagation()}
+                  >
+                    <TrashSimpleIcon />
+                  </Button>
+                }
+              />
+            }
+          />
+
+          <TooltipContent sideOffset={2}>Delete</TooltipContent>
+
+          <DialogContent>
+            <DialogTitle>Delete template?</DialogTitle>
+
+            <div className="flex justify-end gap-2">
+              <DialogClose render={<Button variant="outline">Cancel</Button>} />
+              <Button variant="destructive" onClick={handleDelete}>
+                Delete
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+      </Tooltip>
     </div>
   )
 }

@@ -1,6 +1,5 @@
 import { Header } from "@/components/platform/shell/header"
 import { Navigation } from "@/components/platform/shell/navigation"
-import { Footer } from "@/components/platform/shell/footer"
 
 export function ShellLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -8,7 +7,6 @@ export function ShellLayout({ children }: { children: React.ReactNode }) {
       <Header />
       <Navigation />
       <main className="w-full">{children}</main>
-      <Footer />
     </div>
   )
 }

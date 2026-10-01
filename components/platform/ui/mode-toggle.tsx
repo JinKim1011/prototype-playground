@@ -1,47 +1,36 @@
 "use client"
 
-import { MoonIcon, SunDimIcon } from "@phosphor-icons/react"
+import { CircleHalfIcon } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
-
-import { Button } from "@/components/platform/ui/button"
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/platform/ui/dropdown-menu"
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/platform/ui/tooltip"
+import { Button } from "@/components/platform/ui/button"
 
 export function ModeToggle() {
-  const { setTheme } = useTheme()
+  const { resolvedTheme, setTheme } = useTheme()
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger
+    <Tooltip>
+      <TooltipTrigger
         render={
-          <Button variant="ghost" size="icon-sm" className="relative">
-            <SunDimIcon
-              weight="fill"
-              className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"
-            />
-            <MoonIcon
-              weight="fill"
-              className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0"
-            />
-            <span className="sr-only">Toggle theme</span>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() =>
+              setTheme(resolvedTheme === "dark" ? "light" : "dark")
+            }
+            aria-label="Toggle theme"
+          >
+            <CircleHalfIcon weight="bold" className="h-[1.2rem] w-[1.2rem]" />
           </Button>
         }
       />
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
-          Light
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
-          Dark
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
-          System
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+      <TooltipContent
+        sideOffset={2}
+      >{`Change to ${resolvedTheme === "dark" ? "light" : "dark"}`}</TooltipContent>
+    </Tooltip>
   )
 }

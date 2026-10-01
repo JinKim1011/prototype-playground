@@ -132,6 +132,7 @@ export default function CreatePrototypeForm({
             <Button
               size="lg"
               type="submit"
+              variant="secondary"
               disabled={pending}
               className="mt-1.5 w-full"
             >
