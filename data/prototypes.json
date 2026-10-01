@@ -49,6 +49,16 @@
       "createdAt": "2026-10-01T21:35:20.955Z",
       "updatedAt": "2026-10-01T21:35:20.955Z",
       "templateId": "template:form"
+    },
+    {
+      "id": "prototype:john-smith:developer-api-portal",
+      "ownerId": "owner:john-smith",
+      "slug": "developer-api-portal",
+      "title": "Developer API Portal",
+      "description": "A developer workspace for navigating API resources, documentation, service information, and account tools.",
+      "createdAt": "2026-10-01T21:36:46.575Z",
+      "updatedAt": "2026-10-01T21:36:46.575Z",
+      "templateId": "template:application-shell"
     }
   ]
 }
