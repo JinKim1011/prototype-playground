@@ -83,7 +83,7 @@ export function PrototypeItemActions({
             </Button>
           }
         />
-        <TooltipContent sideOffset={2}>Open in editor</TooltipContent>
+        <TooltipContent sideOffset={2}>Edit in editor</TooltipContent>
       </Tooltip>
 
       <Tooltip>
