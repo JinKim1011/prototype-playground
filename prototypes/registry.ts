@@ -7,6 +7,8 @@ import P3 from "./lisa-miller/team-onboarding/page";
 import P4 from "./john-smith/integration-settings/page";
 import P5 from "./john-smith/developer-api-portal/page";
 import P6 from "./jennifer-brown/campaign-analytics/page";
+import P7 from "./lisa-miller/customer-feedback-portal/page";
+import P8 from "./robert-davis/billing-and-workspace-settings/page";
 
 export const registry: Record<string, ComponentType> = {
 "mary-johnson:project-dashboard": P0,
@@ -16,4 +18,6 @@ export const registry: Record<string, ComponentType> = {
 "john-smith:integration-settings": P4,
 "john-smith:developer-api-portal": P5,
 "jennifer-brown:campaign-analytics": P6,
+"lisa-miller:customer-feedback-portal": P7,
+"robert-davis:billing-and-workspace-settings": P8,
 };

@@ -69,6 +69,26 @@
       "createdAt": "2026-10-01T21:37:45.958Z",
       "updatedAt": "2026-10-01T21:37:45.958Z",
       "templateId": "template:dashboard"
+    },
+    {
+      "id": "prototype:lisa-miller:customer-feedback-portal",
+      "ownerId": "owner:lisa-miller",
+      "slug": "customer-feedback-portal",
+      "title": "Customer Feedback Portal",
+      "description": "A searchable list for reviewing customer feedback, tracking status, and managing follow-up actions.",
+      "createdAt": "2026-10-01T21:38:45.235Z",
+      "updatedAt": "2026-10-01T21:38:45.235Z",
+      "templateId": "template:table"
+    },
+    {
+      "id": "prototype:robert-davis:billing-and-workspace-settings",
+      "ownerId": "owner:robert-davis",
+      "slug": "billing-and-workspace-settings",
+      "title": "Billing and Workspace Settings",
+      "description": "An administrative form for managing workspace details, billing preferences, and account settings.",
+      "createdAt": "2026-10-01T21:39:04.979Z",
+      "updatedAt": "2026-10-01T21:39:04.979Z",
+      "templateId": "template:form"
     }
   ]
 }
