@@ -1,0 +1,31 @@
+{
+  "content": {
+    "title": "Set up your workspace",
+    "description": "Complete these steps to get started."
+  },
+  "progress": {
+    "value": 33,
+    "label": "Step 1 of 3"
+  },
+  "steps": [
+    {
+      "number": 1,
+      "title": "Workspace details",
+      "description": "Add the basic information for your workspace."
+    },
+    {
+      "number": 2,
+      "title": "Invite members",
+      "description": "Bring your team into the workspace."
+    },
+    {
+      "number": 3,
+      "title": "Finish setup",
+      "description": "Review your preferences and complete setup."
+    }
+  ],
+  "fields": {
+    "workspaceName": "My workspace",
+    "teamSize": "1-10"
+  }
+}
