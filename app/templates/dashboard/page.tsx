@@ -1,51 +1,40 @@
-"use client"
+import { AppSidebar } from "@/app/templates/dashboard/components/app-sidebar"
+import { ChartAreaInteractive } from "@/app/templates/dashboard/components/chart-area-interactive"
+import { DataTable } from "@/app/templates/dashboard/components/data-table"
+import { SectionCards } from "@/app/templates/dashboard/components/section-cards"
+import { SiteHeader } from "@/app/templates/dashboard/components/site-header"
+import {
+  SidebarInset,
+  SidebarProvider,
+} from "@/app/templates/dashboard/components/sidebar"
 
-import { usePathname } from "next/navigation"
-import { toast } from "@/components/prototypes/sonner"
-import { Button } from "@/components/prototypes/button"
-import { Typography } from "@/components/prototypes/typography"
-import { openInEditor } from "./lib/openInEditor"
-import { WisdomIdiom } from "./components/wisdom-idiom"
+import data from "./data/data.json"
 
-export default function BlankTemplatePage() {
-  const pathname = usePathname()
-  const isPreview = pathname.startsWith("/templates/")
-
-  async function handleOpenInEditor(event: React.MouseEvent) {
-    event.preventDefault()
-    event.stopPropagation()
-
-    try {
-      if (isPreview) {
-        toast.error("This is template preview mode")
-        return
-      }
-
-      await openInEditor(window.location.pathname)
-      toast.success(`Opened Blank in editor`)
-    } catch (error) {
-      toast.error(
-        error instanceof Error ? error.message : "Failed to open editor"
-      )
-    }
-  }
-
+export default function Page() {
   return (
-    <main className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-3">
-      <section className="flex items-center pt-20">
-        <div className="flex flex-1 flex-col gap-1">
-          <Typography variant="heading-small">New prototype</Typography>
-          <Typography variant="body" className="text-muted-foreground">
-            This is a blank template.
-          </Typography>
+    <SidebarProvider
+      style={
+        {
+          "--sidebar-width": "calc(var(--spacing) * 72)",
+          "--header-height": "calc(var(--spacing) * 12)",
+        } as React.CSSProperties
+      }
+    >
+      <AppSidebar variant="inset" />
+      <SidebarInset>
+        <SiteHeader />
+        <div className="flex flex-1 flex-col">
+          <div className="@container/main flex flex-1 flex-col gap-2">
+            <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+              <SectionCards />
+              <div className="px-4 lg:px-6">
+                <ChartAreaInteractive />
+              </div>
+              <DataTable data={data} />
+            </div>
+          </div>
         </div>
-
-        <Button onClick={handleOpenInEditor} className="w-fit">
-          Open in editor
-        </Button>
-      </section>
-
-      <WisdomIdiom />
-    </main>
+      </SidebarInset>
+    </SidebarProvider>
   )
 }
