@@ -1,0 +1,202 @@
+---
+description: Rules for creating and editing prototypes and templates
+globs: prototypes/**/*,app/templates/**/*
+alwaysApply: false
+---
+
+# Prototyping Rules
+
+This rule applies when working on prototype pages or template source. Repository-wide conventions come from `AGENTS.md`.
+
+## Prototype Structure
+
+A prototype consists of:
+
+- An entry in `data/prototypes.json`
+- A page at `prototypes/{owner}/{slug}/page.tsx`
+- A generated entry in `prototypes/registry.ts`
+
+Prototype routes use:
+
+```text
+/{owner}/{slug}
+```
+
+Prototype source is loaded through:
+
+```text
+app/[owner]/[slug]/page.tsx
+```
+
+Prototype identifiers use:
+
+```text
+prototype:{ownerSlug}:{slug}
+```
+
+The owner and slug together uniquely identify a prototype.
+
+## Creating Prototypes, Owners, and Templates
+
+Use the existing playground creation flow whenever creating a prototype, owner, or template.
+
+The creation flow is the consistency boundary for:
+
+- Filesystem directories
+- Catalog metadata
+- Template copying
+- Registry generation
+- Locking
+- Rollback
+
+Do not manually create or publish an item by updating its files, catalog entry, and generated registry separately.
+
+### Prototypes
+
+The prototype creation flow:
+
+- Resolves an existing owner or creates a new owner.
+- Copies the selected template into `prototypes/{owner}/{slug}/`.
+- Updates `data/prototypes.json`.
+- Regenerates `prototypes/registry.ts`.
+- Rolls back partial changes if creation fails.
+
+### Owners
+
+When a new owner is needed, create it through the owner control in the prototype creation flow.
+
+Do not manually add an owner to `data/owners.json` or create the owner directory separately.
+
+### Templates
+
+The template creation flow:
+
+1. Copies the blank template into `app/templates/{slug}/`.
+2. Adds the template entry to `data/templates.json`.
+3. Rolls back the copied directory if catalog creation fails.
+
+Do not copy template directories manually to create prototypes.
+
+## Manual Editing After Creation
+
+After an item has been created through the playground flow, edit its source directly.
+
+Prototype source belongs in:
+
+```text
+prototypes/{owner}/{slug}/
+```
+
+Template source belongs in:
+
+```text
+app/templates/{slug}/
+```
+
+Manual source edits are expected. Manual catalog and registry edits are not.
+
+Do not manually:
+
+- Edit `prototypes/registry.ts`
+- Add or remove catalog entries during normal prototype work
+- Create owner directories independently of owner creation
+- Invent a different identifier or slug format
+- Copy template directories outside the creation flow
+
+## Templates
+
+Templates live under:
+
+```text
+app/templates/{slug}/
+```
+
+A template may include:
+
+- `page.tsx`
+- Local components
+- Local data
+- Local utilities
+
+Templates are previewed at:
+
+```text
+/templates/{slug}
+```
+
+When a prototype is created from a template, the template directory is copied into:
+
+```text
+prototypes/{owner}/{slug}/
+```
+
+Keep template code portable so it can run both in template preview mode and after being copied into a prototype.
+
+Avoid relying on the current URL except where preview behavior requires it.
+
+## Component Usage
+
+- Import shared prototype components from `@/components/prototypes`.
+- Do not import components from `@/components/platform`.
+- Use existing shared components and tokens before creating new primitives.
+- Keep prototype-specific components inside the relevant prototype directory.
+- Keep the prototype self-contained.
+- Do not introduce shared application state for prototype-specific behavior.
+- Use Tailwind utilities and the shared tokens from `app/globals.css`.
+- Use Phosphor icons when an icon is needed.
+- Add `"use client"` only to files that require client-side behavior.
+
+## Page Conventions
+
+Prototype and template pages should:
+
+- Export a default React component.
+- Render a complete, usable page.
+- Keep layout and styling local to the prototype or template.
+- Avoid changing application layouts or playground shell behavior.
+- Follow the existing client and server component boundaries.
+- Keep fixed-format UI elements dimensionally stable.
+- Use accessible interactive elements and visible focus states.
+
+A minimal prototype page is:
+
+```tsx
+export default function PrototypePage() {
+  return <main className="min-h-screen" />
+}
+```
+
+## Scope
+
+For prototype work:
+
+- Do not modify `app/(shell)/` unless the task explicitly concerns the playground shell.
+- Do not modify `components/platform/` for prototype-specific UI.
+- Do not modify catalog, filesystem, or registry logic for a visual prototype task.
+- Do not edit another owner's prototype unless explicitly requested.
+- Do not change shared prototype components for a one-off prototype need unless the component behavior is intentionally being improved for all prototypes.
+
+## Verification
+
+After creating or editing a prototype:
+
+1. Run the relevant type and lint checks.
+2. Start the development server if it is not already running.
+3. Verify the prototype at:
+
+```text
+http://localhost:3000/{owner}/{slug}
+```
+
+For template changes, also verify:
+
+```text
+http://localhost:3000/templates/{slug}
+```
+
+For creation-flow changes, verify that:
+
+- The expected directory is created.
+- The relevant catalog is updated.
+- The generated registry remains synchronized.
+- Failed creation does not leave partial files or metadata.
