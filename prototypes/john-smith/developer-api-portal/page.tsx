@@ -1,6 +1,5 @@
 "use client"
 
-import type { MouseEvent } from "react"
 import { usePathname } from "next/navigation"
 import data from "./data/data.json"
 import { toast } from "@/components/prototypes/sonner"
@@ -16,7 +15,7 @@ import {
 import { Separator } from "@/components/prototypes/separator"
 import { Typography } from "@/components/prototypes/typography"
 
-export default function ApplicationShellTemplatePage() {
+export default function DeveloperApiPortalPage() {
   const pathname = usePathname()
   const isPreview = pathname.startsWith("/templates/")
 
