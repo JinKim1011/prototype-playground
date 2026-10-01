@@ -1,0 +1,29 @@
+{
+  "profile": {
+    "fullName": "Alex Morgan",
+    "email": "alex@example.com",
+    "category": "general",
+    "notes": "Add supporting information about this profile.",
+    "notifications": true
+  },
+  "categories": [
+    {
+      "value": "general",
+      "label": "General"
+    },
+    {
+      "value": "personal",
+      "label": "Personal"
+    },
+    {
+      "value": "work",
+      "label": "Work"
+    }
+  ],
+  "content": {
+    "title": "Profile settings",
+    "description": "Update your information and preferences.",
+    "sectionTitle": "General information",
+    "sectionDescription": "Add or update the details associated with this profile."
+  }
+}

@@ -19,6 +19,36 @@
       "createdAt": "2026-10-01T21:33:23.082Z",
       "updatedAt": "2026-10-01T21:33:23.082Z",
       "templateId": "template:application-shell"
+    },
+    {
+      "id": "prototype:robert-davis:workspace-permissions",
+      "ownerId": "owner:robert-davis",
+      "slug": "workspace-permissions",
+      "title": "Workspace Permissions",
+      "description": "A management table for reviewing team members, roles, access levels, and permission status.",
+      "createdAt": "2026-10-01T21:34:23.249Z",
+      "updatedAt": "2026-10-01T21:34:23.249Z",
+      "templateId": "template:table"
+    },
+    {
+      "id": "prototype:lisa-miller:team-onboarding",
+      "ownerId": "owner:lisa-miller",
+      "slug": "team-onboarding",
+      "title": "Team Onboarding",
+      "description": "A guided setup flow for creating a workspace, choosing initial preferences, and inviting teammates.",
+      "createdAt": "2026-10-01T21:35:00.568Z",
+      "updatedAt": "2026-10-01T21:35:00.568Z",
+      "templateId": "template:onboarding"
+    },
+    {
+      "id": "prototype:john-smith:integration-settings",
+      "ownerId": "owner:john-smith",
+      "slug": "integration-settings",
+      "title": "Integration Settings",
+      "description": "A configuration form for connecting external services and managing integration preferences.",
+      "createdAt": "2026-10-01T21:35:20.955Z",
+      "updatedAt": "2026-10-01T21:35:20.955Z",
+      "templateId": "template:form"
     }
   ]
 }
