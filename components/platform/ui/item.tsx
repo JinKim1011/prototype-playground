@@ -22,7 +22,7 @@ function ItemGroup({ className, ...props }: React.ComponentProps<"div">) {
 
 const itemVariants = cva(
   cn(
-    "group/item flex w-full flex-wrap items-center rounded-none border transition-colors duration-100 outline-none hover:bg-muted hover:text-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 [a]:transition-colors [a]:hover:bg-muted",
+    "group/item flex w-full flex-wrap items-center rounded-md border transition-colors duration-100 outline-none hover:bg-muted hover:text-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 [a]:transition-colors [a]:hover:bg-muted",
     typographyStyles({ variant: "label-small" })
   ),
   {
@@ -77,7 +77,7 @@ const itemMediaVariants = cva(
         default: "bg-transparent",
         icon: "[&_svg:not([class*='size-'])]:size-4",
         image:
-          "shrink-0 overflow-hidden rounded-none bg-muted [&_img]:size-full [&_img]:object-cover",
+          "shrink-0 overflow-hidden rounded-sm bg-muted [&_img]:size-full [&_img]:object-cover",
       },
     },
     defaultVariants: {
