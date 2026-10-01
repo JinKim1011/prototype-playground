@@ -1,9 +1,9 @@
-import { usePrototypePage } from "@/lib/prototypes/path"
+import { getPrototypePage } from "@/lib/prototypes/path"
+import { getTemplatePage } from "@/lib/templates/path"
 import { NextResponse } from "next/server"
 import { execFile } from "node:child_process"
 import { promisify } from "node:util"
 import { isValidateSegment } from "@/lib/prototypes/validate"
-import { getTemplatePage } from "@/lib/templates/path"
 import { getOwnerBySlug } from "@/lib/owners/catalog"
 
 const execFileAsync = promisify(execFile)
@@ -67,7 +67,7 @@ export async function POST(request: Request) {
 
     await execFileAsync("code", [
       "--reuse-window",
-      usePrototypePage(owner.slug, slug),
+      getPrototypePage(owner.slug, slug),
     ])
 
     return NextResponse.json({ ok: true })

@@ -6,7 +6,7 @@ export function prototypeDirectory(ownerSlug: string, prototypeSlug: string) {
   return path.join(prototypesRoot, ownerSlug, prototypeSlug)
 }
 
-export function usePrototypePage(ownerSlug: string, prototypeSlug: string) {
+export function getPrototypePage(ownerSlug: string, prototypeSlug: string) {
   const directory = prototypeDirectory(ownerSlug, prototypeSlug)
 
   return path.join(directory, "page.tsx")
