@@ -16,8 +16,20 @@ type DesignSystemItemProps = {
   link: DesignSystemLink
 }
 
+function faviconUrl(url: string) {
+  try {
+    const parsedUrl = new URL(url)
+    return `https://www.google.com/s2/favicons?domain_url=${encodeURIComponent(
+      parsedUrl.origin
+    )}&sz=64`
+  } catch {
+    return null
+  }
+}
+
 export function DesignSystemItem({ link }: DesignSystemItemProps) {
   const [faviconFailed, setFaviconFailed] = useState(false)
+  const faviconSrc = faviconUrl(link.url)
 
   return (
     <Item size="xs" className="relative" role="listitem">
@@ -32,11 +44,11 @@ export function DesignSystemItem({ link }: DesignSystemItemProps) {
           variant={faviconFailed ? "icon" : "image"}
           className="h-6 w-6 shrink-0 rounded-sm border-[0.5px] bg-muted"
         >
-          {faviconFailed ? (
-            <GlobeIcon aria-hidden="true" />
+          {faviconFailed || !faviconSrc ? (
+            <GlobeIcon aria-hidden="true" className="text-muted-foreground" />
           ) : (
             <img
-              src={`https://www.google.com/s2/favicons?domain_url=${encodeURIComponent(link.url)}&sz=64`}
+              src={faviconSrc}
               alt=""
               onError={() => setFaviconFailed(true)}
             />
