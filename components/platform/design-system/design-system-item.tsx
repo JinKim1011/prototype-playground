@@ -20,7 +20,7 @@ export function DesignSystemItem({ link }: DesignSystemItemProps) {
   const [faviconFailed, setFaviconFailed] = useState(false)
 
   return (
-    <Item size="xs" className="relative">
+    <Item size="xs" className="relative" role="listitem">
       <Link
         href={link.url}
         target="_blank"
