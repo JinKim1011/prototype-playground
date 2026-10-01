@@ -1,5 +1,9 @@
 export type DesignSystemLink = {
   id: string
-  label: string
+  title: string
   url: string
+}
+
+export type DesignSystemLinksFile = {
+  links: DesignSystemLink[]
 }

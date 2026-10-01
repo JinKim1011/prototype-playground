@@ -8,12 +8,15 @@ import type { PrototypeListItem } from "@/types/prototypes"
 import { Typography } from "../ui/typography"
 import { OwnerEntry } from "@/types/owners"
 
-type Props = {
+type PrototypeItemGroupProps = {
   prototypes: PrototypeListItem[]
   owners: OwnerEntry[]
 }
 
-export function PrototypeItemGroup({ prototypes, owners }: Props) {
+export function PrototypeItemGroup({
+  prototypes,
+  owners,
+}: PrototypeItemGroupProps) {
   const [selectedOwnerId, setSelectedOwnerId] = useState("all")
 
   const ownersById = new Map(owners.map((owner) => [owner.id, owner]))

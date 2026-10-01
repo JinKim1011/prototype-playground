@@ -19,7 +19,7 @@ export function PrototypeItem({ prototype, owner }: PrototypeItemProps) {
   const prototypePath = `${owner.slug}/${prototype.slug}`
 
   return (
-    <Item size="xs" className="relative">
+    <Item size="xs" className="relative" role="listitem">
       <Link
         href={prototypePath}
         target="_blank"

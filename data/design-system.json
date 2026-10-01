@@ -1,0 +1,19 @@
+{
+  "links": [
+    {
+      "id": "component-button",
+      "title": "Button",
+      "url": "https://ui.shadcn.com/docs/components/base/button"
+    },
+    {
+      "id": "component-toast",
+      "title": "Toast",
+      "url": "https://ui.shadcn.com/docs/components/base/toast"
+    },
+    {
+      "id": "tokens-typography",
+      "title": "Typography",
+      "url": "https://ui.shadcn.com/docs/components/base/typography"
+    }
+  ]
+}

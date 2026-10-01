@@ -17,7 +17,7 @@ export function TemplateItem({ template }: TemplateItemProps) {
   const templatePath = `/templates/${template.slug}`
 
   return (
-    <Item size="xs" className="relative">
+    <Item size="xs" className="relative" role="listitem">
       <Link
         href={templatePath}
         target="_blank"
