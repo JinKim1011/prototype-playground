@@ -1,15 +1,23 @@
 {
   "brand": {
-    "name": "Workspace",
-    "description": "A reusable application shell"
+    "name": "Threadline Workspace",
+    "description": "Coordinate projects, teams, and shared work in one place."
   },
   "navigation": [
     {
-      "label": "Overview",
+      "label": "Projects",
       "active": true
     },
     {
+      "label": "Team",
+      "active": false
+    },
+    {
       "label": "Activity",
+      "active": false
+    },
+    {
+      "label": "Files",
       "active": false
     },
     {
@@ -22,8 +30,32 @@
     }
   ],
   "user": {
-    "name": "Alex Morgan",
-    "email": "alex@example.com",
-    "initials": "AM"
-  }
+    "name": "Mary Johnson",
+    "email": "mary.johnson@example.com",
+    "initials": "MJ"
+  },
+  "content": {
+    "title": "Team workspace",
+    "description": "Review active projects and coordinate work across your team.",
+    "actionLabel": "New project",
+    "cardTitle": "Active work",
+    "cardDescription": "Projects currently being planned or delivered."
+  },
+  "projects": [
+    {
+      "name": "Workspace onboarding",
+      "type": "Product",
+      "status": "In progress"
+    },
+    {
+      "name": "API documentation",
+      "type": "Developer",
+      "status": "Ready for review"
+    },
+    {
+      "name": "Customer feedback improvements",
+      "type": "Research",
+      "status": "In progress"
+    }
+  ]
 }

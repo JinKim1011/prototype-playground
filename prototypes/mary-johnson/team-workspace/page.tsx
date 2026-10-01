@@ -1,7 +1,5 @@
 "use client"
 
-import type { MouseEvent } from "react"
-import { usePathname } from "next/navigation"
 import data from "./data/data.json"
 import { toast } from "@/components/prototypes/sonner"
 import { Avatar, AvatarFallback } from "@/components/prototypes/avatar"
@@ -16,10 +14,7 @@ import {
 import { Separator } from "@/components/prototypes/separator"
 import { Typography } from "@/components/prototypes/typography"
 
-export default function ApplicationShellTemplatePage() {
-  const pathname = usePathname()
-  const isPreview = pathname.startsWith("/templates/")
-
+export default function TeamWorkspacePage() {
   function handleNavigation(label: string) {
     toast.success(`Selected ${label}`)
   }
@@ -85,39 +80,49 @@ export default function ApplicationShellTemplatePage() {
           <div className="flex items-start justify-between gap-4">
             <div className="grid gap-1">
               <Typography as="h1" variant="heading">
-                Overview
+                {data.content.title}
               </Typography>
+
               <Typography variant="body" className="text-muted-foreground">
-                {data.brand.description}
+                {data.content.description}
               </Typography>
             </div>
 
             <Button
               type="button"
-              onClick={() => toast.success("Action started")}
+              onClick={() => toast.success("New project flow started")}
             >
-              New item
+              {data.content.actionLabel}
             </Button>
           </div>
 
           <Card>
             <CardHeader>
-              <CardTitle>Content area</CardTitle>
-              <CardDescription>
-                Replace this area with a dashboard, table, form, or custom
-                prototype screen.
-              </CardDescription>
+              <CardTitle>{data.content.cardTitle}</CardTitle>
+              <CardDescription>{data.content.cardDescription}</CardDescription>
             </CardHeader>
 
-            <CardContent>
-              <div className="flex min-h-48 items-center justify-center border border-dashed text-center">
-                <Typography
-                  variant="body"
-                  className="max-w-sm text-muted-foreground"
+            <CardContent className="grid gap-3">
+              {data.projects.map((project) => (
+                <div
+                  key={project.name}
+                  className="flex items-center justify-between border p-3"
                 >
-                  This is the primary content area of the application shell.
-                </Typography>
-              </div>
+                  <div className="grid gap-1">
+                    <Typography variant="body-strong">
+                      {project.name}
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      className="text-muted-foreground"
+                    >
+                      {project.type}
+                    </Typography>
+                  </div>
+
+                  <Typography variant="caption">{project.status}</Typography>
+                </div>
+              ))}
             </CardContent>
           </Card>
         </div>
