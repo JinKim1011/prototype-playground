@@ -50,9 +50,9 @@ export function PrototypeItemGroup({
         owners={availableOwners}
         value={effectiveSelectedOwnerId}
         onValueChange={setSelectedOwnerId}
-        className="mt-4"
+        className="mt-6"
       />
-      <ItemGroup className="-mx-2 w-[calc(100%+1rem)] py-2">
+      <ItemGroup className="-mx-2 w-[calc(100%+1rem)] py-4">
         {visiblePrototypes.length === 0 ? (
           <Typography
             variant="label-small"
