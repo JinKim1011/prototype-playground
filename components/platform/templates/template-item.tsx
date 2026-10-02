@@ -7,6 +7,7 @@ import {
   ItemTitle,
 } from "@/components/platform/ui/item"
 import type { TemplateListItem } from "@/types/templates"
+import Image from "next/image"
 import { TemplateItemActions } from "@/components/platform/templates/template-item-actions"
 
 type TemplateItemProps = {
@@ -27,12 +28,13 @@ export function TemplateItem({ template }: TemplateItemProps) {
       <div className="pointer-events-none flex min-w-0 flex-1 items-center gap-3">
         <ItemMedia variant="image" className="h-9 w-16 shrink-0">
           <div className="h-9 w-16 overflow-hidden rounded-sm border-[0.5px] bg-muted">
-            <iframe
-              src={templatePath}
-              title={`${template.title} preview`}
-              className="pointer-events-none h-180 w-7xl origin-top-left scale-[0.05] border-0"
-              tabIndex={-1}
-              aria-hidden="true"
+            <Image
+              src={`/previews/templates/${template.slug}.png`}
+              alt={`${template.title} preview`}
+              width={320}
+              height={180}
+              className="h-9 w-16 object-cover"
+              sizes="64px"
             />
           </div>
         </ItemMedia>
