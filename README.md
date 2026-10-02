@@ -9,6 +9,14 @@ Each prototype is stored as source code under `prototypes/` and is available at 
 - Tailwind
 - shadcn/ui
 
+## Live Demo
+
+[Open the live demo](https://demo-prototype-playground.vercel.app/)
+
+The demo is deployed from the `demo` branch and contains mock owners, templates,
+and prototypes. It is intended for browsing and sharing. Creation and deletion
+flows remain available only during local development.
+
 ## Features
 
 - Browse prototypes and templates from a shared playground.
@@ -30,6 +38,10 @@ Install dependencies:
 Start the development server:
 
 `pnpm dev`
+
+Catalog previews generating:
+
+`pnpm previews` (stored under `public/previews/`)
 
 Open `http://localhost:3000` in your browser.
 
