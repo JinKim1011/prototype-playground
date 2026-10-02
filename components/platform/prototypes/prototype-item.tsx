@@ -34,6 +34,7 @@ export function PrototypeItem({ prototype, owner }: PrototypeItemProps) {
               title={`${prototype.title} preview`}
               className="pointer-events-none h-180 w-7xl origin-top-left scale-[0.05] border-0"
               tabIndex={-1}
+              loading="lazy"
               aria-hidden="true"
             />
           </div>
