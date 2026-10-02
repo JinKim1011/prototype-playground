@@ -31,10 +31,6 @@ export default function WorkspacePermissionsPage() {
     return searchableText.toLowerCase().includes(query.toLowerCase())
   })
 
-  function handleRowAction(name: string) {
-    toast.success(`Selected ${name}`)
-  }
-
   return (
     <main className="mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 py-10">
       <header className="flex items-start justify-between gap-6">
