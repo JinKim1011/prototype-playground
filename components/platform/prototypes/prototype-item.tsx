@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import {
   Item,
   ItemContent,
@@ -29,12 +30,13 @@ export function PrototypeItem({ prototype, owner }: PrototypeItemProps) {
       <div className="pointer-events-none flex min-w-0 flex-1 items-center gap-3">
         <ItemMedia variant="image" className="h-9 w-16 shrink-0">
           <div className="h-9 w-16 overflow-hidden border-[0.5px] bg-muted">
-            <iframe
-              src={prototypePath}
-              title={`${prototype.title} preview`}
-              className="pointer-events-none h-180 w-7xl origin-top-left scale-[0.05] border-0"
-              tabIndex={-1}
-              aria-hidden="true"
+            <Image
+              src={`/previews/prototypes/${owner.slug}/${prototype.slug}.png`}
+              alt={`${prototype.title} preview`}
+              width={320}
+              height={180}
+              className="h-9 w-16 object-cover"
+              sizes="64px"
             />
           </div>
         </ItemMedia>
