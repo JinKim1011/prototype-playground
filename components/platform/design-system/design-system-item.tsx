@@ -51,6 +51,9 @@ export function DesignSystemItem({ link }: DesignSystemItemProps) {
             <Image
               src={faviconSrc}
               alt={`${link.title} favicon`}
+              width={24}
+              height={24}
+              unoptimized
               onError={() => setFaviconFailed(true)}
             />
           )}
