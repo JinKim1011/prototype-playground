@@ -13,17 +13,17 @@ export async function loadPrototypeModuleWithRetry({
 
   for (let attempt = 0; attempt < RETRY_ATTEMPTS; attempt++) {
     try {
-      const module = await import(
+      const prototypeModule = await import(
         `@/prototypes/${ownerSlug}/${prototypeSlug}/page`
       )
 
-      if (!module.default) {
+      if (!prototypeModule.default) {
         throw new Error(
           `Prototype "${ownerSlug}/${prototypeSlug}" does not export a default component`
         )
       }
 
-      return module.default
+      return prototypeModule.default
     } catch (error) {
       lastError = error
 
