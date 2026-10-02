@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { GlobeIcon } from "@phosphor-icons/react"
 import {
   Item,
@@ -47,9 +48,12 @@ export function DesignSystemItem({ link }: DesignSystemItemProps) {
           {faviconFailed || !faviconSrc ? (
             <GlobeIcon aria-hidden="true" className="text-muted-foreground" />
           ) : (
-            <img
+            <Image
               src={faviconSrc}
-              alt=""
+              alt={`${link.title} favicon`}
+              width={24}
+              height={24}
+              unoptimized
               onError={() => setFaviconFailed(true)}
             />
           )}

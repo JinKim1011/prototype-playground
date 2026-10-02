@@ -34,12 +34,15 @@ export function PrototypeItemGroup({
       ? selectedOwnerId
       : "all"
 
-  const visiblePrototypes =
-    effectiveSelectedOwnerId === "all"
-      ? prototypes
-      : prototypes.filter(
-          (prototype) => prototype.ownerId === effectiveSelectedOwnerId
-        )
+  const visiblePrototypes = prototypes
+    .filter(
+      (prototype) =>
+        effectiveSelectedOwnerId === "all" ||
+        prototype.ownerId === effectiveSelectedOwnerId
+    )
+    .toSorted((first, second) =>
+      first.updatedAt.localeCompare(second.updatedAt)
+    )
 
   return (
     <>

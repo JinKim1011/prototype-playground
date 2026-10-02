@@ -9,9 +9,12 @@ type TemplateItemGroupProps = {
 }
 
 export function TemplateItemGroup({ templates }: TemplateItemGroupProps) {
+  const sortedTemplates = templates.toSorted((first, second) =>
+    first.createdAt.localeCompare(second.createdAt)
+  )
   return (
     <ItemGroup className="-mx-2 w-[calc(100%+1rem)] py-2">
-      {templates.map((template) => (
+      {sortedTemplates.map((template) => (
         <TemplateItem key={template.id} template={template} />
       ))}
     </ItemGroup>
