@@ -47,6 +47,7 @@ export function PrototypeItem({ prototype, owner }: PrototypeItemProps) {
               height={180}
               className="h-9 w-16 object-cover"
               sizes="64px"
+              onError={() => setPreviewFailed(true)}
             />
           )}
         </ItemMedia>
