@@ -41,7 +41,7 @@ export function PrototypeItemGroup({
         prototype.ownerId === effectiveSelectedOwnerId
     )
     .toSorted((first, second) =>
-      first.updatedAt.localeCompare(second.updatedAt)
+      second.updatedAt.localeCompare(first.updatedAt)
     )
 
   return (
